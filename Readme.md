@@ -2,7 +2,7 @@
 Custom implementation of a doubly LinkedList
 
 # Methods
-1. `CustomLinkedList()` - constructor.
+1. `CustomDoublyLinkedList()` - constructor.
 2. `add(T item)` - add item to list, returns true if successful, else false.
 3. `add(int index, T item)` - add item to list at given index - throws IndexOutOfBoundsException.
 4. `addAll(Collection<T> collection)` - adds collection of items to list, return true if list has changed, else false.
