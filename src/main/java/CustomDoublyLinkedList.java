@@ -1,0 +1,424 @@
+import java.util.Collection;
+import java.util.NoSuchElementException;
+
+public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterface<T> {
+
+    private Node head;
+    private Node tail;
+
+    private int size = 0;
+
+    public void traverseForward() {
+        Node current = head;
+        while(current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public void traverseBackwards() {
+        Node current = tail;
+        while(current != null) {
+            System.out.print(current.data + " ");
+            current = current.previous;
+        }
+        System.out.println();
+    }
+
+    public boolean addAll(final Collection<T> collection) {
+        if(collection == null)
+            throw new NullPointerException();
+        int startSize = size;
+        collection.forEach(this::add);
+        return startSize != size;
+    }
+
+    public boolean addAll(final int index, final Collection<T> collection) {
+        if(collection == null)
+            throw new NullPointerException();
+        if(index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+        int startSize = size;
+        int insertIndex = 0;
+        Node currentNode = head;
+        while(currentNode.next != null) {
+            if(insertIndex == index) {
+                for (T item : collection)
+                    add(insertIndex++, item);
+                break;
+            }
+            insertIndex++;
+            currentNode = currentNode.next;
+        }
+        return startSize != size;
+    }
+
+    public void addFirst(T data) {
+        Node temp = new Node(data);
+        if(head == null) {
+            head = temp;
+            tail = temp;
+        } else {
+            temp.next = head;
+            head.previous = temp;
+            head = temp;
+        }
+        size++;
+    }
+
+    public boolean add(T item) {
+        addLast(item);
+        return true;
+    }
+
+    public void add(int position, T data) {
+        Node temp = new Node(data);
+        if(position > size || position < 0)
+            throw new IndexOutOfBoundsException();
+        if(position == 0) {
+            addFirst(data);
+        } else if(position == size) {
+            addLast(data);
+        }else {
+            Node current = head;
+            int currentPosition = 1;
+            while(current.next != null && currentPosition <= position) {
+                current = current.next;
+                currentPosition++;
+            }
+            temp.next = current;
+            temp.previous = current.previous;
+            current.previous.next = temp;
+            current.previous = temp;
+            size++;
+        }
+    }
+
+    public void addLast(T data) {
+        Node temp = new Node(data);
+        if (tail == null) {
+            head = temp;
+        } else {
+            tail.next = temp;
+            temp.previous = tail;
+        }
+        tail = temp;
+        size++;
+    }
+
+    @Override
+    public CustomDoublyLinkedList<T> clone() {
+
+        CustomDoublyLinkedList<T> clone = new CustomDoublyLinkedList<>();
+        for (Node x = head; x != null; x = x.next)
+            clone.add(x.data);
+        return clone;
+    }
+
+    public boolean contains(final T item) {
+        if(item == null)
+            throw new NullPointerException();
+        return indexOf(item) > -1;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        System.out.println(o.getClass());
+        if (getClass() != o.getClass())
+            return false;
+        CustomDoublyLinkedList<?> that = (CustomDoublyLinkedList<?>) o;
+        T[] firstArray = this.toArray();
+        T[] secondArray = (T[]) ((CustomDoublyLinkedList<?>) o).toArray();
+        for(int i = 0; i < firstArray.length; i++)
+            if (!firstArray[i].equals(secondArray[i]))
+                return false;
+        return size == that.size;
+    }
+
+    public int indexOf(final T item) {
+        int index = 0;
+        for (Node x = head; x != null; x = x.next, index++)
+            if (x.data == item)
+                return index;
+        return -1;
+    }
+
+    public int lastIndexOf(final T item) {
+        int foundIndex = -1;
+        int index = size - 1;
+        for (Node x = tail; x != null; x = x.previous, index--)
+            if (x.data == item)
+                return index;
+        return foundIndex;
+    }
+
+    public T removeFirst() {
+        if(size == 0)
+            throw new NoSuchElementException();
+
+        if (head == null) {
+            return null;
+        }
+
+        if (head == tail) {
+            T previous = head.data;
+            head = null;
+            tail = null;
+            size--;
+            return previous;
+        }
+        T previous = head.data;
+        Node temp = head;
+        head = head.next;
+        head.previous = null;
+        temp.next = null;
+        size--;
+        return previous;
+    }
+
+    public boolean removeFirstOccurrence(final T item) {
+        if(item == null || size == 0)
+            return false;
+        if(contains(item)) {
+            remove(indexOf(item));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeLastOccurrence(final T item) {
+        if(item == null || size == 0)
+            return false;
+        if(contains(item)) {
+            remove(lastIndexOf(item));
+            return true;
+        }
+        return false;
+    }
+
+    public T remove(int position) {
+        T result;
+        if (position >= size || position < 0)
+            throw new IndexOutOfBoundsException();
+        if (head == null) {
+            result = null;
+        } else if (position == 0) {
+            result = removeFirst();
+        } else {
+            Node current = head;
+            int count = 0;
+            while (current != null && count != position) {
+                current = current.next;
+                count++;
+            }
+            if (current == tail) {
+                result = removeLast();
+            } else {
+                assert current != null;
+                T data = current.data;
+                current.previous.next = current.next;
+                current.next.previous = current.previous;
+                current.previous = null;
+                current.next = null;
+                size--;
+                result = data;
+            }
+        }
+
+        return result;
+    }
+
+    public T removeLast() {
+        if(size == 0) {
+            throw new NoSuchElementException();
+        }
+        if (tail == null) {
+            return null;
+        }
+
+        if (head == tail) {
+            T data = head.data;
+            head = null;
+            tail = null;
+            size--;
+            return data;
+        }
+
+        Node temp = tail;
+        T data = tail.data;
+        tail = tail.previous;
+        tail.next = null;
+        temp.previous = null;
+        size--;
+        return data;
+    }
+
+    public T remove() {
+        return removeFirst();
+    }
+
+    public T remove(final T item) {
+        if(contains(item)) {
+            remove(indexOf(item));
+            return item;
+        }
+        return null;
+    }
+
+    public T element() {
+        if(size == 0)
+            throw new NoSuchElementException();
+        return head.data;
+    }
+
+    public boolean offer(final T item) {
+        return add(item);
+    }
+
+    public T poll() {
+        if(size == 0)
+            return null;
+        return removeFirst();
+    }
+
+    public boolean offerFirst(final T item) {
+        addFirst(item);
+        return head.data == item;
+    }
+
+    public boolean offerLast(final T item) {
+        addLast(item);
+        return get(size - 1).equals(item);
+    }
+
+
+    public T peekFirst() {
+        if(size == 0)
+            return null;
+        return peek();
+    }
+
+    public T peek() {
+        return head.data;
+    }
+
+    public T peekLast() {
+        if(size == 0)
+            return null;
+        else if(size == 1)
+            return head.data;
+
+        Node current = head.next;
+        while(current.next != null)
+            current = current.next;
+        return current.data;
+    }
+
+    public T pollFirst() {
+        return poll();
+    }
+
+    public T pollLast() {
+        if(size == 0)
+            return null;
+        T last = get(size - 1);
+        remove(size - 1);
+        return last;
+    }
+
+    public void push(final T item) {
+        addFirst(item);
+    }
+
+    public T pop() {
+        if(size == 0)
+            throw new NoSuchElementException();
+        return poll();
+    }
+
+    public T set(final int index, final T item) {
+        if(index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+        T previousValue;
+        if(index == 0) {
+            previousValue = head.data;
+            head.data = item;
+            return previousValue;
+        } else {
+            return updateIndex(index, item);
+        }
+    }
+
+    private T updateIndex(int index, T item) {
+        T previousValue;
+        int currentIndex = 0;
+        Node currentHead = head;
+        while(currentHead.next != null) {
+            if(currentIndex == index) {
+                previousValue = currentHead.data;
+                currentHead.data = item;
+                return previousValue;
+            }
+            currentHead = currentHead.next;
+            currentIndex++;
+        }
+        return null;
+    }
+
+    public T[] toArray() {
+        if(head != null) {
+            Object[] array = new Object[size];
+            int insertIndex = 0;
+            Node currentNode = head;
+            while(currentNode.next != null){
+                array[insertIndex++] = currentNode.data;
+                currentNode = currentNode.next;
+            }
+            array[insertIndex] = currentNode.data;
+            return (T[]) array;
+        }
+        return null;
+    }
+
+    private class Node {
+        T data;
+        Node previous = null;
+        Node next = null;
+
+        public Node(T data) {
+            this.data = data;
+
+        }
+    }
+
+    public T get(final int index) {
+        if(index >= size || index < 0)
+            throw new IndexOutOfBoundsException();
+        if(index == 0)
+            return head.data;
+        Node current = head.next;
+        if(index == size - 1)
+            while (current.next != null)
+                current = current.next;
+        else
+            for (int i = 0; i < index - 1; i++)
+                current = current.next;
+
+        return current.data;
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    public void print() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " --> ");
+            temp = temp.next;
+        }
+        System.out.println("NULL");
+    }
+}
