@@ -40,11 +40,9 @@ class CustomDoublyLinkedListTest {
     public void givenNewListOf_10_onAddLast_20_returnsSizeOf_2() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         customDoublyLinkedList.addFirst(10);
-        customDoublyLinkedList.print();
         customDoublyLinkedList.add(20);
         assertEquals(2, customDoublyLinkedList.size());
         assertEquals(20, customDoublyLinkedList.get(1));
-        customDoublyLinkedList.print();
     }
 
     @Test
@@ -60,9 +58,7 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
         assertEquals(3, customDoublyLinkedList.size());
-        customDoublyLinkedList.print();
         assertEquals(10, customDoublyLinkedList.remove());
-        customDoublyLinkedList.print();
         assertEquals(2, customDoublyLinkedList.size());
     }
 
@@ -79,9 +75,7 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
         assertEquals(3, customDoublyLinkedList.size());
-        customDoublyLinkedList.print();
         assertEquals(10, customDoublyLinkedList.removeFirst());
-        customDoublyLinkedList.print();
         assertEquals(2, customDoublyLinkedList.size());
     }
 
@@ -284,6 +278,7 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(30);
         customDoublyLinkedList.add(40);
         customDoublyLinkedList.add(3, 50);
+        customDoublyLinkedList.print();
         assertEquals(50, customDoublyLinkedList.get(3));
     }
 
