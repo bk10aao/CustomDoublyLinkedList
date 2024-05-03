@@ -50,7 +50,6 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         size++;
     }
 
-
     public boolean add(final T item) {
         addLast(item);
         return true;
@@ -149,13 +148,10 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         if (head == tail) {
             head = null;
             tail = null;
-            size--;
-            return previous;
+        } else {
+            head = head.next;
+            head.previous = null;
         }
-        Node temp = head;
-        head = head.next;
-        head.previous = null;
-        temp.next = null;
         size--;
         return previous;
     }
@@ -251,11 +247,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
             return null;
         else if(size == 1)
             return head.data;
-
-        Node current = head.next;
-        while(current.next != null)
-            current = current.next;
-        return current.data;
+        return tail.data;
     }
 
     public T poll() {
@@ -320,13 +312,10 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     private Node getNodeByIndexFromHead(final int position) {
-        Node current;
-        current = head;
+        Node current = head;
         int currentPosition = 1;
-        while (current.next != null && currentPosition <= position) {
+        while (current.next != null && currentPosition++ <= position)
             current = current.next;
-            currentPosition++;
-        }
         return current;
     }
 
@@ -334,10 +323,8 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         Node current;
         current = tail;
         int currentPosition = size - 1;
-        while(current.previous != null && currentPosition > position) {
+        while(current.previous != null && currentPosition-- > position)
             current = current.previous;
-            currentPosition--;
-        }
         return current;
     }
 
@@ -418,7 +405,6 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
 
         public Node(T data) {
             this.data = data;
-
         }
     }
 }
