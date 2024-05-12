@@ -97,7 +97,6 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        System.out.println(o.getClass());
         if (getClass() != o.getClass())
             return false;
         CustomDoublyLinkedList<?> that = (CustomDoublyLinkedList<?>) o;
@@ -131,12 +130,11 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public int lastIndexOf(final T item) {
-        int foundIndex = -1;
         int index = size - 1;
         for (Node x = tail; x != null; x = x.previous, index--)
             if (x.data == item)
                 return index;
-        return foundIndex;
+        return -1;
     }
 
     public T removeFirst() {
