@@ -11,7 +11,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
 
     public CustomDoublyLinkedList() { }
 
-    public CustomDoublyLinkedList(Collection<T> items) {
+    public CustomDoublyLinkedList(final Collection<T> items) {
         if(items == null)
             throw new NullPointerException("Null collection not supported");
         this.addAll(items);
@@ -389,7 +389,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return null;
     }
 
-    private T updateReverse(int index, T item) {
+    private T updateReverse(int index, final T item) {
         int currentIndex = size - 1;
         Node currentTail = tail;
         while (tail.previous != null) {
