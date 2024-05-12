@@ -9,6 +9,14 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
 
     private int size = 0;
 
+    public CustomDoublyLinkedList() { }
+
+    public CustomDoublyLinkedList(Collection<T> items) {
+        if(items == null)
+            throw new NullPointerException("Null collection not supported");
+        this.addAll(items);
+    }
+
     public boolean addAll(final Collection<T> collection) {
         if(collection == null)
             throw new NullPointerException();

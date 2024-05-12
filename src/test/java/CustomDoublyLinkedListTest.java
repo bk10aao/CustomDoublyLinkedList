@@ -21,6 +21,25 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
+    public void givenConstructorWithCollectionParameter_onNullCollection_throws_NullPointerException() {
+        assertThrows(NullPointerException.class, () -> new CustomDoublyLinkedList<Integer>(null));
+    }
+
+    @Test
+    public void givenConstructorWithCollectionParameter_onCollectionOf_0_1_2_3_4_containsValues_withSizeOf_5() {
+        Collection<Integer> values = new ArrayList<>();
+        for(int i = 0; i < 5; i++)
+            values.add(i);
+        CustomDoublyLinkedList<Integer> list = new CustomDoublyLinkedList<>(values);
+        assertTrue(list.contains(0));
+        assertTrue(list.contains(1));
+        assertTrue(list.contains(2));
+        assertTrue(list.contains(3));
+        assertTrue(list.contains(4));
+        assertEquals(5, list.size());
+    }
+
+    @Test
     public void givenLinkedListOfType_Integer_onAdding_1_returnsSizeOf_1() {
         CustomDoublyLinkedList<Integer> customLinkedList = new CustomDoublyLinkedList<>();
         customLinkedList.add(1);
