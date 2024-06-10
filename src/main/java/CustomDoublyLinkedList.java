@@ -88,7 +88,6 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         size++;
     }
 
-    @Override
     public CustomDoublyLinkedList<T> clone() {
         CustomDoublyLinkedList<T> clone = null;
         try {

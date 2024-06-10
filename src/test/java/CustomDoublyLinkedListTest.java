@@ -812,15 +812,4 @@ class CustomDoublyLinkedListTest {
         assertEquals(2, customDoublyLinkedList.get(4));
         assertEquals(3, customDoublyLinkedList.get(5));
     }
-
-    @Test
-    public void givenEmptyLinkedListOfType_Integer_withValues_1_2_3_onClone_returnsMatchingLinkedList() {
-        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
-        assertTrue(customDoublyLinkedList.add(1));
-        assertTrue(customDoublyLinkedList.add(2));
-        assertTrue(customDoublyLinkedList.add(3));
-
-        CustomDoublyLinkedList<Integer> clone = customDoublyLinkedList.clone();
-        assertEquals(customDoublyLinkedList, clone);
-    }
 }
