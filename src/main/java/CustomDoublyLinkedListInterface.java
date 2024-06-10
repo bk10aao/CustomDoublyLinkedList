@@ -173,6 +173,13 @@ public interface CustomDoublyLinkedListInterface<T> {
 
 
     /**
+     * remove item from start of List
+     * @return item - item at start of the list, else null.
+     */
+    T remove();
+
+
+    /**
      * Removes item from list
      * @param item - item to be removed from list
      * @return item removed if present, else null

@@ -89,7 +89,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public CustomDoublyLinkedList<T> clone() {
-        CustomDoublyLinkedList<T> clone = null;
+        CustomDoublyLinkedList<T> clone;
         try {
             clone = (CustomDoublyLinkedList<T>) super.clone();
         } catch (CloneNotSupportedException e) {
