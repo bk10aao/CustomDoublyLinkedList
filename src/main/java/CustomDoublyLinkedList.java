@@ -27,7 +27,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
 
     public boolean addAll(final int index, final Collection<T> collection) {
         if(collection == null)
-            throw new NullPointerException();
+            throw new NullPointerException("Null collection not supported");
         if(index < 0 || index > size)
             throw new IndexOutOfBoundsException();
         int startSize = size;
@@ -90,7 +90,12 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
 
     @Override
     public CustomDoublyLinkedList<T> clone() {
-        CustomDoublyLinkedList<T> clone = new CustomDoublyLinkedList<>();
+        CustomDoublyLinkedList<T> clone = null;
+        try {
+            clone = (CustomDoublyLinkedList<T>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
         for (Node x = head; x != null; x = x.next)
             clone.add(x.data);
         return clone;
@@ -373,7 +378,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return index > size / 2 ? updateReverse(index, item) : updateForward(index, item);
     }
 
-    private T updateForward(int index, final T item) {
+    private T updateForward(final int index, final T item) {
         T previousValue;
         int currentIndex = 0;
         Node currentHead = head;
@@ -389,7 +394,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return null;
     }
 
-    private T updateReverse(int index, final T item) {
+    private T updateReverse(final int index, final T item) {
         int currentIndex = size - 1;
         Node currentTail = tail;
         while (tail.previous != null) {
