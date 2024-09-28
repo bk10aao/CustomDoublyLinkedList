@@ -408,6 +408,19 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return null;
     }
 
+    @Override
+    public String toString() {
+        if(size == 0)
+            return "{ }";
+        StringBuilder stringBuilder = new StringBuilder("{ ");
+        Node temp = head;
+        while (temp != null) {
+            stringBuilder.append(temp.data).append(", ");
+            temp = temp.next;
+        }
+        return stringBuilder.replace(stringBuilder.lastIndexOf(", "), stringBuilder.length(), " }").toString();
+    }
+
     private class Node {
         private T data;
         private Node previous = null;

@@ -111,9 +111,7 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
         assertEquals(3, customDoublyLinkedList.size());
-        customDoublyLinkedList.print();
         assertEquals(30, customDoublyLinkedList.removeLast());
-        customDoublyLinkedList.print();
         assertEquals(2, customDoublyLinkedList.size());
     }
 
@@ -123,9 +121,7 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(10);
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
-        customDoublyLinkedList.print();
         customDoublyLinkedList.add(0, 100);
-        customDoublyLinkedList.print();
     }
 
     @Test
@@ -134,10 +130,8 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(10);
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
-        customDoublyLinkedList.print();
         customDoublyLinkedList.add(0, 100);
         assertEquals(100, customDoublyLinkedList.get(0));
-        customDoublyLinkedList.print();
     }
 
     @Test
@@ -146,10 +140,8 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(10);
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
-        customDoublyLinkedList.print();
         customDoublyLinkedList.add(1, 100);
         assertEquals(100, customDoublyLinkedList.get(1));
-        customDoublyLinkedList.print();
     }
 
     @Test
@@ -158,10 +150,8 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(10);
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
-        customDoublyLinkedList.print();
         customDoublyLinkedList.add(2, 100);
         assertEquals(100, customDoublyLinkedList.get(2));
-        customDoublyLinkedList.print();
     }
 
     @Test
@@ -170,11 +160,8 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(10);
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
-        customDoublyLinkedList.print();
         customDoublyLinkedList.add(3, 100);
-        customDoublyLinkedList.print();
         assertEquals(100, customDoublyLinkedList.get(3));
-        customDoublyLinkedList.print();
     }
 
     @Test
@@ -297,7 +284,6 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(30);
         customDoublyLinkedList.add(40);
         customDoublyLinkedList.add(3, 50);
-        customDoublyLinkedList.print();
         assertEquals(50, customDoublyLinkedList.get(3));
     }
 
@@ -811,5 +797,20 @@ class CustomDoublyLinkedListTest {
         assertEquals(6, customDoublyLinkedList.get(3));
         assertEquals(2, customDoublyLinkedList.get(4));
         assertEquals(3, customDoublyLinkedList.get(5));
+    }
+
+    @Test
+    public void givenLinkedListOfType_Integer_withValues_1_2_3_returnsCorrectString_on_toString() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        assertTrue(customDoublyLinkedList.add(1));
+        assertTrue(customDoublyLinkedList.add(2));
+        assertTrue(customDoublyLinkedList.add(3));
+        assertEquals("{ 1, 2, 3 }", customDoublyLinkedList.toString());
+    }
+
+    @Test
+    public void givenLinkedListOfType_Integer_withNpValues_returnsStringOf_emptyBraces_on_toString() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        assertEquals("{ }", customDoublyLinkedList.toString());
     }
 }
