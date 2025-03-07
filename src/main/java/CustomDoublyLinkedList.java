@@ -103,7 +103,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     public boolean contains(final T item) {
         if(item == null)
             throw new NullPointerException();
-        return indexOf(item) > -1;
+        return indexOf(item) != -1;
     }
 
     public T element() {
@@ -202,15 +202,6 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
 
     public void push(final T item) {
         addFirst(item);
-    }
-
-    public void print() {
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " --> ");
-            temp = temp.next;
-        }
-        System.out.println("NULL");
     }
 
     public T remove() {
