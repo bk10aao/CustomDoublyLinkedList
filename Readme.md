@@ -40,6 +40,9 @@ Custom implementation of a doubly LinkedList
 36. `T[] toArray()` - return list as array.
 37. `String toString()` - return String representation of list.
 
+# Complexities
+
+O time and space complexities and graphs are compared to standard Java Linked List and [Custom Singly Linked List](https://github.com/bk10aao/CustomLinkedList)
 
 ## Time complexity Comparisons CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
 
