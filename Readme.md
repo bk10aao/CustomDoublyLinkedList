@@ -44,7 +44,7 @@ Custom implementation of a doubly LinkedList
 
 O time and space complexities and graphs are compared to standard Java Linked List and [Custom Singly Linked List](https://github.com/bk10aao/CustomLinkedList)
 
-## Time complexity Comparisons CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
+### Time complexity Comparisons CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
 
 | Operation        | CustomLinkedList | CustomDoublyLinkedList | LinkedList (Java) |                   Winner                    |
 |------------------|:----------------:|:----------------------:|:-----------------:|:-------------------------------------------:|
@@ -72,7 +72,7 @@ O time and space complexities and graphs are compared to standard Java Linked Li
 | `push(T)`        |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
 | `pop()`          |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
 
-## Space complexity CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
+### Space complexity CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
 
 | Operation / Method |       CustomLinkedList        |    CustomDoublyLinkedList     |       LinkedList (Java)       |                   Winner                    |
 |--------------------|:-----------------------------:|:-----------------------------:|:-----------------------------:|:-------------------------------------------:|
@@ -106,11 +106,11 @@ notes:
 
 # Performance Charts
 
-## Custom Singly Linked List vs Custom Doubly Linked List vs Java LinkedList
+### Custom Singly Linked List vs Custom Doubly Linked List vs Java LinkedList
 ![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_vs_LinkedList_Performance_Comparisons.png)
 
-## Custom Singly Linked List vs Custom Doubly Linked
+### Custom Singly Linked List vs Custom Doubly Linked
 ![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_Performance_Comparisons.png)
 
-## Custom Doubly Linked
+### Custom Doubly Linked
 ![Combined Performance Charts](PerformanceTesting/CustomDoublyLinkedList_Performance_Charts.png)
