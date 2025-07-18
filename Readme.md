@@ -71,31 +71,31 @@ Custom implementation of a doubly LinkedList
 
 ## Space complexity CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
 
-| Operation / Method | CustomLinkedList              | CustomDoublyLinkedList        | LinkedList (Java)             | Winner                                      |
-|--------------------|-------------------------------|-------------------------------|-------------------------------|---------------------------------------------|
-| `add(T)`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `add(int, T)`      | O(1) for node, O(n) traversal | O(1) for node, O(n) traversal | O(1) for node, O(n) traversal | Tie                                         |
-| `addFirst(T)`      | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
-| `addLast(T)`       | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `get(int)`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `remove()`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `remove()`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `removeLast()`     | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
-| `remove(int)`      | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `contains(T)`      | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `indexOf(T)`       | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `lastIndexOf(T)`   | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `clear()`          | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `size()`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `clone()`          | O(n)                          | O(n)                          | O(n)                          | Tie                                         |
-| `toArray()`        | O(n)                          | O(n)                          | O(n)                          | Tie                                         |
-| `toString()`       | O(n)                          | O(n)                          | O(n)                          | Tie                                         |
-| `offer(T)`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `peek()`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `element()`        | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `poll()`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
-| `push(T)`          | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
-| `pop()`            | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
+| Operation / Method |       CustomLinkedList        |    CustomDoublyLinkedList     |       LinkedList (Java)       |                   Winner                    |
+|--------------------|:-----------------------------:|:-----------------------------:|:-----------------------------:|:-------------------------------------------:|
+| `add(T)`           |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `add(int, T)`      | O(1) for node, O(n) traversal | O(1) for node, O(n) traversal | O(1) for node, O(n) traversal |                     Tie                     |
+| `addFirst(T)`      |             O(n)              |             O(1)              |             O(1)              | Custom Doubly Linked List, Java Linked List |
+| `addLast(T)`       |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `get(int)`         |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `remove()`         |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `remove()`         |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `removeLast()`     |             O(n)              |             O(1)              |             O(1)              | Custom Doubly Linked List, Java Linked List |
+| `remove(int)`      |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `contains(T)`      |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `indexOf(T)`       |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `lastIndexOf(T)`   |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `clear()`          |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `size()`           |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `clone()`          |             O(n)              |             O(n)              |             O(n)              |                     Tie                     |
+| `toArray()`        |             O(n)              |             O(n)              |             O(n)              |                     Tie                     |
+| `toString()`       |             O(n)              |             O(n)              |             O(n)              |                     Tie                     |
+| `offer(T)`         |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `peek()`           |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `element()`        |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `poll()`           |             O(1)              |             O(1)              |             O(1)              |                     Tie                     |
+| `push(T)`          |             O(n)              |             O(1)              |             O(1)              | Custom Doubly Linked List, Java Linked List |
+| `pop()`            |             O(n)              |             O(1)              |             O(1)              | Custom Doubly Linked List, Java Linked List |
 
 notes:
 - *n* = Number of elements in the list.
