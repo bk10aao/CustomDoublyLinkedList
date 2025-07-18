@@ -43,53 +43,59 @@ Custom implementation of a doubly LinkedList
 
 ## Time complexity Comparisons CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
 
-| Operation                    | CustomLinkedList | CustomDoublyLinkedList | LinkedList (Java) |       Winner       |
-|------------------------------|:----------------:|:----------------------:|:-----------------:|:------------------:|
-| `add(T)` (append)            |       O(1)       |          O(1)          |       O(1)        |        Tie         |
-| `add(int, T)`                |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `addFirst(T)`                |       O(n)       |          O(1)          |       O(1)        | CustomDoubly, Java |
-| `addLast(T)`                 |       O(1)       |          O(1)          |       O(1)        |        Tie         |
-| `get(int)`                   |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `remove()` / `removeFirst()` |       O(n)       |          O(1)          |       O(1)        | CustomDoubly, Java |
-| `removeLast()`               |       O(n)       |          O(1)          |       O(1)        | CustomDoubly, Java |
-| `remove(int)`                |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `contains(T)`                |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `indexOf(T)`                 |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `lastIndexOf(T)`             |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `clear()`                    |       O(1)       |          O(1)          |       O(1)        |        Tie         |
-| `size()`                     |       O(1)       |          O(1)          |       O(1)        |        Tie         |
-| `clone()`                    |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `toArray()`                  |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `toString()`                 |       O(n)       |          O(n)          |       O(n)        |        Tie         |
-| `offer(T)`                   |       O(1)       |          O(1)          |       O(1)        |        Tie         |
-| `peek()` / `element()`       |       O(n)       |          O(1)          |       O(1)        | CustomDoubly, Java |
-| `poll()`                     |       O(n)       |          O(1)          |       O(1)        | CustomDoubly, Java |
-| `push(T)`                    |       O(n)       |          O(1)          |       O(1)        | CustomDoubly, Java |
-| `pop()`                      |       O(n)       |          O(1)          |       O(1)        | CustomDoubly, Java |
+| Operation        | CustomLinkedList | CustomDoublyLinkedList | LinkedList (Java) |                   Winner                    |
+|------------------|:----------------:|:----------------------:|:-----------------:|:-------------------------------------------:|
+| `add(T)`         |       O(1)       |          O(1)          |       O(1)        |                     Tie                     |
+| `add(int, T)`    |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `addFirst(T)`    |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `addLast(T)`     |       O(1)       |          O(1)          |       O(1)        |                     Tie                     |
+| `get(int)`       |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `remove()`  `    |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `removeFirst()`  |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `removeLast()`   |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `remove(int)`    |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `contains(T)`    |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `indexOf(T)`     |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `lastIndexOf(T)` |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `clear()`        |       O(1)       |          O(1)          |       O(1)        |                     Tie                     |
+| `size()`         |       O(1)       |          O(1)          |       O(1)        |                     Tie                     |
+| `clone()`        |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `toArray()`      |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `toString()`     |       O(n)       |          O(n)          |       O(n)        |                     Tie                     |
+| `offer(T)`       |       O(1)       |          O(1)          |       O(1)        |                     Tie                     |
+| `peek()`         |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `element()`      |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `poll()`         |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `push(T)`        |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
+| `pop()`          |       O(n)       |          O(1)          |       O(1)        | Custom Doubly Linked List, Java Linked List |
 
 ## Space complexity CustomLinkedList (singly) vs CustomDoublyLinkedList vs LinkedList
 
-| Operation / Method              | CustomLinkedList              | CustomDoublyLinkedList            | LinkedList (Java)                 | Winner             |
-|---------------------------------|-------------------------------|-----------------------------------|-----------------------------------|--------------------|
-| `add(T)` / `addLast(T)`         | O(1) extra (new node)         | O(1) extra (new node with `prev`) | O(1) extra (plus object overhead) | CustomLinkedList** |
-| `addFirst(T)`                   | O(n) (node shift simulated)   | O(1)                              | O(1)                              | CustomDoubly, Java |
-| `add(int, T)`                   | O(1) for node, O(n) traversal | Same                              | Same                              | Tie                |
-| `get(int)`                      | O(1) space                    | O(1)                              | O(1)                              | Tie                |
-| `remove()` / `removeFirst()`    | O(1)                          | O(1)                              | O(1)                              | Tie                |
-| `removeLast()`                  | O(n) (traverse to end)        | O(1)                              | O(1)                              | CustomDoubly, Java |
-| `remove(int)`                   | O(1)                          | O(1)                              | O(1)                              | Tie                |
-| `contains(T)`                   | O(1)                          | O(1)                              | O(1)                              | Tie                |
-| `indexOf(T)` / `lastIndexOf(T)` | O(1)                          | O(1)                              | O(1)                              | Tie                |
-| `clear()`                       | O(1) (drop reference)         | O(1)                              | O(1)                              | Tie                |
-| `size()`                        | O(1) (counter)                | O(1)                              | O(1)                              | Tie                |
-| `clone()`                       | O(n) (duplicate nodes)        | O(n)                              | O(n)                              | CustomLinkedList   |
-| `toArray()`                     | O(n)                          | O(n)                              | O(n)                              | Tie                |
-| `toString()`                    | O(n)                          | O(n)                              | O(n)                              | Tie                |
-| `offer(T)`                      | Same as `addLast(T)`          | Same                              | Same                              | CustomLinkedList   |
-| `peek()` / `element()`          | O(1)                          | O(1)                              | O(1)                              | Tie                |
-| `poll()`                        | O(1)                          | O(1)                              | O(1)                              | Tie                |
-| `push(T)`                       | O(n) (simulate stack head)    | O(1)                              | O(1)                              | CustomDoubly, Java |
-| `pop()`                         | O(n)                          | O(1)                              | O(1)                              | CustomDoubly, Java |
+| Operation / Method | CustomLinkedList              | CustomDoublyLinkedList        | LinkedList (Java)             | Winner                                      |
+|--------------------|-------------------------------|-------------------------------|-------------------------------|---------------------------------------------|
+| `add(T)`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `add(int, T)`      | O(1) for node, O(n) traversal | O(1) for node, O(n) traversal | O(1) for node, O(n) traversal | Tie                                         |
+| `addFirst(T)`      | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
+| `addLast(T)`       | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `get(int)`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `remove()`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `remove()`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `removeLast()`     | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
+| `remove(int)`      | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `contains(T)`      | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `indexOf(T)`       | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `lastIndexOf(T)`   | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `clear()`          | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `size()`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `clone()`          | O(n)                          | O(n)                          | O(n)                          | Tie                                         |
+| `toArray()`        | O(n)                          | O(n)                          | O(n)                          | Tie                                         |
+| `toString()`       | O(n)                          | O(n)                          | O(n)                          | Tie                                         |
+| `offer(T)`         | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `peek()`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `element()`        | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `poll()`           | O(1)                          | O(1)                          | O(1)                          | Tie                                         |
+| `push(T)`          | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
+| `pop()`            | O(n)                          | O(1)                          | O(1)                          | Custom Doubly Linked List, Java Linked List |
 
 notes:
 - *n* = Number of elements in the list.
