@@ -532,7 +532,8 @@ class CustomDoublyLinkedListTest {
     @Test
     public void givenLinkedListOfTypeInteger_withNoValues_onToArray_returns_null() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
-        assertNull(customDoublyLinkedList.toArray());
+        Integer[] arr = customDoublyLinkedList.toArray();
+        assertNull(arr);
     }
 
     @Test
