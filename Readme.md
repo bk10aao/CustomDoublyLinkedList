@@ -100,3 +100,14 @@ Custom implementation of a doubly LinkedList
 notes:
 - *n* = Number of elements in the list.
 - *m* = Number of elements in the input
+
+# Performance Charts
+
+## Custom Singly Linked List vs Custom Doubly Linked List vs Java LinkedList
+![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_vs_LinkedList_Performance_Comparisons.png)
+
+## Custom Singly Linked List vs Custom Doubly Linked
+![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_Performance_Comparisons.png)
+
+## Custom Doubly Linked
+![Combined Performance Charts](PerformanceTesting/CustomDoublyLinkedList_Performance_Charts.png)
