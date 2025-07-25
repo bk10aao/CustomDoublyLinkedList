@@ -20,7 +20,15 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public boolean add(final T item) {
-        addLast(item);
+        Node temp = new Node(item);
+        if (tail == null)
+            head = temp;
+        else {
+            tail.next = temp;
+            temp.previous = tail;
+        }
+        tail = temp;
+        size++;
         return true;
     }
 
@@ -32,11 +40,9 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         if(position == 0)
             addFirst(data);
         else if(position == size)
-            addLast(data);
-        else {
-            Node current = position > size / 2 ? getNodeByIndexFromTail(position) :  getNodeByIndexFromHead(position);
-            addToIndex(data, current);
-        }
+            add(data);
+        else
+            addToIndex(data, position > size / 2 ? getNodeByIndexFromTail(position) : getFromHead(position));
     }
 
     public boolean addAll(final Collection<T> collection) {
@@ -80,7 +86,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
             first.previous = tail;
             tail = last;
         } else {
-            Node current = index > size / 2 ? getNodeByIndexFromTail(index) : getNodeByIndexFromHead(index);
+            Node current = index > size / 2 ? getNodeByIndexFromTail(index) : getFromHead(index);
             first.previous = current.previous;
             if(current.previous != null)
                 current.previous.next = first;
@@ -105,15 +111,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public void addLast(final T data) {
-        Node temp = new Node(data);
-        if (tail == null)
-            head = temp;
-        else {
-            tail.next = temp;
-            temp.previous = tail;
-        }
-        tail = temp;
-        size++;
+        add(data);
     }
 
     @Override
@@ -158,7 +156,14 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
             return head.data;
         if(index == size - 1)
             return tail.data;
-        return (index > size / 2) ? getFromTail(index) : getFromHead(index);
+        return (index > size / 2) ? getFromTail(index) : getFromHead(index).data;
+    }
+
+    public int hashCode() {
+        int result = 1;
+        for (Node x = head; x != null; x = x.next)
+            result = 31 * result + x.data.hashCode();
+        return result;
     }
 
     public int indexOf(final T item) {
@@ -185,7 +190,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         if (item == null)
             throw new NullPointerException();
         addFirst(item);
-        return head.data == item;
+        return head.data.equals(item);
     }
 
     public boolean offerLast(final T item) {
@@ -196,7 +201,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public T peekFirst() {
-        return size != 0 ? peek() : null;
+        return peek();
     }
 
     public T peek() {
@@ -216,7 +221,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public T pollLast() {
-        return size != 0 ? remove(size - 1) : null;
+        return size != 0 ? removeLast() : null;
     }
 
     public T pop() {
@@ -244,8 +249,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
             return removeFirst();
         else if(position == size - 1)
             return removeLast();
-
-        Node current = position > size / 2 ? getNodeByIndexFromTail(position) : getNodeByIndexFromHead(position);
+        Node current = position > size / 2 ? getNodeByIndexFromTail(position) : getFromHead(position);
         return getFromIndex(current);
     }
 
@@ -265,9 +269,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public boolean removeFirstOccurrence(final T item) {
-        if(item == null || size == 0)
-            return false;
-        return contains(item) && remove(indexOf(item)) != null;
+        return item != null && size != 0 && contains(item) && remove(indexOf(item)) != null;
     }
 
     public T removeLast() {
@@ -286,9 +288,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
     }
 
     public boolean removeLastOccurrence(final T item) {
-        if(item == null || size == 0)
-            return false;
-        return contains(item) && remove(lastIndexOf(item)) != null;
+        return item != null && size != 0 && contains(item) && remove(lastIndexOf(item)) != null;
     }
 
     public T set(final int index, final T item) {
@@ -346,26 +346,6 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         size++;
     }
 
-    private T getFromHead(final int index) {
-        Node current = head.next;
-        for (int i = 0; i < index - 1; i++) {
-            if (current == null)
-                throw new IllegalStateException();
-            current = current.next;
-        }
-        return current.data;
-    }
-
-    private Node getNodeByIndexFromHead(final int position) {
-        Node current = head;
-        for(int i = 0; i < position; i++) {
-            if (current == null)
-                throw new IllegalStateException();
-            current = current.next;
-        }
-        return current;
-    }
-
     private Node getNodeByIndexFromTail(final int position) {
         Node current = tail;
         for(int i = size - 1; i > position; i--) {
@@ -387,6 +367,16 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
             tail = current.previous;
         size--;
         return data;
+    }
+
+    private Node getFromHead(final int index) {
+        Node current = head.next;
+        for (int i = 0; i < index - 1; i++) {
+            if (current == null)
+                throw new IllegalStateException();
+            current = current.next;
+        }
+        return current;
     }
 
     private T getFromTail(final int index) {
