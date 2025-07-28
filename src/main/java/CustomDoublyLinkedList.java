@@ -3,7 +3,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @SuppressWarnings("unchecked")
-public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterface<T> {
+public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterface<E> {
 
     private Node head;
     private Node tail;
@@ -12,14 +12,14 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
 
     public CustomDoublyLinkedList() { }
 
-    public CustomDoublyLinkedList(final Collection<T> items) {
+    public CustomDoublyLinkedList(final Collection<E> items) {
         if(items == null)
             throw new NullPointerException("Null collection not supported");
-        for (T item : items)
+        for (E item : items)
             addLast(item);
     }
 
-    public boolean add(final T item) {
+    public boolean add(final E item) {
         Node temp = new Node(item);
         if (tail == null)
             head = temp;
@@ -32,7 +32,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return true;
     }
 
-    public void add(final int position, final T data) {
+    public void add(final int position, final E data) {
         if (data == null)
             throw new NullPointerException();
         if(position > size || position < 0)
@@ -45,7 +45,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
             addToIndex(data, position > size / 2 ? getNodeByIndexFromTail(position) : getFromHead(position));
     }
 
-    public boolean addAll(final Collection<T> collection) {
+    public boolean addAll(final Collection<E> collection) {
         if(collection == null)
             throw new NullPointerException();
         int startSize = size;
@@ -53,7 +53,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return startSize != size;
     }
 
-    public boolean addAll(final int index, final Collection<T> collection) {
+    public boolean addAll(final int index, final Collection<E> collection) {
         if(collection == null)
             throw new NullPointerException("Null collection not supported");
         if(index < 0 || index > size)
@@ -62,10 +62,10 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
             return false;
         Node first = null;
         Node last = null;
-        for(T t : collection) {
-            if(t == null)
+        for(E e : collection) {
+            if(e == null)
                 throw new NullPointerException();
-            Node newNode = new Node(t);
+            Node newNode = new Node(e);
             if(first == null)
                 first = newNode;
             else {
@@ -97,7 +97,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return true;
     }
 
-    public void addFirst(final T data) {
+    public void addFirst(final E data) {
         Node temp = new Node(data);
         if(head == null) {
             head = temp;
@@ -110,25 +110,25 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         size++;
     }
 
-    public void addLast(final T data) {
+    public void addLast(final E data) {
         add(data);
     }
 
     @Override
-    public CustomDoublyLinkedList<T> clone() {
-        CustomDoublyLinkedList<T> clone = new CustomDoublyLinkedList<>();
+    public CustomDoublyLinkedList<E> clone() {
+        CustomDoublyLinkedList<E> clone = new CustomDoublyLinkedList<>();
         for (Node x = head; x != null; x = x.next)
             clone.add(x.data);
         return clone;
     }
 
-    public boolean contains(final T item) {
+    public boolean contains(final E item) {
         if(item == null)
             throw new NullPointerException();
         return indexOf(item) != -1;
     }
 
-    public T element() {
+    public E element() {
         if(size == 0)
             throw new NoSuchElementException();
         return head.data;
@@ -149,7 +149,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return thisNode == null && thatNode == null;
     }
 
-    public T get(final int index) {
+    public E get(final int index) {
         if(index >= size || index < 0)
             throw new IndexOutOfBoundsException();
         if(index == 0)
@@ -166,7 +166,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return result;
     }
 
-    public int indexOf(final T item) {
+    public int indexOf(final E item) {
         int index = 0;
         for (Node x = head; x != null; x = x.next, index++)
             if (Objects.equals(x.data, item))
@@ -174,7 +174,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return -1;
     }
 
-    public int lastIndexOf(final T item) {
+    public int lastIndexOf(final E item) {
         int index = size - 1;
         for (Node x = tail; x != null; x = x.previous, index--)
             if (Objects.equals(x.data, item))
@@ -182,67 +182,67 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return -1;
     }
 
-    public boolean offer(final T item) {
+    public boolean offer(final E item) {
         return add(item);
     }
 
-    public boolean offerFirst(final T item) {
+    public boolean offerFirst(final E item) {
         if (item == null)
             throw new NullPointerException();
         addFirst(item);
         return head.data.equals(item);
     }
 
-    public boolean offerLast(final T item) {
+    public boolean offerLast(final E item) {
         if (item == null)
             throw new NullPointerException();
         addLast(item);
         return tail.data.equals(item);
     }
 
-    public T peekFirst() {
+    public E peekFirst() {
         return peek();
     }
 
-    public T peek() {
+    public E peek() {
         return size == 0 ? null : head.data;
     }
 
-    public T peekLast() {
+    public E peekLast() {
         return size == 0 ? null : tail.data;
     }
 
-    public T poll() {
+    public E poll() {
         return size != 0 ? removeFirst() : null;
     }
 
-    public T pollFirst() {
+    public E pollFirst() {
         return poll();
     }
 
-    public T pollLast() {
+    public E pollLast() {
         return size != 0 ? removeLast() : null;
     }
 
-    public T pop() {
+    public E pop() {
         if(size == 0)
             throw new NoSuchElementException();
         return poll();
     }
 
-    public void push(final T item) {
+    public void push(final E item) {
         addFirst(item);
     }
 
-    public T remove() {
+    public E remove() {
         return removeFirst();
     }
 
-    public T remove(final T item) {
+    public E remove(final E item) {
         return contains(item) ? remove(indexOf(item)) : null;
     }
 
-    public T remove(final int position) {
+    public E remove(final int position) {
         if (position < 0 || position >= size)
             throw new IndexOutOfBoundsException();
         if (position == 0)
@@ -253,10 +253,10 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return getFromIndex(current);
     }
 
-    public T removeFirst() {
+    public E removeFirst() {
         if(size == 0)
             throw new NoSuchElementException();
-        T previous = head.data;
+        E previous = head.data;
         if (head == tail) {
             head = null;
             tail = null;
@@ -268,14 +268,14 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return previous;
     }
 
-    public boolean removeFirstOccurrence(final T item) {
+    public boolean removeFirstOccurrence(final E item) {
         return item != null && size != 0 && contains(item) && remove(indexOf(item)) != null;
     }
 
-    public T removeLast() {
+    public E removeLast() {
         if(size == 0)
             throw new NoSuchElementException();
-        T data = tail.data;
+        E data = tail.data;
         if (head == tail) {
             head = null;
             tail = null;
@@ -287,15 +287,15 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return data;
     }
 
-    public boolean removeLastOccurrence(final T item) {
+    public boolean removeLastOccurrence(final E item) {
         return item != null && size != 0 && contains(item) && remove(lastIndexOf(item)) != null;
     }
 
-    public T set(final int index, final T item) {
+    public E set(final int index, final E item) {
         if(index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
         if(index == 0) {
-            T previousValue = head.data;
+            E previousValue = head.data;
             head.data = item;
             return previousValue;
         } else
@@ -306,7 +306,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return this.size;
     }
 
-    public T[] toArray() {
+    public E[] toArray() {
         if(head != null) {
             Object[] array = new Object[size];
             int insertIndex = 0;
@@ -316,7 +316,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
                 currentNode = currentNode.next;
             }
             array[insertIndex] = currentNode.data;
-            return (T[]) array;
+            return (E[]) array;
         }
         return null;
     }
@@ -334,7 +334,7 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return stringBuilder.replace(stringBuilder.lastIndexOf(", "), stringBuilder.length(), " }").toString();
     }
 
-    private void addToIndex(final T data, final Node current) {
+    private void addToIndex(final E data, final Node current) {
         if (data == null)
             throw new NullPointerException();
         Node temp = new Node(data);
@@ -356,10 +356,10 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return current;
     }
 
-    private T getFromIndex(final Node current) {
+    private E getFromIndex(final Node current) {
         if (current == null)
             throw new IllegalStateException("List structure corrupted");
-        T data = current.data;
+        E data = current.data;
         current.previous.next = current.next;
         if (current.next != null)
             current.next.previous = current.previous;
@@ -379,18 +379,18 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
         return current;
     }
 
-    private T getFromTail(final int index) {
+    private E getFromTail(final int index) {
         Node currentTail = tail;
         for (int i = size - 1; i > index; i--)
             currentTail = currentTail.previous;
         return currentTail.data;
     }
 
-    private T updateIndex(final int index, final T item) {
+    private E updateIndex(final int index, final E item) {
         return index > size / 2 ? updateReverse(index, item) : updateForward(index, item);
     }
 
-    private T updateForward(final int index, final T item) {
+    private E updateForward(final int index, final E item) {
         if(item == null)
             throw new NullPointerException();
 
@@ -400,12 +400,12 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
                 throw new IllegalStateException();
             current = current.next;
         }
-        T previous = current.data;
+        E previous = current.data;
         current.data = item;
         return previous;
     }
 
-    private T updateReverse(final int index, final T item) {
+    private E updateReverse(final int index, final E item) {
         if(item == null)
             throw new NullPointerException();
         Node current = tail;
@@ -414,17 +414,17 @@ public class CustomDoublyLinkedList<T> implements CustomDoublyLinkedListInterfac
                 throw new IllegalStateException();
             current = current.previous;
         }
-        T previous = current.data;
+        E previous = current.data;
         current.data = item;
         return previous;
     }
 
     private class Node {
-        private T data;
+        private E data;
         private Node previous = null;
         private Node next = null;
 
-        public Node(T data) {
+        public Node(E data) {
             this.data = data;
         }
     }
