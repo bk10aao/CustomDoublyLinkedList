@@ -110,6 +110,11 @@ notes:
 
 ![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_vs_LinkedList_Performance_Comparisons.png)
 
+### Custom Doubly LinkedList vs LinkedList
+
+![Combined Performance Charts](PerformanceTesting/LinkedList_vs_CustomDoublyLinkedList_Comparisons.png)
+
+
 ### Custom Singly Linked List vs Custom Doubly Linked
 
 ![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_Performance_Comparisons.png)
