@@ -110,7 +110,7 @@ notes:
 
 ![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_vs_LinkedList_Performance_Comparisons.png)
 
-### Custom Doubly LinkedList vs Java Linked List
+### Custom Doubly Linked List vs Java Linked List
 
 ![Combined Performance Charts](PerformanceTesting/LinkedList_vs_CustomDoublyLinkedList_Comparisons.png)
 
