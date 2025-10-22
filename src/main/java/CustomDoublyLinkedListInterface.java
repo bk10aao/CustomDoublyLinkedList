@@ -246,7 +246,7 @@ public interface CustomDoublyLinkedListInterface<E> {
 
     /**
      * Get all values from list as array.
-     * @return all values from list as array, else null.
+     * @return all values from list as array, else empty array.
      */
     E[] toArray();
 

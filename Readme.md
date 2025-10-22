@@ -106,19 +106,76 @@ notes:
 
 # Performance Charts
 
-### Custom Singly Linked List vs Custom Doubly Linked List vs Java Linked List
-
-![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_vs_LinkedList_Performance_Comparisons.png)
-
 ### Custom Doubly Linked List vs Java Linked List
 
-![Combined Performance Charts](PerformanceTesting/LinkedList_vs_CustomDoublyLinkedList_Comparisons.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/constructor().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/constructor(Collection).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/add(int,%20T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/add(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/addAll(Collection).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/addAll(int,%20Collection).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/addFirst(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/addLast(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/clone().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/contains(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/element().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/equals().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/get(int).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/hashCode().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/indexOf(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/lastIndexOf(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/offer(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/offerFirst(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/offerLast(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/peek().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/peekFirst().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/peekLast.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/poll().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/pollFirst.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/pollLast().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/pop().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/push(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/remove(int).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/remove(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/removeFirst().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/removeFirstOccurence(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/removeLast().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/removeLastOccurence(T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/set(int,%20T).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/size().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/toArray().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/toString().png)
 
 
-### Custom Singly Linked List vs Custom Doubly Linked
 
-![Combined Performance Charts](PerformanceTesting/CustomLinkedList_vs_CustomDoublyLinkedList_Performance_Comparisons.png)
 
-### Custom Doubly Linked
 
-![Combined Performance Charts](PerformanceTesting/CustomDoublyLinkedList_Performance_Charts.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
