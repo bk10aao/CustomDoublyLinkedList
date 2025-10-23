@@ -106,10 +106,10 @@ notes:
 
 # Performance Charts
 
-### Custom Doubly Linked List vs Java Linked List
+### Custom Singly Linked List vs Custom Doubly Linked List vs Java Linked List
 
-![Combined Performance Charts](PerformanceTesting/Graphs/constructor().png)
-![Combined Performance Charts](PerformanceTesting/Graphs/constructor(Collection).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/Constructor().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/Constructor(Collection).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/add(int,%20T).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/add(T).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/addAll(Collection).png)
@@ -119,7 +119,7 @@ notes:
 ![Combined Performance Charts](PerformanceTesting/Graphs/clone().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/contains(T).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/element().png)
-![Combined Performance Charts](PerformanceTesting/Graphs/equals().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/equals(Object).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/get(int).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/hashCode().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/indexOf(T).png)
@@ -129,9 +129,9 @@ notes:
 ![Combined Performance Charts](PerformanceTesting/Graphs/offerLast(T).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/peek().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/peekFirst().png)
-![Combined Performance Charts](PerformanceTesting/Graphs/peekLast.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/peekLast().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/poll().png)
-![Combined Performance Charts](PerformanceTesting/Graphs/pollFirst.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/pollFirst().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/pollLast().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/pop().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/push(T).png)
@@ -145,8 +145,6 @@ notes:
 ![Combined Performance Charts](PerformanceTesting/Graphs/size().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/toArray().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/toString().png)
-
-
 
 
 
