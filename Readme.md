@@ -1,5 +1,5 @@
 # LinkedList
-Custom implementation of a doubly LinkedList
+Custom implementation of a doubly LinkedList. Implementation of a Singly Linked List can be found [here](https://github.com/bk10aao/CustomLinkedList).
 
 # Methods
 1. `CustomDoublyLinkedList()` - constructor.
