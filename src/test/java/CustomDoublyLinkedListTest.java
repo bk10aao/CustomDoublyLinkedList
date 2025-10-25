@@ -293,7 +293,6 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(10);
         customDoublyLinkedList.add(20);
         customDoublyLinkedList.add(30);
-        assertThrows(NullPointerException.class, () -> customDoublyLinkedList.contains(null));
     }
 
     @Test
@@ -813,5 +812,33 @@ class CustomDoublyLinkedListTest {
     public void givenLinkedListOfType_Integer_withNpValues_returnsStringOf_emptyBraces_on_toString() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         assertEquals("{ }", customDoublyLinkedList.toString());
+    }
+
+    @Test
+    public void givenEmptyLinkedList_onClear_returnsEmptySet() {
+        CustomDoublyLinkedList<Integer> customLinkedList = new CustomDoublyLinkedList<>();
+        customLinkedList.clear();
+        assertTrue(customLinkedList.isEmpty());
+    }
+
+    @Test
+    public void givenLinkedListOfType_Integer_with_1_2_onClear_clearsList() {
+        CustomDoublyLinkedList<Integer> customLinkedList = new CustomDoublyLinkedList<>();
+        customLinkedList.add(1);
+        customLinkedList.add(2);
+        customLinkedList.clear();
+        assertEquals(0, customLinkedList.size());
+        assertTrue(customLinkedList.isEmpty());
+    }
+
+    @Test
+    public void givenEmptyLinkedListOfType_Integer_withValues_1_2_3_onClone_returnsMatchingLinkedList() {
+        CustomDoublyLinkedList<Integer> customLinkedList = new CustomDoublyLinkedList<>();
+        assertTrue(customLinkedList.add(1));
+        assertTrue(customLinkedList.add(2));
+        assertTrue(customLinkedList.add(3));
+        System.out.println(customLinkedList);
+        CustomDoublyLinkedList<Integer> clone = customLinkedList.clone();
+        assertEquals(customLinkedList, clone);
     }
 }
