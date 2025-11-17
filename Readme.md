@@ -4,13 +4,9 @@ All methods implemented are of the [Java Linked List](https://docs.oracle.com/ja
 
 Implementation of a Singly Linked List can be found [here](https://github.com/bk10aao/CustomLinkedList).
 
-# Complexities
 
-O time and space complexities and graphs are compared to standard Java Linked List and [Custom Singly Linked List](https://github.com/bk10aao/CustomLinkedList)
 
-### Time complexity Comparisons CustomDoublyLinkedList vs LinkedList
-
-## Time Complexity
+### Time complexity
 
 | Method                                       | CustomDoublyLinkedList     | Java LinkedList            | Verdict |
 |----------------------------------------------|----------------------------|----------------------------|---------|
@@ -54,10 +50,8 @@ O time and space complexities and graphs are compared to standard Java Linked Li
 | `toArray()`                                  | O(n)                       | O(n)                       | Tie     |
 | `toString()`                                 | O(n)                       | O(n)                       | Tie     |
 
-**n** = current number of elements in the list  
-**m** = number of elements being added
-
 ### Space complexity
+
 | Method                                       | CustomDoublyLinkedList | Java LinkedList        | Verdict |
 |----------------------------------------------|------------------------|------------------------|---------|
 | `add(E)`                                     | O(1)                   | O(1)                   | Tie     |
@@ -104,8 +98,8 @@ O time and space complexities and graphs are compared to standard Java Linked Li
 | `toArray(T[] a)`                             | O(n)                   | O(n)                   | Tie     |
 | `toString()`                                 | O(n) temporary         | O(n) temporary         | Tie     |
 
-
-
+**n** = current number of elements in the list  
+**m** = number of elements being added
 
 # Performance Charts
 
