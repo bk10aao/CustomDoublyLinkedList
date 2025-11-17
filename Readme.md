@@ -103,7 +103,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 # Performance Charts
 
-### Custom Singly Linked List vs Custom Doubly Linked List vs Java Linked List
+### [Custom Singly Linked List](https://github.com/bk10aao/CustomLinkedList) vs Custom Doubly Linked List vs Java Linked List
 
 ![Combined Performance Charts](PerformanceTesting/Graphs/Constructor().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/Constructor(Collection).png)
