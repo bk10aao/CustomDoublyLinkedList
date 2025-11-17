@@ -2,7 +2,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -614,21 +617,21 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
-    public void givenLinkedListOfType_String_withValues_a_b_c_onRemoveObject_d_returns_null() {
+    public void givenLinkedListOfType_String_withValues_a_b_c_onRemoveObject_d_returns_false() {
         CustomDoublyLinkedList<String> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         assertTrue(customDoublyLinkedList.add("a"));
         assertTrue(customDoublyLinkedList.add("b"));
         assertTrue(customDoublyLinkedList.add("c"));
-        assertNull(customDoublyLinkedList.remove("d"));
+        assertFalse(customDoublyLinkedList.remove("d"));
     }
 
     @Test
-    public void givenLinkedListOfType_String_withValues_a_b_c_onRemoveObject_b_returns_b_andRemoveItFromList() {
+    public void givenLinkedListOfType_String_withValues_a_b_c_onRemoveObject_b_returns_true_andRemoveItFromList() {
         CustomDoublyLinkedList<String> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         assertTrue(customDoublyLinkedList.add("a"));
         assertTrue(customDoublyLinkedList.add("b"));
         assertTrue(customDoublyLinkedList.add("c"));
-        assertEquals("b", customDoublyLinkedList.remove("b"));
+        assertTrue(customDoublyLinkedList.remove("b"));
         assertEquals("a", customDoublyLinkedList.get(0));
         assertEquals("c", customDoublyLinkedList.get(1));
     }
@@ -840,5 +843,99 @@ class CustomDoublyLinkedListTest {
         System.out.println(customLinkedList);
         CustomDoublyLinkedList<Integer> clone = customLinkedList.clone();
         assertEquals(customLinkedList, clone);
+    }
+
+    @Test
+    public void givenAListOf_0_to_32_integers_onContainsAllOf_5_10_and_20_returns_true() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList<>();
+        List<Integer> collection = IntStream.of(5, 10, 20).boxed().toList();
+        IntStream.range(0, 33).forEach(customList::add);
+        assertTrue(customList.containsAll(collection));
+    }
+
+    @Test
+    public void givenAListOf_0_to_32_integers_onContainsAllOf_5_10_and_200_returns_false() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList<>();
+        List<Integer> collection = IntStream.of(5, 10, 200).boxed().toList();
+        IntStream.range(0, 33).forEach(customList::add);
+        assertFalse(customList.containsAll(collection));
+    }
+
+    @Test
+    public void givenAListOf_0_to_32_integers_onContainsAllOf_nullCollection_throws_NullPointerException() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList<>();
+        IntStream.range(0, 33).forEach(customList::add);
+        assertThrows(NullPointerException.class, () -> customList.containsAll(null));
+    }
+
+    @Test
+    public void whenGettingSubList_withFirstIndexSmallerThan_0_throws_IndexOutOfBoundsException() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customList::add);
+        assertThrows(IndexOutOfBoundsException.class, () -> customList.subList(-1, 10));
+    }
+
+    @Test
+    public void whenGettingSubList_withIndexOf_2_8_returnsCorrectSublistOf_size_8() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        IntStream.range(0, 10).mapToObj(i -> i * 10).forEach(customList::add);
+        CustomDoublyLinkedList<Integer> expected = new CustomDoublyLinkedList();
+        IntStream.range(2, 8).mapToObj(i -> i * 10).forEach(expected::add);
+        CustomDoublyLinkedList subList = customList.subList(2, 8);
+        assertEquals(subList, expected);
+    }
+
+    @Test
+    public void whenRemovingListWithOnlyNullItems_throws_NullPointerException() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        Collection<Integer> items = IntStream.range(0, 3).<Integer>mapToObj(i -> null).toList();
+        assertThrows(NullPointerException.class, () -> customList.removeAll(items));
+    }
+
+    @Test
+    public void whenRemovingListWithANullItem_throws_NullPointerException() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        Collection<Integer> items = IntStream.range(10, 12).boxed().collect(Collectors.toList());
+        items.add(null);
+        IntStream.range(10, 12).forEach(customList::add);
+        assertThrows(NullPointerException.class, () -> customList.removeAll(items));
+    }
+
+    @Test
+    public void whenRemovingNullList_throws_NullPointerException() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customList::add);
+        assertThrows(NullPointerException.class, () -> customList.removeAll(null));
+    }
+
+    @Test
+    public void whenRemovingEmptyList_returns_false() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customList::add);
+        assertFalse(customList.removeAll(new ArrayList<>()));
+    }
+
+    @Test
+    public void whenRemovingListWithThreeIntegersPresentInCollection_returns_true() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customList::add);
+        Collection<Integer> items = IntStream.range(0, 3).mapToObj(i -> i * 10).toList();
+        assertTrue(customList.removeAll(items));
+    }
+
+    @Test
+    public void whenRemovingListWithThreeIntegersPresentInCollection_and_oneNot_returns_true() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customList::add);
+        Collection<Integer> items = IntStream.range(2, 6).mapToObj(i -> i * 10).toList();
+        assertTrue(customList.removeAll(items));
+    }
+
+    @Test
+    public void whenRemovingListWithThreeIntegersPresentInCollection_withGaps_returns_true() {
+        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customList::add);
+        Collection<Integer> items = IntStream.of(0, 30, 10).boxed().toList();
+        assertTrue(customList.removeAll(items));
     }
 }

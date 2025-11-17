@@ -1,12 +1,14 @@
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
  * A custom doubly-linked list implementation that maintains elements in insertion order.
  * This list does not permit null elements in add operations and throws a {@link NullPointerException}.
- * It implements the {@link CustomDoublyLinkedListInterface} for standard list operations and supports iteration via {@link Iterable}.
+ * It implements the {@link List} interface for standard list operations and supports iteration via {@link Iterable}.
  * <p>
  * This implementation provides O(1) time complexity for operations at the head and tail (e.g.,
  * {@code addFirst}, {@code addLast}, {@code removeFirst}, {@code removeLast}) and O(n/2) average
@@ -18,7 +20,7 @@ import java.util.Objects;
  * @see <a href="https://github.com/bk10aao">GitHub Account</a>
  * @see <a href="https://github.com/bk10aao/CustomDoublyLinkedList">Repository</a>
  */
-public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterface<E> {
+public class CustomDoublyLinkedList<E> implements List<E> {
 
     private Node head;
     private Node tail;
@@ -66,6 +68,7 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      *
      * @throws NullPointerException if the element is null
      */
+    @Override
     public boolean add(final E item) {
         if(item == null)
             throw new NullPointerException();
@@ -92,6 +95,7 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      * @throws NullPointerException if the element is null
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
      */
+    @Override
     public void add(final int index, final E item) {
         if (item == null)
             throw new NullPointerException();
@@ -109,17 +113,24 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      * Appends all elements in the specified collection to the end of this list,
      * in the order they are returned by the collection's iterator.
      *
-     * @param collection the collection containing elements to be added
+     * @param values the collection containing elements to be added
      *
      * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty
      *
      * @throws NullPointerException if the collection or any element is null
      */
-    public boolean addAll(final Collection<E> collection) {
-        if(collection == null)
+    @Override
+    public boolean addAll(final Collection<? extends E> values) {
+        if(values == null)
             throw new NullPointerException();
+        if(values.isEmpty())
+            return false;
         int startSize = size;
-        collection.forEach(this::add);
+        for(E value : values) {
+            if(value == null)
+                throw new NullPointerException();
+            add(value);
+        }
         return startSize != size;
     }
 
@@ -129,24 +140,25 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      * at that position (if any) and any subsequent elements to the right.
      *
      * @param index the index at which to insert the first element from the collection
-     * @param collection the collection containing elements to be added
+     * @param c the collection containing elements to be added
      *
      * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty
      *
      * @throws NullPointerException if the collection or any element is null
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
      */
-    public boolean addAll(final int index, final Collection<E> collection) {
-        if (collection == null)
+    @Override
+    public boolean addAll(final int index, final Collection<? extends E> c) {
+        if (c == null)
             throw new NullPointerException("Null collection not supported");
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException();
-        if (collection.isEmpty())
+        if (c.isEmpty())
             return false;
         Node first = null;
         Node last = null;
         int count = 0;
-        for (E item : collection) {
+        for (E item : c) {
             if (item == null)
                 throw new NullPointerException();
             Node newNode = new Node(item);
@@ -248,12 +260,33 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      * More formally, returns {@code true} if and only if this list contains at least
      * one element {@code e} such that {@code Objects.equals(item, e)}.
      *
-     * @param item the element to search for (may be null)
+     * @param o the element to search for (may be null)
      *
      * @return {@code true} if the element is present in the list, {@code false} otherwise
      */
-    public boolean contains(final E item) {
-        return indexOf(item) != -1;
+    @Override
+    public boolean contains(final Object o) {
+        return indexOf(o) != -1;
+    }
+
+    /**
+     * Returns {@code true} if this list contains all elements in Collection.
+     *
+     * @param c collection to check for all values in CustomList
+     * @return {@code true} if this list contains all elements in collection
+     * @throws NullPointerException if the specified collection or any of its elements is null
+     */
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        if(c == null)
+            throw new NullPointerException();
+        for(Object o : c) {
+            if(o == null)
+                throw new NullPointerException();
+            if(indexOf(o) == -1)
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -347,14 +380,14 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      * Returns the index of the first occurrence of the specified element in this list,
      * or -1 if the element is not present.
      *
-     * @param item the element to search for (may be null)
+     * @param o the element to search for (may be null)
      *
      * @return the index of the first occurrence of the element, or -1 if not found
      */
-    public int indexOf(final E item) {
+    public int indexOf(final Object o) {
         int index = 0;
         for (Node x = head; x != null; x = x.next, index++)
-            if (Objects.equals(x.data, item))
+            if (Objects.equals(x.data, o))
                 return index;
         return -1;
     }
@@ -364,6 +397,7 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      *
      * @return {@code true} if the list is empty, {@code false} otherwise
      */
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
@@ -406,16 +440,39 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      * or -1 if the element is not present. Uses {@link Objects#equals(Object, Object)}
      * for comparison.
      *
-     * @param item the element to search for (may be null)
+     * @param o the element to search for (may be null)
      *
      * @return the index of the last occurrence of the element, or -1 if not found
      */
-    public int lastIndexOf(final E item) {
+    public int lastIndexOf(final Object o) {
         int index = size - 1;
         for (Node x = tail; x != null; x = x.previous, index--)
-            if (Objects.equals(x.data, item))
+            if (Objects.equals(x.data, o))
                 return index;
         return -1;
+    }
+
+    /**
+     * Returns an iterator over the elements in this list in proper sequence.
+     *
+     * @return an iterator over the elements in this list in proper sequence
+     */
+    @Override
+    public ListIterator<E> listIterator() {
+        return new CustomListIterator(0);
+    }
+
+    /**
+     * Returns an iterator over the elements in this list in proper sequence.
+     *
+     * @return an iterator over the elements in this list in proper sequence
+     * @param index the index of the start of List Iterator
+     */
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        if (index < 0 || index > size())
+            throw new IndexOutOfBoundsException();
+        return new CustomListIterator(index);
     }
 
     /**
@@ -585,15 +642,37 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
     /**
      * Removes the first occurrence of the specified element from this list, if present.
      *
-     * @param item the element to be removed (may be null)
-     *
+     * @param o the element to be removed (may be null)
      * @return the element that was removed, or {@code null} if the element was not found
      */
-    public E remove(final E item) {
+    @Override
+    public boolean remove(final Object o) {
         for(Node node = head; node != null; node = node.next)
-            if (Objects.equals(node.data, item))
-                return getFromIndex(node);
-        return null;
+            if (Objects.equals(node.data, o)) {
+                getFromIndex(node);
+                return true;
+            }
+        return false;
+    }
+
+    /**
+     * Removes from this list all elements that are contained in the specified collection.
+     *
+     * @param c collection containing elements to be removed from this list
+     * @return {@code true} if this list changed
+     * @throws NullPointerException if the specified collection or any of its elements is null
+     * @see Collection#contains(Object)
+     */
+    public boolean removeAll(Collection<?> c) {
+        if(c == null || c.contains(null))
+            throw new NullPointerException();
+        int originalSize = size;
+        for(Object o : c) {
+            int index = indexOf(o);
+            if(index > -1)
+                remove(index);
+        }
+        return originalSize != size;
     }
 
     /**
@@ -628,8 +707,10 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      */
     public boolean removeFirstOccurrence(final E item) {
         for(Node node = head; node != null; node = node.next)
-            if (Objects.equals(node.data, item))
-                return getFromIndex(node) != null;
+            if (Objects.equals(node.data, item)) {
+                getFromIndex(node);
+                return true;
+            }
         return false;
     }
 
@@ -664,9 +745,38 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      */
     public boolean removeLastOccurrence(final E item) {
         for(Node node = tail; node != null; node = node.previous)
-            if (Objects.equals(node.data, item))
-                return getFromIndex(node) != null;
+            if (Objects.equals(node.data, item)) {
+                getFromIndex(node);
+                return true;
+            }
         return false;
+    }
+
+    /**
+     * Retains only the elements in this list that are contained in the specified collection.
+     * In other words, removes from this list all of its elements that are not contained in {@code c}.
+     *
+     * @param c collection containing elements to be retained in this list
+     * @return {@code true} if this list changed as a result of the call
+     * @throws NullPointerException if {@code c} is null or contains null
+     */
+    public boolean retainAll(Collection<?> c) {
+        if(c == null || c.contains(null))
+            throw new NullPointerException();
+        CustomDoublyLinkedList<E> retained = new CustomDoublyLinkedList<>();
+        boolean changed = false;
+        for(Node node = head; node != null; node = node.next) {
+            if(c.contains(node.data))
+                retained.add(node.data);
+            else
+                changed = true;
+        }
+        if(changed) {
+            this.head = retained.head;
+            this.tail = retained.tail;
+            this.size = retained.size;
+        }
+        return changed;
     }
 
     /**
@@ -689,9 +799,9 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
             head.data = item;
             return previousValue;
         } else if(index == size - 1) {
-            E previouseValue = tail.data;
+            E previousValue = tail.data;
             tail.data = item;
-            return previouseValue;
+            return previousValue;
         }
         return updateIndex(index, item);
     }
@@ -701,8 +811,36 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      *
      * @return the number of elements in this list
      */
+    @Override
     public int size() {
         return this.size;
+    }
+
+    /**
+     * Returns a new list containing the portion of this list between the specified
+     * {@code fromIndex}, inclusive, and {@code toIndex}, exclusive. If
+     * {@code fromIndex} and {@code toIndex} are equal, the returned list is empty.
+     * Note: The returned list is a copy, not a view backed by the original.
+     *
+     * @param fromIndex index of the first element (inclusive)
+     * @param toIndex index after the last element (exclusive)
+     * @return a new list containing the specified range of elements
+     * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()},
+     * or {@code fromIndex > toIndex}
+     */
+    public CustomDoublyLinkedList<E> subList(final int fromIndex, final int toIndex) {
+        if (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
+            throw new IndexOutOfBoundsException();
+        Node current = head;
+        int currentIndex = 0;
+        for(;currentIndex < fromIndex; currentIndex++)
+            current = current.next;
+        CustomDoublyLinkedList<E> copy = new CustomDoublyLinkedList<>();
+        for(; currentIndex < toIndex; currentIndex++) {
+            copy.add(current.data);
+            current = current.next;
+        }
+        return copy;
     }
 
     /**
@@ -714,13 +852,13 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
      * @throws ArrayStoreException if the runtime type of the array elements is not
      *         compatible with the type of the elements in this list
      */
-    @SuppressWarnings("unchecked")
-    public E[] toArray() {
+    @Override
+    public Object[] toArray() {
         Object[] array = new Object[size];
         int index = 0;
         for(Node node = head; node != null; node = node.next)
             array[index++] = node.data;
-        return (E[])array;
+        return array;
     }
 
     /**
@@ -758,10 +896,12 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
         StringBuilder stringBuilder = new StringBuilder("{ ");
         Node node = head;
         while (node != null) {
-            stringBuilder.append(node.data).append(", ");
+            if(stringBuilder.length() > 2)
+                stringBuilder.append(", ");
+            stringBuilder.append(node.data);
             node = node.next;
         }
-        return stringBuilder.replace(stringBuilder.lastIndexOf(", "), stringBuilder.length(), " }").toString();
+        return stringBuilder.append(" }").toString();
     }
 
     /**
@@ -870,6 +1010,118 @@ public class CustomDoublyLinkedList<E> implements CustomDoublyLinkedListInterfac
          */
         public Node(E data) {
             this.data = data;
+        }
+    }
+
+    private class CustomListIterator implements ListIterator<E> {
+        private Node nextNode;
+        private Node lastReturned = null;
+        private int nextIndex;
+
+        CustomListIterator(int index) {
+            if (index < 0 || index > size)
+                throw new IndexOutOfBoundsException();
+            this.nextIndex = index;
+            this.nextNode = (index == size) ? null : getFromHead(index);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nextIndex < size;
+        }
+
+        @Override public E next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            lastReturned = nextNode;
+            E data = nextNode.data;
+            nextNode = nextNode.next;
+            nextIndex++;
+            return data;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return nextIndex > 0;
+        }
+
+        @Override public E previous() {
+            if (!hasPrevious())
+                throw new NoSuchElementException();
+            if (nextNode == null)
+                nextNode = tail;
+            else
+                nextNode = nextNode.previous;
+            lastReturned = nextNode;
+            nextIndex--;
+            return nextNode.data;
+        }
+
+        @Override
+        public int nextIndex() {
+            return nextIndex;
+        }
+        @Override
+        public int previousIndex() {
+            return nextIndex - 1;
+        }
+
+        @Override
+        public void remove() {
+            if (lastReturned == null)
+                throw new IllegalStateException();
+            Node prev = lastReturned.previous;
+            Node next = lastReturned.next;
+
+            if (prev != null)
+                prev.next = next;
+            else
+                head = next;
+
+            if (next != null)
+                next.previous = prev;
+            else
+                tail = prev;
+            size--;
+            if (nextNode == lastReturned)
+                nextNode = next;
+            lastReturned = null;
+        }
+
+        @Override public void set(E e) {
+            if (lastReturned == null)
+                throw new IllegalStateException();
+            if (e == null)
+                throw new NullPointerException();
+            lastReturned.data = e;
+        }
+
+        @Override
+        public void add(E e) {
+            if (e == null)
+                throw new NullPointerException();
+            Node newNode = new Node(e);
+
+            if (nextNode == null) {
+                if (tail == null)
+                    head = tail = newNode;
+                else {
+                    tail.next = newNode;
+                    newNode.previous = tail;
+                    tail = newNode;
+                }
+            } else {
+                newNode.next = nextNode;
+                newNode.previous = nextNode.previous;
+                if (nextNode.previous != null)
+                    nextNode.previous.next = newNode;
+                else
+                    head = newNode;
+                nextNode.previous = newNode;
+            }
+            size++;
+            nextIndex++;
+            lastReturned = null;
         }
     }
 }
