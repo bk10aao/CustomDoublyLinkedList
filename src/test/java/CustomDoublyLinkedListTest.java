@@ -808,13 +808,13 @@ class CustomDoublyLinkedListTest {
         assertTrue(customDoublyLinkedList.add(1));
         assertTrue(customDoublyLinkedList.add(2));
         assertTrue(customDoublyLinkedList.add(3));
-        assertEquals("{ 1, 2, 3 }", customDoublyLinkedList.toString());
+        assertEquals("[1, 2, 3]", customDoublyLinkedList.toString());
     }
 
     @Test
     public void givenLinkedListOfType_Integer_withNpValues_returnsStringOf_emptyBraces_on_toString() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
-        assertEquals("{ }", customDoublyLinkedList.toString());
+        assertEquals("[]", customDoublyLinkedList.toString());
     }
 
     @Test

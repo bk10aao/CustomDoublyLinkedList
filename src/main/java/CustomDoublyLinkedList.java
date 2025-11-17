@@ -42,11 +42,9 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws NullPointerException if the collection or any element is null
      */
     public CustomDoublyLinkedList(final Collection<E> items) {
-        if(items == null)
-            throw new NullPointerException("Null collection not supported");
+        requireNonNullCollection(items);
         for (E item : items) {
-            if (item == null)
-                throw new NullPointerException();
+            requireNonNull(item);
             Node node = new Node(item);
             if (tail == null)
                 head = node;
@@ -70,8 +68,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      */
     @Override
     public boolean add(final E item) {
-        if(item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         Node node = new Node(item);
         if (tail == null)
             head = node;
@@ -97,8 +94,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      */
     @Override
     public void add(final int index, final E item) {
-        if (item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         if(index > size || index < 0)
             throw new IndexOutOfBoundsException();
         if(index == 0)
@@ -121,14 +117,12 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      */
     @Override
     public boolean addAll(final Collection<? extends E> values) {
-        if(values == null)
-            throw new NullPointerException();
+        requireNonNullCollection(values);
         if(values.isEmpty())
             return false;
         int startSize = size;
         for(E value : values) {
-            if(value == null)
-                throw new NullPointerException();
+            requireNonNull(value);
             add(value);
         }
         return startSize != size;
@@ -149,18 +143,15 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      */
     @Override
     public boolean addAll(final int index, final Collection<? extends E> c) {
-        if (c == null)
-            throw new NullPointerException("Null collection not supported");
-        if (index < 0 || index > size)
-            throw new IndexOutOfBoundsException();
+        requireNonNullCollection(c);
+        requireInRange(index);
         if (c.isEmpty())
             return false;
         Node first = null;
         Node last = null;
         int count = 0;
         for (E item : c) {
-            if (item == null)
-                throw new NullPointerException();
+            requireNonNull(item);
             Node newNode = new Node(item);
             if (first == null)
                 first = newNode;
@@ -202,8 +193,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws NullPointerException if the element is null
      */
     public void addFirst(final E item) {
-        if (item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         Node node = new Node(item);
         if(head == null)
             head = tail = node;
@@ -248,6 +238,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws OutOfMemoryError if there is insufficient memory to create the clone
      */
     @Override
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public CustomDoublyLinkedList<E> clone() {
         CustomDoublyLinkedList<E> clone = new CustomDoublyLinkedList<>();
         for (Node x = head; x != null; x = x.next)
@@ -278,12 +269,11 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      */
     @Override
     public boolean containsAll(Collection<?> c) {
-        if(c == null)
-            throw new NullPointerException();
+        requireNonNullCollection(c);
+        if (c.contains(null))
+            throw new NullPointerException("Collection must not contain null elements");
         for(Object o : c) {
-            if(o == null)
-                throw new NullPointerException();
-            if(indexOf(o) == -1)
+            if (!contains(o))
                 return false;
         }
         return true;
@@ -348,8 +338,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      */
     public E get(final int index) {
-        if(index >= size || index < 0)
-            throw new IndexOutOfBoundsException();
+        requireInRange(index);
         if(index == 0)
             return head.data;
         if(index == size - 1)
@@ -429,7 +418,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
             public void remove() {
                 if (lastReturned == null)
                     throw new IllegalStateException();
-                CustomDoublyLinkedList.this.getFromIndex(lastReturned);
+                CustomDoublyLinkedList.this.unlink(lastReturned);
                 lastReturned = null;
             }
         };
@@ -470,8 +459,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      */
     @Override
     public ListIterator<E> listIterator(int index) {
-        if (index < 0 || index > size())
-            throw new IndexOutOfBoundsException();
+        requireInRange(index);
         return new CustomListIterator(index);
     }
 
@@ -500,8 +488,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws NullPointerException if the element is null
      */
     public boolean offerFirst(final E item) {
-        if (item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         addFirst(item);
         return true;
     }
@@ -517,8 +504,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws NullPointerException if the element is null
      */
     public boolean offerLast(final E item) {
-        if (item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         addLast(item);
         return true;
     }
@@ -629,27 +615,26 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws IllegalStateException if the list structure is inconsistent
      */
     public E remove(final int index) {
-        if (index < 0 || index >= size)
-            throw new IndexOutOfBoundsException();
+        requireInRange(index);
         if (index == 0)
             return removeFirst();
         else if(index == size - 1)
             return removeLast();
         Node node = index > size / 2 ? getNodeByIndexFromTail(index) : getFromHead(index);
-        return getFromIndex(node);
+        return unlink(node);
     }
 
     /**
      * Removes the first occurrence of the specified element from this list, if present.
      *
      * @param o the element to be removed (may be null)
-     * @return the element that was removed, or {@code null} if the element was not found
+     * @return the true if removed
      */
     @Override
     public boolean remove(final Object o) {
         for(Node node = head; node != null; node = node.next)
             if (Objects.equals(node.data, o)) {
-                getFromIndex(node);
+                unlink(node);
                 return true;
             }
         return false;
@@ -663,16 +648,19 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws NullPointerException if the specified collection or any of its elements is null
      * @see Collection#contains(Object)
      */
+    @Override
     public boolean removeAll(Collection<?> c) {
-        if(c == null || c.contains(null))
-            throw new NullPointerException();
-        int originalSize = size;
-        for(Object o : c) {
-            int index = indexOf(o);
-            if(index > -1)
-                remove(index);
+        requireNonNullCollection(c);
+        if (c.contains(null))
+            throw new NullPointerException("Collection must not contain null elements");
+
+        boolean modified = false;
+        for (Object o : c) {
+            while (remove(o)) {
+                modified = true;
+            }
         }
-        return originalSize != size;
+        return modified;
     }
 
     /**
@@ -708,7 +696,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
     public boolean removeFirstOccurrence(final E item) {
         for(Node node = head; node != null; node = node.next)
             if (Objects.equals(node.data, item)) {
-                getFromIndex(node);
+                unlink(node);
                 return true;
             }
         return false;
@@ -746,7 +734,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
     public boolean removeLastOccurrence(final E item) {
         for(Node node = tail; node != null; node = node.previous)
             if (Objects.equals(node.data, item)) {
-                getFromIndex(node);
+                unlink(node);
                 return true;
             }
         return false;
@@ -761,8 +749,9 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws NullPointerException if {@code c} is null or contains null
      */
     public boolean retainAll(Collection<?> c) {
-        if(c == null || c.contains(null))
-            throw new NullPointerException();
+        requireNonNullCollection(c);
+        if(c.contains(null))
+            throw new NullPointerException("Collection must not contain null elements");
         CustomDoublyLinkedList<E> retained = new CustomDoublyLinkedList<>();
         boolean changed = false;
         for(Node node = head; node != null; node = node.next) {
@@ -792,8 +781,8 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws IllegalStateException if the list structure is inconsistent (e.g., a node is unexpectedly null)
      */
     public E set(final int index, final E item) {
-        if(index < 0 || index >= size)
-            throw new IndexOutOfBoundsException();
+        requireInRange(index);
+        requireNonNull(item);
         if(index == 0) {
             E previousValue = head.data;
             head.data = item;
@@ -883,25 +872,24 @@ public class CustomDoublyLinkedList<E> implements List<E> {
     /**
      * Returns a string representation of this list.
      * The string representation consists of the elements of the list in order,
-     * enclosed in curly braces ({@code "{ }"}). Adjacent elements are separated
-     * by a comma and a space ({@code ", "}). If the list is empty, returns
-     * {@code "{ }"}.
-     *
+     * enclosed in square braces ({@code "[]"}). Adjacent elements are separated
+     * by a comma and a space ({@code ", "]). If the list is empty, returns
+     * {@code "[]"}.
      * @return a string representation of this list
      */
     @Override
     public String toString() {
         if(size == 0)
-            return "{ }";
-        StringBuilder stringBuilder = new StringBuilder("{ ");
+            return "[]";
+        StringBuilder stringBuilder = new StringBuilder("[");
         Node node = head;
         while (node != null) {
-            if(stringBuilder.length() > 2)
+            if(stringBuilder.length() > 1)
                 stringBuilder.append(", ");
             stringBuilder.append(node.data);
             node = node.next;
         }
-        return stringBuilder.append(" }").toString();
+        return stringBuilder.append("]").toString();
     }
 
     /**
@@ -912,8 +900,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
      * @throws NullPointerException if the item is null
      */
     private void addToIndex(final E item, final Node newNode) {
-        if (item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         Node node = new Node(item);
         node.next = newNode;
         node.previous = newNode.previous;
@@ -933,15 +920,20 @@ public class CustomDoublyLinkedList<E> implements List<E> {
         return node;
     }
 
-    private E getFromIndex(final Node node) {
+    private E unlink(final Node node) {
         if (node == null)
             throw new IllegalStateException("List structure corrupted");
         E data = node.data;
-        node.previous.next = node.next;
-        if (node.next != null)
-            node.next.previous = node.previous;
+        Node prev = node.previous;
+        Node next = node.next;
+        if (prev == null)
+            head = next;
         else
-            tail = node.previous;
+            prev.next = next;
+        if (next == null)
+            tail = prev;
+        else
+            next.previous = prev;
         size--;
         return data;
     }
@@ -963,17 +955,31 @@ public class CustomDoublyLinkedList<E> implements List<E> {
         return node.data;
     }
 
+    private void requireInRange(int index) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+    }
+
+    private void requireNonNull(E item) {
+        if(item == null)
+            throw new NullPointerException("Null elements not supported");
+    }
+
+    private void requireNonNullCollection(Collection<?> c) {
+        if(c == null)
+            throw new NullPointerException("Null collection not supported");
+    }
+
     private E updateIndex(final int index, final E item) {
         return index > size / 2 ? updateReverse(index, item) : updateForward(index, item);
     }
 
+    @SuppressWarnings("unchecked")
     private E updateForward(final int index, final E item) {
-        if(item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         Node node = head;
         for(int i = 0; i < index; i++) {
-            if(node == null)
-                throw new IllegalStateException();
+            requireNonNull((E) node);
             node = node.next;
         }
         E previous = node.data;
@@ -981,13 +987,12 @@ public class CustomDoublyLinkedList<E> implements List<E> {
         return previous;
     }
 
+    @SuppressWarnings("unchecked")
     private E updateReverse(final int index, final E item) {
-        if(item == null)
-            throw new NullPointerException();
+        requireNonNull(item);
         Node node = tail;
         for(int i = size - 1; i > index; i--) {
-            if(node == null)
-                throw new IllegalStateException();
+            requireNonNull((E) node);
             node = node.previous;
         }
         E previous = node.data;
@@ -1019,8 +1024,7 @@ public class CustomDoublyLinkedList<E> implements List<E> {
         private int nextIndex;
 
         CustomListIterator(int index) {
-            if (index < 0 || index > size)
-                throw new IndexOutOfBoundsException();
+            requireInRange(index);
             this.nextIndex = index;
             this.nextNode = (index == size) ? null : getFromHead(index);
         }
@@ -1072,7 +1076,6 @@ public class CustomDoublyLinkedList<E> implements List<E> {
                 throw new IllegalStateException();
             Node prev = lastReturned.previous;
             Node next = lastReturned.next;
-
             if (prev != null)
                 prev.next = next;
             else
@@ -1088,20 +1091,18 @@ public class CustomDoublyLinkedList<E> implements List<E> {
             lastReturned = null;
         }
 
-        @Override public void set(E e) {
+        @Override
+        public void set(E e) {
             if (lastReturned == null)
                 throw new IllegalStateException();
-            if (e == null)
-                throw new NullPointerException();
+            requireNonNull(e);
             lastReturned.data = e;
         }
 
         @Override
         public void add(E e) {
-            if (e == null)
-                throw new NullPointerException();
+            requireNonNull(e);
             Node newNode = new Node(e);
-
             if (nextNode == null) {
                 if (tail == null)
                     head = tail = newNode;

@@ -4,7 +4,9 @@ All methods implemented are of the [Java Linked List](https://docs.oracle.com/ja
 
 Implementation of a Singly Linked List can be found [here](https://github.com/bk10aao/CustomLinkedList).
 
-
+![Null-Hostile](https://img.shields.io/badge/null-hostile-red)
+![O(1) head/tail](https://img.shields.io/badge/O(1)-head%2Ftail-brightgreen)
+![JDK-Matched](https://img.shields.io/badge/performance-JDK%20matched-blue)
 
 ### Time complexity
 
@@ -180,6 +182,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/size().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/toArray().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/toString().png)
+
 
 
 
