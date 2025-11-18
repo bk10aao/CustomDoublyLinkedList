@@ -1,6 +1,6 @@
 # LinkedList
 Custom implementation of a doubly LinkedList.
-All methods implemented are of the [Java Linked List](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html) and Standard [List](https://docs.oracle.com/javase/8/docs/api/java/util/List.html) interface.
+All methods implemented are of the [Java Linked List](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html), standard [List](https://docs.oracle.com/javase/8/docs/api/java/util/List.html) and [Deque](https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html) interfaces.
 
 Implementation of a Singly Linked List can be found [here](https://github.com/bk10aao/CustomLinkedList).
 
