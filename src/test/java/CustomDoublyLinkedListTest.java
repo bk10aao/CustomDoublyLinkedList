@@ -886,22 +886,6 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
-    public void whenRemovingListWithOnlyNullItems_throws_NullPointerException() {
-        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
-        Collection<Integer> items = IntStream.range(0, 3).<Integer>mapToObj(i -> null).toList();
-        assertThrows(NullPointerException.class, () -> customList.removeAll(items));
-    }
-
-    @Test
-    public void whenRemovingListWithANullItem_throws_NullPointerException() {
-        CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
-        Collection<Integer> items = IntStream.range(10, 12).boxed().collect(Collectors.toList());
-        items.add(null);
-        IntStream.range(10, 12).forEach(customList::add);
-        assertThrows(NullPointerException.class, () -> customList.removeAll(items));
-    }
-
-    @Test
     public void whenRemovingNullList_throws_NullPointerException() {
         CustomDoublyLinkedList<Integer> customList = new CustomDoublyLinkedList();
         IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customList::add);
