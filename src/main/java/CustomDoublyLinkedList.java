@@ -1,6 +1,7 @@
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -16,19 +17,23 @@ import java.util.Spliterator;
  * This implementation provides O(1) time complexity for operations at the head and tail (e.g.,
  * {@code addFirst}, {@code addLast}, {@code removeFirst}, {@code removeLast}) and O(n/2) average
  * for indexed operations (e.g., {@code get(int)}, {@code set(int, E)}). It is not thread-safe.
+ * <strong>Note:</strong> Unlike {@link java.util.LinkedList}, this implementation
+ * does <em>not</em> permit {@code null} elements. Any attempt to insert {@code null}
+ * will result in a {@link NullPointerException}
  * <p>
+ *
  * @param <E> the type of elements maintained by this list
  * @author Benjamin Kane
  * @see <a href="https://www.linkedin.com/in/benjamin-kane-81149482/">LinkedIn Profile</a>
  * @see <a href="https://github.com/bk10aao">GitHub Account</a>
  * @see <a href="https://github.com/bk10aao/CustomDoublyLinkedList">Repository</a>
  */
-public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneable {
+public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializable, Cloneable {
 
-    private Node head;
-    private Node tail;
+    private transient Node head;
+    private transient Node tail;
 
-    private int size = 0;
+    private transient int size = 0;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -168,20 +173,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
             last = newNode;
             count++;
         }
-        if (index == 0) {
-            last.next = head;
-            if (head != null)
-                head.previous = last;
-            head = first;
-            if (size == 0)
-                tail = last;
-        } else if (index == size) {
-            tail.next = first;
-            first.previous = tail;
-            tail = last;
-        } else {
-            insertCollection(index, first, last);
-        }
+        updateList(index, first, last);
         size += count;
         return true;
     }
@@ -193,6 +185,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @throws NullPointerException if the element is null
      */
+    @Override
     public void addFirst(final E item) {
         requireNonNull(item);
         Node node = new Node(item);
@@ -214,6 +207,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @throws NullPointerException if the element is null
      */
+    @Override
     public void addLast(final E item) {
         add(item);
     }
@@ -222,6 +216,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Removes all elements from this list, setting its size to zero and
      * resetting the head and tail to {@code null}.
      */
+    @Override
     public void clear() {
         this.head = null;
         this.tail = null;
@@ -265,7 +260,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Returns {@code true} if this list contains all elements in Collection.
      *
      * @param c collection to check for all values in CustomList
+     *
      * @return {@code true} if this list contains all elements in collection
+     *
      * @throws NullPointerException if the specified collection or any of its elements is null
      */
     @Override
@@ -280,13 +277,12 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Retrieves, but does not remove, the head (first element) of this list.
      *
-     * @return the element at the head of the list
+     * @return {@code E} element at head of the list
      *
      * @throws NoSuchElementException if the list is empty
      */
     public E element() {
-        if(size == 0)
-            throw new NoSuchElementException();
+        checkNotEmpty();
         return head.data;
     }
 
@@ -303,7 +299,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * @param o the object to be compared for equality with this list
      *
      * @return {@code true} if the specified object is equal to this list,
-     *         {@code false} otherwise
      */
     @Override
     public boolean equals(final Object o) {
@@ -328,7 +323,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @param index the index of the element to return
      *
-     * @return the element at the specified index
+     * @return {@code E} element at the specified index
      *
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      */
@@ -350,7 +345,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * {@code list1.hashCode() == list2.hashCode()} for any two lists, as required
      * by the general contract of {@link Object#hashCode()}.
      *
-     * @return the hash code value for this list
+     * @return {@code int} the hash code value for this list
      */
     @Override
     public int hashCode() {
@@ -366,7 +361,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @param o the element to search for (may be null)
      *
-     * @return the index of the first occurrence of the element, or -1 if not found
+     * @return {@code int} the index of the first occurrence of the element, or -1 if not found
      */
     public int indexOf(final Object o) {
         int index = 0;
@@ -391,6 +386,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @return an {@code Iterator} over the elements in this list
      */
+    @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
 
@@ -420,14 +416,56 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     }
 
     /**
+     * Returns an iterator over the elements in this list in reverse sequential order.
+     * The elements will be returned from last (tail) to first (head).
+     * <p>
+     * The returned iterator supports {@code remove()} but not {@code add()} or {@code set()}.
+     * Calling {@code remove()} removes the last element returned by {@code next()}.
+     *
+     * @return an iterator over the elements in this list in reverse order
+     * @see java.util.Deque#descendingIterator()
+     */
+    @Override
+    public Iterator<E> descendingIterator() {
+        return new Iterator<>() {
+            private Node node = tail;
+            private Node lastReturned = null;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public E next() {
+                if (node == null)
+                    throw new NoSuchElementException();
+                lastReturned = node;
+                E data = node.data;
+                node = node.previous;
+                return data;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturned == null)
+                    throw new IllegalStateException();
+                CustomDoublyLinkedList.this.unlink(lastReturned);
+                lastReturned = null;
+            }
+        };
+    }
+
+    /**
      * Returns the index of the last occurrence of the specified element in this list,
      * or -1 if the element is not present. Uses {@link Objects#equals(Object, Object)}
      * for comparison.
      *
      * @param o the element to search for (may be null)
      *
-     * @return the index of the last occurrence of the element, or -1 if not found
+     * @return {@code int} the index of the last occurrence of the element, or -1 if not found
      */
+    @Override
     public int lastIndexOf(final Object o) {
         int index = size - 1;
         for (Node x = tail; x != null; x = x.previous, index--)
@@ -439,7 +477,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Returns an iterator over the elements in this list in proper sequence.
      *
-     * @return an iterator over the elements in this list in proper sequence
+     * @return {@code ListIterator} over the elements in this list in proper sequence
      */
     @Override
     public ListIterator<E> listIterator() {
@@ -449,8 +487,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Returns an iterator over the elements in this list in proper sequence.
      *
-     * @return an iterator over the elements in this list in proper sequence
      * @param index the index of the start of List Iterator
+     *
+     * @return {@code ListIterator} over the elements in this list in proper sequence
+     *
+     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      */
     @Override
     public ListIterator<E> listIterator(final int index) {
@@ -468,6 +509,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @throws NullPointerException if the element is null
      */
+    @Override
     public boolean offer(final E item) {
         return add(item);
     }
@@ -482,6 +524,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @throws NullPointerException if the element is null
      */
+    @Override
     public boolean offerFirst(final E item) {
         requireNonNull(item);
         addFirst(item);
@@ -498,6 +541,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @throws NullPointerException if the element is null
      */
+    @Override
     public boolean offerLast(final E item) {
         requireNonNull(item);
         addLast(item);
@@ -507,8 +551,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Retrieves, but does not remove, the head (first element) of this list.
      *
-     * @return the element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
+    @Override
     public E peek() {
         return size == 0 ? null : head.data;
     }
@@ -517,8 +562,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Retrieves, but does not remove, the head (first element) of this list.
      * This method is equivalent to {@link #peek()}.
      *
-     * @return the element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
+    @Override
     public E peekFirst() {
         return peek();
     }
@@ -526,8 +572,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Retrieves, but does not remove, the last element of this list.
      *
-     * @return the element at the end of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the end of the list, or {@code null} if the list is empty
      */
+    @Override
     public E peekLast() {
         return size == 0 ? null : tail.data;
     }
@@ -535,8 +582,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Removes and returns the head (first element) of this list.
      *
-     * @return the element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
+    @Override
     public E poll() {
         return size != 0 ? removeFirst() : null;
     }
@@ -545,8 +593,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Removes and returns the head (first element) of this list.
      * This method is equivalent to {@link #poll()}.
      *
-     * @return the element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
+    @Override
     public E pollFirst() {
         return poll();
     }
@@ -554,23 +603,50 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Removes and returns the last element of this list.
      *
-     * @return the element at the end of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the end of the list, or {@code null} if the list is empty
      */
+    @Override
     public E pollLast() {
         return size != 0 ? removeLast() : null;
+    }
+
+    /**
+     * Gets but does not remove the first element of this list.
+     *
+     * @return {@code E} element at the start of the list.
+     *
+     * @throws NoSuchElementException if this list is empty
+     */
+    @Override
+    public E getFirst() {
+        checkNotEmpty();
+        return head.data;
+    }
+
+    /**
+     * Gets but does not remove the last element of this list.
+     *
+     * @return {@code E} element at the end of the list.
+     *
+     * @throws NoSuchElementException if this list is empty
+     */
+    @Override
+    public E getLast() {
+        checkNotEmpty();
+        return tail.data;
     }
 
     /**
      * Removes and returns the head (first element) of this list.
      * This method is equivalent to {@link #poll()} but throws an exception if the list is empty.
      *
-     * @return the element at the head of the list
+     * @return {@code E} element at the head of the list
      *
      * @throws NoSuchElementException if the list is empty
      */
+    @Override
     public E pop() {
-        if(size == 0)
-            throw new NoSuchElementException();
+        checkNotEmpty();
         return poll();
     }
 
@@ -582,6 +658,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @throws NullPointerException if the element is null
      */
+    @Override
     public void push(final E item) {
         addFirst(item);
     }
@@ -590,10 +667,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Removes and returns the head (first element) of this list.
      * This method is equivalent to {@link #poll()} but throws an exception if the list is empty.
      *
-     * @return the element at the head of the list
+     * @return {@code E} element at the head of the list
      *
      * @throws NoSuchElementException if the list is empty
      */
+    @Override
     public E remove() {
         return removeFirst();
     }
@@ -604,11 +682,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @param index the index of the element to be removed
      *
-     * @return the element that was removed
+     * @return {@code E} element that was removed
      *
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
-     * @throws IllegalStateException if the list structure is inconsistent
      */
+    @Override
     public E remove(final int index) {
         requireInRange(index);
         if (index == 0)
@@ -623,6 +701,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Removes the first occurrence of the specified element from this list, if present.
      *
      * @param o the element to be removed (may be null)
+     *
      * @return {@code true} if this list contained the specified element
      */
     @Override
@@ -639,6 +718,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Removes from this list all elements that are contained in the specified collection.
      *
      * @param c collection containing elements to be removed from this list
+     *
      * @return {@code true} if this list changed
      * @see Collection#contains(Object)
      */
@@ -662,13 +742,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Removes and returns the head (first element) of this list.
      * This method is equivalent to {@link #poll()} but throws an exception if the list is empty.
      *
-     * @return the element at the head of the list
+     * @return {@code E} element at the head of the list
      *
      * @throws NoSuchElementException if the list is empty
      */
+    @Override
     public E removeFirst() {
-        if(size == 0)
-            throw new NoSuchElementException();
+        checkNotEmpty();
         E previous = head.data;
         if (head == tail) {
             head = null;
@@ -684,13 +764,14 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Removes the first occurrence of the specified element from this list, if present.
      *
-     * @param item the element to be removed (may be null)
+     * @param o the element to be removed (may be null)
      *
      * @return {@code true} if the element was found and removed, {@code false} otherwise
      */
-    public boolean removeFirstOccurrence(final E item) {
+    @Override
+    public boolean removeFirstOccurrence(final Object o) {
         for(Node node = head; node != null; node = node.next)
-            if (Objects.equals(node.data, item)) {
+            if (Objects.equals(node.data, o)) {
                 unlink(node);
                 return true;
             }
@@ -700,13 +781,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Removes and returns the last element of this list.
      *
-     * @return the element that was removed
+     * @return {@code E} the element that was removed
      *
      * @throws NoSuchElementException if the list is empty
      */
+    @Override
     public E removeLast() {
-        if(size == 0)
-            throw new NoSuchElementException();
+        checkNotEmpty();
         E data = tail.data;
         if (head == tail) {
             head = null;
@@ -722,13 +803,14 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Removes the last occurrence of the specified element from this list, if present.
      *
-     * @param item the element to be removed (may be null)
+     * @param o the element to be removed (may be null)
      *
      * @return {@code true} if the element was found and removed, {@code false} otherwise
      */
-    public boolean removeLastOccurrence(final E item) {
+    @Override
+    public boolean removeLastOccurrence(final Object o) {
         for(Node node = tail; node != null; node = node.previous)
-            if (Objects.equals(node.data, item)) {
+            if (Objects.equals(node.data, o)) {
                 unlink(node);
                 return true;
             }
@@ -740,9 +822,12 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * In other words, removes from this list all of its elements that are not contained in {@code c}.
      *
      * @param c collection containing elements to be retained in this list
+     *
      * @return {@code true} if this list changed as a result of the call
+     *
      * @throws NullPointerException if {@code c} is null or contains null
      */
+    @Override
     public boolean retainAll(final Collection<?> c) {
         requireNonNullCollection(c);
         boolean modified = false;
@@ -764,12 +849,12 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * @param index the index of the element to replace
      * @param item the new element to set at the specified index
      *
-     * @return the previous element at the specified index
+     * @return {@code E} previous element at the specified index
      *
      * @throws NullPointerException if the element is null
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
-     * @throws IllegalStateException if the list structure is inconsistent (e.g., a node is unexpectedly null)
      */
+    @Override
     public E set(final int index, final E item) {
         requireInRange(index);
         requireNonNull(item);
@@ -788,13 +873,18 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
     /**
      * Returns the number of elements in this list.
      *
-     * @return the number of elements in this list
+     * @return {@code int} the number of elements in this list
      */
     @Override
     public int size() {
         return this.size;
     }
 
+    /**
+     * Returns a {@code Spliterator} for elements over list in ordered sequence
+     *
+     * @return {@code Spliterator} for elements over list in ordered sequence
+     */
     @Override
     public Spliterator<E> spliterator() {
         return java.util.Spliterators.spliterator(this, Spliterator.ORDERED);
@@ -808,9 +898,10 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      *
      * @param fromIndex index of the first element (inclusive)
      * @param toIndex index after the last element (exclusive)
+     *
      * @return a new {@code CustomDoublyLinkedList} containing the specified range of elements
-     * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()},
-     * or {@code fromIndex > toIndex}
+     *
+     * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()} or {@code fromIndex > toIndex}
      */
     public CustomDoublyLinkedList<E> subList(final int fromIndex, final int toIndex) {
         if (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
@@ -831,10 +922,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * Returns an array containing all elements in this list in proper sequence
      * (from head to tail).
      *
-     * @return an array containing the elements of this list
-     *
-     * @throws ArrayStoreException if the runtime type of the array elements is not
-     *         compatible with the type of the elements in this list
+     * @return {@code Object[]} array containing the elements of this list
      */
     @Override
     public Object[] toArray() {
@@ -850,8 +938,10 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * using the specified array if it is large enough.
      *
      * @param a the array into which the elements are to be stored, if it is large enough
-     * @return an array containing the elements of this list
+     *
+     * @return {@code <T> T[]} array containing the elements of this list
      */
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
         if (a.length < size)
@@ -870,7 +960,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
      * enclosed in square braces ({@code "[]"}). Adjacent elements are separated
      * by a comma and a space ({@code ", "]). If the list is empty, returns
      * {@code "[]"}.
-     * @return a string representation of this list
+     *
+     * @return a {@code String}  representation of this list
      */
     @Override
     public String toString() {
@@ -887,13 +978,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
         return stringBuilder.append("]").toString();
     }
 
-    /**
-     * Inserts a new node with the specified item before the given node.
-     *
-     * @param item the element to insert
-     * @param newNode the node before which to insert the new node
-     * @throws NullPointerException if the item is null
-     */
     private void addToIndex(final E item, final Node newNode) {
         requireNonNull(item);
         Node node = new Node(item);
@@ -950,6 +1034,23 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
         return node.data;
     }
 
+    private void updateList(int index, Node first, Node last) {
+        if (index == 0) {
+            last.next = head;
+            if (head != null)
+                head.previous = last;
+            head = first;
+            if (size == 0)
+                tail = last;
+        } else if (index == size) {
+            tail.next = first;
+            first.previous = tail;
+            tail = last;
+        } else {
+            insertCollection(index, first, last);
+        }
+    }
+
     private void insertCollection(int index, Node first, Node last) {
         Node next = index > size / 2 ? getNodeByIndexFromTail(index) : getFromHead(index);
         Node previous = next.previous;
@@ -960,6 +1061,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
         else
             head = first;
         next.previous = last;
+    }
+
+    private void checkNotEmpty() {
+        if(size == 0)
+            throw new NoSuchElementException();
     }
 
     private void requireInRange(int index) {
@@ -1009,11 +1115,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Serializable, Cloneab
         private Node previous = null;
         private Node next = null;
 
-        /**
-         * Constructs a node with the specified element.
-         *
-         * @param data the element to store in this node
-         */
         public Node(E data) {
             this.data = data;
         }
