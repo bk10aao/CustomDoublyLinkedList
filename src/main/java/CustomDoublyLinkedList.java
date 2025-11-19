@@ -1,6 +1,5 @@
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.HashSet;
@@ -10,7 +9,6 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Spliterator;
 
 /**
  * A custom doubly-linked list implementation that maintains elements in insertion order.
@@ -220,8 +218,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      */
     @Override
     public void clear() {
-        this.head = null;
-        this.tail = null;
+        this.head = this.tail = null;
         size = 0;
     }
 
@@ -337,7 +334,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             return head.data;
         if(index == size - 1)
             return tail.data;
-        return (index > size / 2) ? getFromTail(index).data : getFromHead(index).data;
+        return getNodeFromIndex(index).data;
     }
 
     /**
@@ -697,7 +694,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             return removeFirst();
         else if(index == size - 1)
             return removeLast();
-        Node<E> node = index > size / 2 ? getFromTail(index) : getFromHead(index);
+        Node<E> node = getNodeFromIndex(index);
         return unlink(node);
     }
 
@@ -889,16 +886,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     /**
-     * Returns a {@code Spliterator} for elements over list in ordered sequence
-     *
-     * @return {@code Spliterator} for elements over list in ordered sequence
-     */
-    @Override
-    public Spliterator<E> spliterator() {
-        return java.util.Spliterators.spliterator(this, Spliterator.ORDERED |  Spliterator.SIZED | Spliterator.NONNULL);
-    }
-
-    /**
      * Returns a new list containing the portion of this list between the specified
      * {@code fromIndex}, inclusive, and {@code toIndex}, exclusive. If
      * {@code fromIndex} and {@code toIndex} are equal, the returned list is empty.
@@ -915,7 +902,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         if (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
             throw new IndexOutOfBoundsException();
         Node<E> startNode = getNodeFromIndex(fromIndex);
-        List<E> result = new ArrayList<>();
+        CustomDoublyLinkedList<E> result = new CustomDoublyLinkedList<>();
         Node<E> current = startNode;
         int remaining = toIndex - fromIndex;
         for (int i = 0; i < remaining && current != null; i++) {
@@ -998,7 +985,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private void addToIndex(int index, E item) {
-        Node<E> successor = index > size / 2 ? getFromTail(index) : getFromHead(index);
+        Node<E> successor = getNodeFromIndex(index);
         Node<E> predecessor = successor.previous;
         Node<E> newNode = new Node<>(item);
         newNode.previous = predecessor;
@@ -1034,11 +1021,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private Node<E> getNodeFromIndex(int fromIndex) {
-        return (fromIndex < (size / 2)) ? getFromHead(fromIndex) : getFromTail(fromIndex);
+        return (fromIndex < size >> 1) ? getFromHead(fromIndex) : getFromTail(fromIndex);
     }
 
     private void insertCollection(int index, Node<E> first, Node<E> last) {
-        Node<E> next = index > size / 2 ? getFromTail(index) : getFromHead(index);
+        Node<E> next = getNodeFromIndex(index);
         Node<E> previous = next.previous;
         first.previous = previous;
         last.next = next;
