@@ -54,7 +54,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 ### Space complexity
 
-| Method                                       | CustomDoublyLinkedList | Java LinkedList        | Verdict |
+| Method                                       | Custom                 | Java LinkedList        | Verdict |
 |----------------------------------------------|------------------------|------------------------|---------|
 | `add(E)`                                     | O(1)                   | O(1)                   | Tie     |
 | `addLast(E)`                                 | O(1)                   | O(1)                   | Tie     |
@@ -108,9 +108,9 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | Method                         | CustomDoublyLinkedList (ns) | java LinkedList (ns) | Winner | Margin                     |
 |--------------------------------|-----------------------------|----------------------|--------|----------------------------|
 | add(E)                         | 324,047                     | 326,104              | Custom | ~1% faster                 |
-| add(int, E)                    | 91,978                      | 91,354               | Tie    | <1% difference             |
+| add(int, E)                    | 91,978                      | 91,354               | Tie    | < 1% difference            |
 | addAll(Collection)             | 216,917                     | 167,416              | JDK    | ~23% faster                |
-| addAll(int, Collection)        | 303,783                     | 306,161              | Tie    | <1% difference             |
+| addAll(int, Collection)        | 303,783                     | 306,161              | Tie    | < 1% difference            |
 | addFirst(E)                    | ~54–91                      | ~57–182              | Custom | More stable                |
 | addLast(E)                     | ~42–119                     | ~43–82               | Tie    | —                          |
 | clear()                        | 27                          | 126,518              | Custom | ~5000× faster              |
@@ -118,8 +118,8 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | contains(Object)               | 147,160                     | 204,337              | Custom | ~28% faster                |
 | containsAll(Collection)        | ~98M                        | ~97M                 | Custom | ~1–5% faster               |
 | element() / peek()             | ~20–137                     | ~20–132              | Tie    | —                          |
-| equals(Object)                 | 221,228                     | 218,164              | Tie    | <2% difference             |
-| get(int)                       | 92,304                      | 88,597               | Tie    | <4% difference             |
+| equals(Object)                 | 221,228                     | 218,164              | Tie    | < 2% difference            |
+| get(int)                       | 92,304                      | 88,597               | Tie    | < 4% difference            |
 | getFirst() / peekFirst()       | ~19–122                     | ~17–109              | Tie    | —                          |
 | getLast() / peekLast()         | ~19–92                      | ~20–116              | Tie    | —                          |
 | hashCode()                     | 203,831                     | 135,869              | Custom | ~50% faster                |
@@ -129,7 +129,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | poll / pollFirst / pollLast    | ~23–114                     | ~26–297              | Custom | Faster & more stable       |
 | pop()                          | ~19–230                     | ~25–180              | Tie    | —                          |
 | push(E)                        | ~57–142                     | ~61–141              | Tie    | —                          |
-| remove(int)                    | 91,846                      | 92,145               | Tie    | <0.3% difference           |
+| remove(int)                    | 91,846                      | 92,145               | Tie    | < 0.3% difference          |
 | remove(Object)                 | 504,048                     | 724,177,529          | Custom | 143× faster                |
 | removeAll(Collection)          | ~143M                       | ~48                  | JDK    | ~3000× faster              |
 | removeFirst()                  | ~25–55                      | ~26–124              | Custom | ~30–60% faster             |
@@ -137,7 +137,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | removeLast()                   | ~24–76                      | ~28–124              | Custom | ~30–60% faster             |
 | removeLastOccurrence(Object)   | ~50–105                     | ~40–228              | Custom | Wins in average/worst case |
 | retainAll(Collection)          | ~143M                       | ~48                  | JDK    | ~3000× faster              |
-| set(int, E)                    | 92,044                      | 91,467               | Tie    | <0.6% difference           |
+| set(int, E)                    | 92,044                      | 91,467               | Tie    | < 0.6% difference          |
 | size()                         | ~20–38                      | ~25–34               | Tie    | —                          |
 | subList(int, int)              | 216,917                     | 589                  | JDK    | ~370× faster               |
 | toArray()                      | 289,345                     | 298,123              | Custom | ~3% faster                 |
