@@ -144,11 +144,6 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | toArray(T[])                   | 419,234                     | 291,876              | Custom | ~3.7% faster               |
 | toString()                     | ~1.99M                      | ~2.35M               | Custom | ~15–20% faster             |
 
-**Final Score (47 operations)**  
-**CustomDoublyLinkedList: 43**  
-**java.util.LinkedList: 4**
-
-### Custom Doubly Linked List vs Java Linked List
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(int,%20E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/addAll(Collection).png)
