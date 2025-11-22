@@ -57,7 +57,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         requireNonNullCollection(items);
         for (E item : items) {
             requireNonNull(item);
-            Node<E> node = new Node<>(item);
+            Node<E> node = new Node<>(item, tail, null);
             if (tail == null)
                 head = node;
             else {
@@ -81,14 +81,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     @Override
     public boolean add(final E item) {
         requireNonNull(item);
-        Node<E> node = new Node<>(item);
-        if (tail == null)
-            head = node;
-        else {
-            tail.next = node;
-            node.previous = tail;
-        }
-        tail = node;
+        final Node<E> newNode = new Node<>(item, tail, null);
+
+        if (tail != null)
+            tail.next = newNode;
+        else
+            head = newNode;
+        tail = newNode;
         size++;
         return true;
     }
@@ -131,12 +130,25 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         requireNonNullCollection(values);
         if(values.isEmpty())
             return false;
-        int startSize = size;
+        Node<E> first = null;
+        Node<E> last = null;
         for(E value : values) {
             requireNonNull(value);
-            add(value);
+            Node<E> node = new Node<>(value, last, null);
+            if (first == null)
+                first = node;
+            else
+                last.next = node;
+            last = node;
         }
-        return startSize != size;
+        if(tail != null) {
+            tail.next = first;
+            first.previous = tail;
+        } else
+            head = first;
+        tail = last;
+        size += values.size();
+        return true;
     }
 
     /**
@@ -163,13 +175,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         int count = 0;
         for (E item : c) {
             requireNonNull(item);
-            Node<E> newNode = new Node<>(item);
+            Node<E> newNode = new Node<>(item, last, null);
             if (first == null)
                 first = newNode;
-            else {
+            else
                 last.next = newNode;
-                newNode.previous = last;
-            }
             last = newNode;
             count++;
         }
@@ -188,14 +198,12 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     @Override
     public void addFirst(final E item) {
         requireNonNull(item);
-        Node<E> node = new Node<>(item);
-        if(head == null)
-            head = tail = node;
-        else {
-            node.next = head;
+        Node<E> node = new Node<>(item, null, head);
+        if(head != null)
             head.previous = node;
-            head = node;
-        }
+        else
+            tail = node;
+        head = node;
         size++;
     }
 
@@ -274,6 +282,47 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     /**
+     * Returns an iterator over the elements in this list in reverse sequential order.
+     * The elements will be returned from last (tail) to first (head).
+     * <p>
+     * The returned iterator supports {@code remove()} but not {@code add()} or {@code set()}.
+     * Calling {@code remove()} removes the last element returned by {@code next()}.
+     *
+     * @return an iterator over the elements in this list in reverse order
+     * @see java.util.Deque#descendingIterator()
+     */
+    @Override
+    public Iterator<E> descendingIterator() {
+        return new Iterator<>() {
+            private Node<E> node = tail;
+            private Node<E> lastReturned = null;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public E next() {
+                if (node == null)
+                    throw new NoSuchElementException();
+                lastReturned = node;
+                E data = node.data;
+                node = node.previous;
+                return data;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturned == null)
+                    throw new IllegalStateException();
+                CustomDoublyLinkedList.this.unlink(lastReturned);
+                lastReturned = null;
+            }
+        };
+    }
+
+    /**
      * Retrieves, but does not remove, the head (first element) of this list.
      *
      * @return {@code E} element at head of the list
@@ -335,6 +384,32 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         if(index == size - 1)
             return tail.data;
         return getNodeFromIndex(index).data;
+    }
+
+    /**
+     * Gets but does not remove the first element of this list.
+     *
+     * @return {@code E} element at the start of the list.
+     *
+     * @throws NoSuchElementException if this list is empty
+     */
+    @Override
+    public E getFirst() {
+        checkNotEmpty();
+        return head.data;
+    }
+
+    /**
+     * Gets but does not remove the last element of this list.
+     *
+     * @return {@code E} element at the end of the list.
+     *
+     * @throws NoSuchElementException if this list is empty
+     */
+    @Override
+    public E getLast() {
+        checkNotEmpty();
+        return tail.data;
     }
 
     /**
@@ -407,47 +482,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
                 return data;
             }
 
-            public void remove() {
-                if (lastReturned == null)
-                    throw new IllegalStateException();
-                CustomDoublyLinkedList.this.unlink(lastReturned);
-                lastReturned = null;
-            }
-        };
-    }
-
-    /**
-     * Returns an iterator over the elements in this list in reverse sequential order.
-     * The elements will be returned from last (tail) to first (head).
-     * <p>
-     * The returned iterator supports {@code remove()} but not {@code add()} or {@code set()}.
-     * Calling {@code remove()} removes the last element returned by {@code next()}.
-     *
-     * @return an iterator over the elements in this list in reverse order
-     * @see java.util.Deque#descendingIterator()
-     */
-    @Override
-    public Iterator<E> descendingIterator() {
-        return new Iterator<>() {
-            private Node<E> node = tail;
-            private Node<E> lastReturned = null;
-
-            @Override
-            public boolean hasNext() {
-                return node != null;
-            }
-
-            @Override
-            public E next() {
-                if (node == null)
-                    throw new NoSuchElementException();
-                lastReturned = node;
-                E data = node.data;
-                node = node.previous;
-                return data;
-            }
-
-            @Override
             public void remove() {
                 if (lastReturned == null)
                     throw new IllegalStateException();
@@ -609,32 +643,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     @Override
     public E pollLast() {
         return size != 0 ? removeLast() : null;
-    }
-
-    /**
-     * Gets but does not remove the first element of this list.
-     *
-     * @return {@code E} element at the start of the list.
-     *
-     * @throws NoSuchElementException if this list is empty
-     */
-    @Override
-    public E getFirst() {
-        checkNotEmpty();
-        return head.data;
-    }
-
-    /**
-     * Gets but does not remove the last element of this list.
-     *
-     * @return {@code E} element at the end of the list.
-     *
-     * @throws NoSuchElementException if this list is empty
-     */
-    @Override
-    public E getLast() {
-        checkNotEmpty();
-        return tail.data;
     }
 
     /**
@@ -898,6 +906,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()} or {@code fromIndex > toIndex}
      */
+    @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         if (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
             throw new IndexOutOfBoundsException();
@@ -976,20 +985,25 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      */
     private static class Node<E> {
         private E data;
-        private Node<E> previous = null;
-        private Node<E> next = null;
+        private Node<E> previous;
+        private Node<E> next;
 
-        public Node(E data) {
+        public Node(E data, Node<E> previous, Node<E> next) {
             this.data = data;
+            this.previous = previous;
+            this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(data);
         }
     }
 
     private void addToIndex(int index, E item) {
         Node<E> successor = getNodeFromIndex(index);
         Node<E> predecessor = successor.previous;
-        Node<E> newNode = new Node<>(item);
-        newNode.previous = predecessor;
-        newNode.next = successor;
+        Node<E> newNode = new Node<>(item, predecessor, successor);
         if (predecessor != null)
             predecessor.next = newNode;
         else
@@ -1021,14 +1035,12 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private Node<E> getNodeFromIndex(int fromIndex) {
-        return (fromIndex < size >> 1) ? getFromHead(fromIndex) : getFromTail(fromIndex);
+        return (fromIndex < (size >> 1)) ? getFromHead(fromIndex) : getFromTail(fromIndex);
     }
 
     private void insertCollection(int index, Node<E> first, Node<E> last) {
         Node<E> next = getNodeFromIndex(index);
         Node<E> previous = next.previous;
-        first.previous = previous;
-        last.next = next;
         if (previous != null)
             previous.next = first;
         else
@@ -1090,19 +1102,19 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
 
     private void updateList(int index, Node<E> first, Node<E> last) {
         if (index == 0) {
-            last.next = head;
             if (head != null)
                 head.previous = last;
+            last.next = head;
             head = first;
             if (size == 0)
                 tail = last;
         } else if (index == size) {
-            tail.next = first;
+            if(tail != null)
+                tail.next = first;
             first.previous = tail;
             tail = last;
-        } else {
+        } else
             insertCollection(index, first, last);
-        }
     }
 
     private E updateReverse(final int index, final E item) {
@@ -1199,20 +1211,17 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         @Override
         public void add(E e) {
             requireNonNull(e);
-            Node<E> newNode = new Node<>(e);
             if (nextNode == null) {
+                Node<E> newNode; newNode = new Node<>(e, tail, null);
                 if (tail == null)
                     head = tail = newNode;
-                else {
+                else
                     tail.next = newNode;
-                    newNode.previous = tail;
-                    tail = newNode;
-                }
             } else {
-                newNode.next = nextNode;
-                newNode.previous = nextNode.previous;
-                if (nextNode.previous != null)
-                    nextNode.previous.next = newNode;
+                Node<E> previous = nextNode.previous;
+                Node<E> newNode; newNode = new Node<>(e, previous, nextNode);
+                if (previous != null)
+                    previous.next = newNode;
                 else
                     head = newNode;
                 nextNode.previous = newNode;
