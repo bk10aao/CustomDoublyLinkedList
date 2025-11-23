@@ -742,7 +742,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @see Collection#contains(Object)
      */
     @Override
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(final Collection<?> c) {
         requireNonNullCollection(c);
         if (c.isEmpty())
             return false;
@@ -848,7 +848,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws NullPointerException if {@code c} is null or contains null
      */
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(final Collection<?> c) {
         requireNonNullCollection(c);
         if (c.isEmpty()) {
             boolean modified = !isEmpty();
