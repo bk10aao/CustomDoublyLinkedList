@@ -245,7 +245,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     @Override
     public boolean containsAll(final Collection<?> c) {
         requireNonNullCollection(c);
-        final Set<?> values = (c instanceof Set<?>) ? (Set<?>) c : new HashSet<>(c);
+        Set<?> values = (c instanceof Set<?> s) ? s : new HashSet<>(c);
         for(Object o : values)
             if (!contains(o))
                 return false;
@@ -816,7 +816,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             clear();
             return modified;
         }
-        Set<?> retain = (c instanceof Set<?>) ? (Set<?>) c : null;
+        Set<?> retain = (c instanceof Set<?> s) ? s : new HashSet<>(c);
         boolean modified = false;
         for (Node<E> node = head, next; node != null; node = next) {
             next = node.next;
@@ -884,18 +884,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             throw new IndexOutOfBoundsException();
         if(fromIndex == toIndex)
             return new CustomDoublyLinkedList<>();
-        if(fromIndex == 0  && toIndex == size)
-            return this;
         CustomDoublyLinkedList<E> result = new CustomDoublyLinkedList<>();
-        Node<E> startNode = getNodeFromIndex(fromIndex);
-        Node<E> endNode = getNodeFromIndex(toIndex - 1);
-        result.head = startNode;
-        result.tail = endNode;
-        result.size = toIndex - fromIndex;
-        if(startNode != null)
-            startNode.previous = null;
-        if(endNode != null)
-            endNode.next = null;
+        for (int i = fromIndex; i < toIndex; i++)
+            result.add(get(i));
         return result;
     }
 
