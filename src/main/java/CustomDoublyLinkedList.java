@@ -55,18 +55,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      */
     public CustomDoublyLinkedList(final Collection<E> items) {
         requireNonNullCollection(items);
-        for (E item : items) {
-            requireNonNull(item);
-            Node<E> node = new Node<>(item, tail, null);
-            if (tail == null)
-                head = node;
-            else {
-                tail.next = node;
-                node.previous = tail;
-            }
-            tail = node;
-            size++;
-        }
+        addAll(items);
     }
 
     /**
@@ -82,7 +71,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     public boolean add(final E item) {
         requireNonNull(item);
         final Node<E> newNode = new Node<>(item, tail, null);
-
         if (tail != null)
             tail.next = newNode;
         else
@@ -119,45 +107,25 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Appends all elements in the specified collection to the end of this list,
      * in the order they are returned by the collection's iterator.
      *
-     * @param values the collection containing elements to be added
+     * @param c the collection containing elements to be added
      *
      * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty
      *
      * @throws NullPointerException if the collection or any element is null
      */
     @Override
-    public boolean addAll(final Collection<? extends E> values) {
-        requireNonNullCollection(values);
-        if (values.isEmpty())
+    public boolean addAll(final Collection<? extends E> c) {
+        requireNonNullCollection(c);
+        if (c.isEmpty())
             return false;
 
-        if (values instanceof CustomDoublyLinkedList<?> that) {
+        if (c instanceof CustomDoublyLinkedList<?> that) {
             @SuppressWarnings("unchecked")
             CustomDoublyLinkedList<E> other = (CustomDoublyLinkedList<E>) that;
             linkAfterTail(other.head, other.tail, other.size);
             return true;
         }
-        Node<E> first = null;
-        Node<E> last = null;
-        int count = 0;
-        for (E value : values) {
-            requireNonNull(value);
-            Node<E> node = new Node<>(value, last, null);
-            if (first == null)
-                first = node;
-            else
-                last.next = node;
-            last = node;
-            count++;
-        }
-
-        if (tail != null) {
-            tail.next = first;
-            first.previous = tail;
-        } else
-            head = first;
-        tail = last;
-        size += count;
+        size += update(size, c);
         return true;
     }
 
@@ -180,21 +148,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         rangeCheckForAdd(index);
         if (c.isEmpty())
             return false;
-        Node<E> first = null;
-        Node<E> last = null;
-        int count = 0;
-        for (E item : c) {
-            requireNonNull(item);
-            Node<E> newNode = new Node<>(item, last, null);
-            if (first == null)
-                first = newNode;
-            else
-                last.next = newNode;
-            last = newNode;
-            count++;
+        if (index == size && c instanceof CustomDoublyLinkedList<?> that) {
+            @SuppressWarnings("unchecked")
+            CustomDoublyLinkedList<E> other = (CustomDoublyLinkedList<E>) that;
+            linkAfterTail(other.head, other.tail, other.size);
+            return true;
         }
-        updateList(index, first, last);
-        size += count;
+        size += update(index, c);
         return true;
     }
 
@@ -285,7 +245,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     @Override
     public boolean containsAll(final Collection<?> c) {
         requireNonNullCollection(c);
-        for(Object o : c)
+        Set<?> values = new HashSet<>(c);
+        for(Object o : values)
             if (!contains(o))
                 return false;
         return true;
@@ -1112,6 +1073,24 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             next.previous = prev;
         size--;
         return data;
+    }
+
+    private int update(int index, Collection<? extends E> c) {
+        Node<E> first = null;
+        Node<E> last = null;
+        int count = 0;
+        for (E value : c) {
+            requireNonNull(value);
+            Node<E> node = new Node<>(value, last, null);
+            if (first == null)
+                first = node;
+            else
+                last.next = node;
+            last = node;
+            count++;
+        }
+        updateList(index, first, last);
+        return count;
     }
 
     private E updateForward(final int index, final E item) {
