@@ -245,7 +245,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     @Override
     public boolean containsAll(final Collection<?> c) {
         requireNonNullCollection(c);
-        Set<?> values = new HashSet<>(c);
+        final Set<?> values = (c instanceof Set<?>) ? (Set<?>) c : new HashSet<>(c);
         for(Object o : values)
             if (!contains(o))
                 return false;
