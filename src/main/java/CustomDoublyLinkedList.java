@@ -118,7 +118,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         requireNonNullCollection(c);
         if (c.isEmpty())
             return false;
-
         if (c instanceof CustomDoublyLinkedList<?> that) {
             @SuppressWarnings("unchecked")
             CustomDoublyLinkedList<E> other = (CustomDoublyLinkedList<E>) that;
@@ -820,7 +819,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         boolean modified = false;
         for (Node<E> node = head, next; node != null; node = next) {
             next = node.next;
-            if (retain != null && !retain.contains(node.data)) {
+            if (!retain.contains(node.data)) {
                 unlink(node);
                 modified = true;
             }
