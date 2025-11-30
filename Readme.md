@@ -195,7 +195,6 @@ Note: all data is an average of 100 runs.
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/set(int,%20E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/size().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/subList(int,%20int).png)
-![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/toArray().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/toArray(T[]).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/toString().png)
 
