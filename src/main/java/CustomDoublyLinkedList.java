@@ -54,7 +54,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws NullPointerException if the collection or any element is null
      */
     public CustomDoublyLinkedList(final Collection<E> items) {
-        requireNonNullCollection(items);
+        Objects.requireNonNull(items);
         addAll(items);
     }
 
@@ -67,9 +67,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the element is null
      */
-    @Override
     public boolean add(final E item) {
-        requireNonNull(item);
+        Objects.requireNonNull(item);
         final Node<E> newNode = new Node<>(item, tail, null);
         if (tail != null)
             tail.next = newNode;
@@ -91,9 +90,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws NullPointerException if the element is null
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
      */
-    @Override
     public void add(final int index, final E item) {
-        requireNonNull(item);
+        Objects.requireNonNull(item);
         rangeCheckForAdd(index);
         if(index == 0)
             addFirst(item);
@@ -113,9 +111,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the collection or any element is null
      */
-    @Override
     public boolean addAll(final Collection<? extends E> c) {
-        requireNonNullCollection(c);
+        Objects.requireNonNull(c);
         if (c.isEmpty())
             return false;
         if (c instanceof CustomDoublyLinkedList<?> that) {
@@ -141,9 +138,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws NullPointerException if the collection or any element is null
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
      */
-    @Override
     public boolean addAll(final int index, final Collection<? extends E> c) {
-        requireNonNullCollection(c);
+        Objects.requireNonNull(c);
         rangeCheckForAdd(index);
         if (c.isEmpty())
             return false;
@@ -164,9 +160,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the element is null
      */
-    @Override
     public void addFirst(final E item) {
-        requireNonNull(item);
+        Objects.requireNonNull(item);
         Node<E> node = new Node<>(item, null, head);
         if(head != null)
             head.previous = node;
@@ -184,7 +179,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the element is null
      */
-    @Override
     public void addLast(final E item) {
         add(item);
     }
@@ -193,7 +187,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Removes all elements from this list, setting its size to zero and
      * resetting the head and tail to {@code null}.
      */
-    @Override
     public void clear() {
         this.head = this.tail = null;
         size = 0;
@@ -209,7 +202,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws OutOfMemoryError if there is insufficient memory to create the clone
      */
-    @Override
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     public CustomDoublyLinkedList<E> clone() {
         CustomDoublyLinkedList<E> clone = new CustomDoublyLinkedList<>();
@@ -227,7 +219,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if the element is present in the list, {@code false} otherwise
      */
-    @Override
     public boolean contains(final Object o) {
         return indexOf(o) != -1;
     }
@@ -241,9 +232,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the specified collection or any of its elements is null
      */
-    @Override
     public boolean containsAll(final Collection<?> c) {
-        requireNonNullCollection(c);
+        Objects.requireNonNull(c);
         Set<?> values = (c instanceof Set<?> s) ? s : new HashSet<>(c);
         for(Object o : values)
             if (!contains(o))
@@ -261,18 +251,15 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @return an iterator over the elements in this list in reverse order
      * @see java.util.Deque#descendingIterator()
      */
-    @Override
     public Iterator<E> descendingIterator() {
         return new Iterator<>() {
             private Node<E> node = tail;
             private Node<E> lastReturned = null;
 
-            @Override
             public boolean hasNext() {
                 return node != null;
             }
 
-            @Override
             public E next() {
                 if (node == null)
                     throw new NoSuchElementException();
@@ -282,7 +269,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
                 return data;
             }
 
-            @Override
             public void remove() {
                 if (lastReturned == null)
                     throw new IllegalStateException();
@@ -318,7 +304,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if the specified object is equal to this list,
      */
-    @Override
     public boolean equals(final Object o) {
         if (this == o)
             return true;
@@ -363,7 +348,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NoSuchElementException if this list is empty
      */
-    @Override
     public E getFirst() {
         checkNotEmpty();
         return head.data;
@@ -376,7 +360,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NoSuchElementException if this list is empty
      */
-    @Override
     public E getLast() {
         checkNotEmpty();
         return tail.data;
@@ -393,7 +376,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code int} the hash code value for this list
      */
-    @Override
     public int hashCode() {
         int result = 1;
         for (Node<E> x = head; x != null; x = x.next)
@@ -422,7 +404,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if the list is empty, {@code false} otherwise
      */
-    @Override
     public boolean isEmpty() {
         return size == 0;
     }
@@ -432,7 +413,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return an {@code Iterator} over the elements in this list
      */
-    @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
 
@@ -470,7 +450,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code int} the index of the last occurrence of the element, or -1 if not found
      */
-    @Override
     public int lastIndexOf(final Object o) {
         int index = size - 1;
         for (Node<E> x = tail; x != null; x = x.previous, index--)
@@ -484,7 +463,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code ListIterator} over the elements in this list in proper sequence
      */
-    @Override
     public ListIterator<E> listIterator() {
         return new CustomListIterator(0);
     }
@@ -498,7 +476,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      */
-    @Override
     public ListIterator<E> listIterator(final int index) {
         rangeCheckForAdd(index);
         return new CustomListIterator(index);
@@ -514,7 +491,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the element is null
      */
-    @Override
     public boolean offer(final E item) {
         return add(item);
     }
@@ -529,9 +505,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the element is null
      */
-    @Override
     public boolean offerFirst(final E item) {
-        requireNonNull(item);
+        Objects.requireNonNull(item);
         addFirst(item);
         return true;
     }
@@ -546,9 +521,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the element is null
      */
-    @Override
     public boolean offerLast(final E item) {
-        requireNonNull(item);
+        Objects.requireNonNull(item);
         addLast(item);
         return true;
     }
@@ -558,7 +532,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
-    @Override
     public E peek() {
         return size == 0 ? null : head.data;
     }
@@ -569,7 +542,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
-    @Override
     public E peekFirst() {
         return peek();
     }
@@ -579,7 +551,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the end of the list, or {@code null} if the list is empty
      */
-    @Override
     public E peekLast() {
         return size == 0 ? null : tail.data;
     }
@@ -589,7 +560,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
-    @Override
     public E poll() {
         return size != 0 ? removeFirst() : null;
     }
@@ -600,7 +570,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the head of the list, or {@code null} if the list is empty
      */
-    @Override
     public E pollFirst() {
         return poll();
     }
@@ -610,7 +579,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the end of the list, or {@code null} if the list is empty
      */
-    @Override
     public E pollLast() {
         return size != 0 ? removeLast() : null;
     }
@@ -623,7 +591,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NoSuchElementException if the list is empty
      */
-    @Override
     public E pop() {
         checkNotEmpty();
         return poll();
@@ -637,7 +604,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if the element is null
      */
-    @Override
     public void push(final E item) {
         addFirst(item);
     }
@@ -650,7 +616,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NoSuchElementException if the list is empty
      */
-    @Override
     public E remove() {
         return removeFirst();
     }
@@ -665,12 +630,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      */
-    @Override
     public E remove(final int index) {
         requireInRange(index);
         if (index == 0)
             return removeFirst();
-        else if(index == size - 1)
+        if(index == size - 1)
             return removeLast();
         Node<E> node = getNodeFromIndex(index);
         return unlink(node);
@@ -683,7 +647,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if this list contained the specified element
      */
-    @Override
     public boolean remove(final Object o) {
         for(Node<E> node = head; node != null; node = node.next)
             if (Objects.equals(node.data, o)) {
@@ -701,9 +664,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @return {@code true} if this list changed
      * @see Collection#contains(Object)
      */
-    @Override
     public boolean removeAll(final Collection<?> c) {
-        requireNonNullCollection(c);
+        Objects.requireNonNull(c);
         if (c.isEmpty())
             return false;
         final Set<?> remove = (c instanceof Set<?>) ? (Set<?>) c : new HashSet<>(c);
@@ -726,7 +688,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NoSuchElementException if the list is empty
      */
-    @Override
     public E removeFirst() {
         checkNotEmpty();
         E previous = head.data;
@@ -748,7 +709,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if the element was found and removed, {@code false} otherwise
      */
-    @Override
     public boolean removeFirstOccurrence(final Object o) {
         for(Node<E> node = head; node != null; node = node.next)
             if (Objects.equals(node.data, o)) {
@@ -765,7 +725,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NoSuchElementException if the list is empty
      */
-    @Override
     public E removeLast() {
         checkNotEmpty();
         E data = tail.data;
@@ -787,7 +746,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if the element was found and removed, {@code false} otherwise
      */
-    @Override
     public boolean removeLastOccurrence(final Object o) {
         for(Node<E> node = tail; node != null; node = node.previous)
             if (Objects.equals(node.data, o)) {
@@ -807,9 +765,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws NullPointerException if {@code c} is null or contains null
      */
-    @Override
     public boolean retainAll(final Collection<?> c) {
-        requireNonNullCollection(c);
+        Objects.requireNonNull(c);
         if (c.isEmpty()) {
             boolean modified = !isEmpty();
             clear();
@@ -838,10 +795,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws NullPointerException if the element is null
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      */
-    @Override
     public E set(final int index, final E item) {
         requireInRange(index);
-        requireNonNull(item);
+        Objects.requireNonNull(item);
         if(index == 0) {
             E previousValue = head.data;
             head.data = item;
@@ -859,7 +815,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code int} the number of elements in this list
      */
-    @Override
     public int size() {
         return this.size;
     }
@@ -877,7 +832,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()} or {@code fromIndex > toIndex}
      */
-    @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         if (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
             throw new IndexOutOfBoundsException();
@@ -895,7 +849,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code Object[]} array containing the elements of this list
      */
-    @Override
     public Object[] toArray() {
         Object[] array = new Object[size];
         int index = 0;
@@ -912,7 +865,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code <T> T[]} array containing the elements of this list
      */
-    @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
         if (a.length < size)
@@ -933,7 +885,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * {@code "[]"}.
      * @return a {@code String}  representation of this list
      */
-    @Override
     public String toString() {
         if(size == 0)
             return "[]";
@@ -962,7 +913,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             this.next = next;
         }
 
-        @Override
         public String toString() {
             return String.valueOf(data);
         }
@@ -1020,9 +970,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         if (tail != null) {
             tail.next = first;
             first.previous = tail;
-        } else {
+        } else
             head = first;
-        }
         tail = last;
         size += count;
     }
@@ -1035,16 +984,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     private void requireInRange(int index) {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
-    }
-
-    private void requireNonNull(E item) {
-        if(item == null)
-            throw new NullPointerException("Null elements not supported");
-    }
-
-    private void requireNonNullCollection(Collection<?> c) {
-        if(c == null)
-            throw new NullPointerException("Null collection not supported");
     }
 
     private E unlink(final Node<E> node) {
@@ -1070,7 +1009,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         Node<E> last = null;
         int count = 0;
         for (E value : c) {
-            requireNonNull(value);
+            Objects.requireNonNull(value);
             Node<E> node = new Node<>(value, last, null);
             if (first == null)
                 first = node;
@@ -1084,7 +1023,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private E updateForward(final int index, final E item) {
-        requireNonNull(item);
+        Objects.requireNonNull(item);
         Node<E> node = head;
         for(int i = 0; i < index; i++)
             node = node.next;
@@ -1105,7 +1044,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             head = first;
             if (size == 0)
                 tail = last;
-        } else if (index == size) {
+        }
+        if (index == size) {
             if(tail != null)
                 tail.next = first;
             first.previous = tail;
@@ -1115,7 +1055,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private E updateReverse(final int index, final E item) {
-        requireNonNull(item);
         Node<E> node = tail;
         for(int i = size - 1; i > index; i--)
             node = node.previous;
@@ -1135,12 +1074,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             this.nextNode = (index == size) ? null : getFromHead(index);
         }
 
-        @Override
         public boolean hasNext() {
             return nextIndex < size;
         }
 
-        @Override public E next() {
+        public E next() {
             if (!hasNext())
                 throw new NoSuchElementException();
             lastReturned = nextNode;
@@ -1150,12 +1088,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             return data;
         }
 
-        @Override
         public boolean hasPrevious() {
             return nextIndex > 0;
         }
 
-        @Override public E previous() {
+        public E previous() {
             if (!hasPrevious())
                 throw new NoSuchElementException();
             if (nextNode == null)
@@ -1167,16 +1104,14 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             return nextNode.data;
         }
 
-        @Override
         public int nextIndex() {
             return nextIndex;
         }
-        @Override
+
         public int previousIndex() {
             return nextIndex - 1;
         }
 
-        @Override
         public void remove() {
             if (lastReturned == null)
                 throw new IllegalStateException();
@@ -1197,17 +1132,15 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             lastReturned = null;
         }
 
-        @Override
         public void set(E e) {
+            Objects.requireNonNull(e);
             if (lastReturned == null)
                 throw new IllegalStateException();
-            requireNonNull(e);
             lastReturned.data = e;
         }
 
-        @Override
         public void add(E e) {
-            requireNonNull(e);
+            Objects.requireNonNull(e);
             if (nextNode == null) {
                 Node<E> newNode; newNode = new Node<>(e, tail, null);
                 if (tail == null)
