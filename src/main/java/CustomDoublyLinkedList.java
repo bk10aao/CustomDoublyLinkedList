@@ -109,18 +109,12 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty
      *
-     * @throws NullPointerException if the collection or any element is null
-     */
+     * @throws NullPointerException if the collection is null or contains a null element
+     **/
     public boolean addAll(final Collection<? extends E> c) {
         Objects.requireNonNull(c);
         if (c.isEmpty())
             return false;
-        if (c instanceof CustomDoublyLinkedList<?> that) {
-            @SuppressWarnings("unchecked")
-            CustomDoublyLinkedList<E> other = (CustomDoublyLinkedList<E>) that;
-            linkAfterTail(other.head, other.tail, other.size);
-            return true;
-        }
         size += update(size, c);
         return true;
     }
@@ -135,7 +129,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty
      *
-     * @throws NullPointerException if the collection or any element is null
+     * @throws NullPointerException if the collection is null or contains a null element
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
      */
     public boolean addAll(final int index, final Collection<? extends E> c) {
@@ -143,12 +137,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         rangeCheckForAdd(index);
         if (c.isEmpty())
             return false;
-        if (index == size && c instanceof CustomDoublyLinkedList<?> that) {
-            @SuppressWarnings("unchecked")
-            CustomDoublyLinkedList<E> other = (CustomDoublyLinkedList<E>) that;
-            linkAfterTail(other.head, other.tail, other.size);
-            return true;
-        }
         size += update(index, c);
         return true;
     }
@@ -188,7 +176,15 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * resetting the head and tail to {@code null}.
      */
     public void clear() {
-        this.head = this.tail = null;
+        Node<E> current = head;
+        while(current != null) {
+            Node<E> next = current.next;
+            current.data = null;
+            current.previous = null;
+            current.next = null;
+            current = next;
+        }
+        head = tail = null;
         size = 0;
     }
 
@@ -338,7 +334,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             return head.data;
         if(index == size - 1)
             return tail.data;
-        return getNodeFromIndex(index).data;
+        return nodeAt(index).data;
     }
 
     /**
@@ -636,7 +632,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             return removeFirst();
         if(index == size - 1)
             return removeLast();
-        Node<E> node = getNodeFromIndex(index);
+        Node<E> node = nodeAt(index);
         return unlink(node);
     }
 
@@ -660,7 +656,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Removes from this list all elements that are contained in the specified collection.
      *
      * @param c collection containing elements to be removed from this list
-     *
+     * @throws NullPointerException if {@code c} is null
      * @return {@code true} if this list changed
      * @see Collection#contains(Object)
      */
@@ -807,7 +803,10 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             tail.data = item;
             return previousValue;
         }
-        return updateIndex(index, item);
+        Node<E> node = nodeAt(index);
+        E previous = node.data;
+        node.data = item;
+        return previous;
     }
 
     /**
@@ -919,7 +918,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private void addToIndex(int index, E item) {
-        Node<E> successor = getNodeFromIndex(index);
+        Node<E> successor = nodeAt(index);
         Node<E> predecessor = successor.previous;
         Node<E> newNode = new Node<>(item, predecessor, successor);
         if (predecessor != null)
@@ -935,47 +934,23 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             throw new NoSuchElementException();
     }
 
-    private Node<E> getFromHead(final int index) {
-        Node<E> node = head;
-        for (int i = 0; i < index; i++) {
-            if (node == null)
-                throw new IllegalStateException();
-            node = node.next;
-        }
-        return node;
-    }
-
-    private Node<E> getFromTail(final int index) {
-        Node<E> node = tail;
-        for (int i = size - 1; i > index; i--)
-            node = node.previous;
-        return node;
-    }
-
-    private Node<E> getNodeFromIndex(int fromIndex) {
-        return (fromIndex < (size >> 1)) ? getFromHead(fromIndex) : getFromTail(fromIndex);
-    }
-
     private void insertCollection(int index, Node<E> first, Node<E> last) {
-        Node<E> next = getNodeFromIndex(index);
-        Node<E> previous = next.previous;
-        if (previous != null)
-            previous.next = first;
+        Node<E> succ = nodeAt(index);
+        Node<E> pred = succ.previous;
+        if (pred != null)
+            pred.next = first;
         else
             head = first;
-        next.previous = last;
+        last.next = succ;
+        succ.previous = last;
     }
 
-    private void linkAfterTail(Node<E> first, Node<E> last, int count) {
-        if (tail != null) {
-            tail.next = first;
-            first.previous = tail;
-        } else
-            head = first;
-        tail = last;
-        size += count;
-    }
-
+    /**
+     * Checks if index is in range
+     *
+     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
+     * @param index - index to range check
+     */
     private void rangeCheckForAdd(int index) {
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -1001,6 +976,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         else
             next.previous = prev;
         size--;
+        node.data = null;
+        node.previous = null;
+        node.next = null;
         return data;
     }
 
@@ -1022,45 +1000,38 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         return count;
     }
 
-    private E updateForward(final int index, final E item) {
-        Objects.requireNonNull(item);
-        Node<E> node = head;
-        for(int i = 0; i < index; i++)
-            node = node.next;
-        E previous = node.data;
-        node.data = item;
-        return previous;
-    }
-
-    private E updateIndex(final int index, final E item) {
-        return index > size / 2 ? updateReverse(index, item) : updateForward(index, item);
+    private Node<E> nodeAt(int index) {
+        requireInRange(index);
+        Node<E> node;
+        if (index <= (size >> 1)) {
+            node = head;
+            for(int i = 0; i < index; i++)
+                node = node.next;
+        } else {
+            node = tail;
+            for(int i = size - 1; i > index; i--)
+                node = node.previous;
+        }
+        return node;
     }
 
     private void updateList(int index, Node<E> first, Node<E> last) {
         if (index == 0) {
             if (head != null)
                 head.previous = last;
+            else
+                tail = last;
             last.next = head;
             head = first;
-            if (size == 0)
-                tail = last;
-        }
-        if (index == size) {
-            if(tail != null)
+        } else if (index == size) {
+            if(tail != null) {
                 tail.next = first;
-            first.previous = tail;
+                first.previous = tail;
+            } else
+                head = first;
             tail = last;
         } else
             insertCollection(index, first, last);
-    }
-
-    private E updateReverse(final int index, final E item) {
-        Node<E> node = tail;
-        for(int i = size - 1; i > index; i--)
-            node = node.previous;
-        E previous = node.data;
-        node.data = item;
-        return previous;
     }
 
     private class CustomListIterator implements ListIterator<E> {
@@ -1071,7 +1042,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         CustomListIterator(int index) {
             rangeCheckForAdd(index);
             this.nextIndex = index;
-            this.nextNode = (index == size) ? null : getFromHead(index);
+            this.nextNode = (index == size) ? null : nodeAt(index);
         }
 
         public boolean hasNext() {
