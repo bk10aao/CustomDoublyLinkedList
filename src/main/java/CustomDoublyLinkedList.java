@@ -832,13 +832,21 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()} or {@code fromIndex > toIndex}
      */
     public List<E> subList(final int fromIndex, final int toIndex) {
-        if (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
-            throw new IndexOutOfBoundsException();
-        if(fromIndex == toIndex)
+        if (fromIndex < 0 || toIndex > size || fromIndex > toIndex) {
+            throw new IndexOutOfBoundsException(
+                    "fromIndex=" + fromIndex + ", toIndex=" + toIndex + ", size=" + size);
+        }
+        if (fromIndex == toIndex) {
             return new CustomDoublyLinkedList<>();
+        }
+        Node<E> current = nodeAt(fromIndex);
         CustomDoublyLinkedList<E> result = new CustomDoublyLinkedList<>();
-        for (int i = fromIndex; i < toIndex; i++)
-            result.add(get(i));
+        int count = toIndex - fromIndex;
+        for (int i = 0; i < count; i++) {
+            result.addLast(current.data);  // or result.add(current.data)
+            current = current.next;
+        }
+
         return result;
     }
 

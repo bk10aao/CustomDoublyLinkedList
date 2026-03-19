@@ -107,53 +107,54 @@ Below performance is a comparison made at 100,000 operations per method.
 
 Note: all data is an average of 100 runs.
 
-| Method                                     | Custom (ns) | java LinkedList (ns) | Winner     | Margin |
-|--------------------------------------------|-------------|----------------------|------------|--------|
-| add(E)                                     | 386084      | 326104               | LinkedList | 1.18×  |
-| add(int index, E)                          | 92195       | 91354                | LinkedList | 1.01×  |
-| addAll(Collection<? extends E>)            | 224323      | 167416               | LinkedList | 1.34×  |
-| addAll(int index, Collection<? extends E>) | 307855      | 306161               | LinkedList | 1.01×  |
-| addFirst(E)                                | 58          | 58                   | Tie        | 1.00×  |
-| addLast(E)                                 | 47          | 82                   | Custom     | 1.74×  |
-| clear()                                    | 26          | 126518               | Custom     | 4866×  |
-| clone()                                    | 214191      | 253823               | Custom     | 1.19×  |
-| contains(Object)                           | 139915      | 204337               | Custom     | 1.46×  |
-| containsAll(Collection<? extends E>)       | 101664761   | 97712046             | LinkedList | 1.04×  |
-| element()                                  | 41          | 35                   | LinkedList | ~1.17× |
-| equals(Object)                             | 236044      | 218164               | LinkedList | 1.08×  |
-| get(int)                                   | 92107       | 88597                | LinkedList | 1.04×  |
-| getFirst()                                 | 21          | 35                   | Custom     | 1.67×  |
-| getLast()                                  | 24          | 35                   | Custom     | 1.46×  |
-| hashCode()                                 | 210055      | 135869               | LinkedList | 1.55×  |
-| indexOf(Object)                            | 210055      | 135869               | LinkedList | 1.55×  |
-| isEmpty()                                  | 24          | 40                   | Custom     | 1.67×  |
-| lastIndexOf(Object)                        | 149187      | 199346               | Custom     | 1.34×  |
-| offer(E)                                   | 57          | 105                  | Custom     | 1.84×  |
-| offerFirst(E)                              | 124         | 105                  | LinkedList | ~1.18× |
-| offerLast(E)                               | 54          | 105                  | Custom     | 1.94×  |
-| peek()                                     | 45          | 41                   | LinkedList | ~1.10× |
-| peekFirst()                                | 41          | 31                   | LinkedList | ~1.32× |
-| peekLast()                                 | 23          | 26                   | Custom     | 1.13×  |
-| poll()                                     | 109         | 154                  | Custom     | 1.41×  |
-| pollFirst()                                | 24          | 31                   | Custom     | 1.29×  |
-| pollLast()                                 | 42          | 68                   | Custom     | 1.62×  |
-| pop()                                      | 22          | 84                   | Custom     | 3.82×  |
-| push(E)                                    | 121         | 84                   | LinkedList | ~1.44× |
-| remove()                                   | 33          | 40                   | Custom     | 1.21×  |
-| remove(int)                                | 91760       | 92644                | Custom     | 1.01×  |
-| remove(Object)                             | 158802      | 197024               | Custom     | 1.24×  |
-| removeAll(Collection<? extends E>)         | 480438      | 167416               | LinkedList | 2.87×  |
-| removeFirst()                              | 30          | 28                   | LinkedList | ~1.07× |
-| removeFirstOccurrence(Object)              | 158816      | 195284               | Custom     | 1.23×  |
-| removeLast()                               | 90          | 61                   | LinkedList | ~1.48× |
-| removeLastOccurrence(Object)               | 78          | 68                   | LinkedList | ~1.15× |
-| retainAll(Collection<? extends E>)         | 495608      | 733797679            | Custom     | 1480×  |
-| set(int, E)                                | 94334       | 90557                | LinkedList | 1.04×  |
-| size()                                     | 23          | 40                   | Custom     | 1.74×  |
-| subList(int, int)                          | 495608      | 724177529            | Custom     | 1462×  |
-| toArray()                                  | 127465      | 197024               | Custom     | 1.55×  |
-| toArray(T[])                               | 131095      | 197024               | Custom     | 1.50×  |
-| toString()                                 | 1865972     | 724177529            | Custom     | 388×   |
+| Method                                     | Custom (ns) | java LinkedList (ns) | Winner         | Margin |
+|--------------------------------------------|-------------|----------------------|----------------|--------|
+| add(E)                                     | 286355      | 326104               | **Custom**     | 1.14×  |
+| add(int index, E)                          | 93032       | 91354                | **LinkedList** | 1.02×  |
+| addAll(Collection<? extends E>)            | 207510      | 167416               | **LinkedList** | 1.24×  |
+| addAll(int index, Collection<? extends E>) | 312307      | 306161               | **LinkedList** | 1.02×  |
+| addFirst(E)                                | 57          | 58                   | **Custom**     | ~1.02× |
+| addLast(E)                                 | 37          | 82                   | **Custom**     | 2.22×  |
+| clear()                                    | 129491      | 126518               | **LinkedList** | 1.02×  |
+| clone()                                    | 215462      | 253823               | **Custom**     | 1.18×  |
+| contains(Object)                           | 140364      | 204337               | **Custom**     | 1.46×  |
+| containsAll(Collection<?>)                 | 102046322   | 97712046             | **LinkedList** | 1.04×  |
+| element()                                  | 37          | 35                   | **LinkedList** | ~1.06× |
+| equals(Object)                             | 224489      | 218164               | **LinkedList** | 1.03×  |
+| get(int)                                   | 93614       | 88597                | **LinkedList** | 1.06×  |
+| getFirst()                                 | 40          | 39                   | **LinkedList** | ~1.03× |
+| getLast()                                  | 39          | 35                   | **LinkedList** | 1.11×  |
+| hashCode()                                 | 207132      | 135869               | **LinkedList** | 1.52×  |
+| indexOf(Object)                            | 149178      | 199346               | **Custom**     | 1.34×  |
+| isEmpty()                                  | 21          | 31                   | **Custom**     | 1.48×  |
+| lastIndexOf(Object)                        | 53          | 41                   | **LinkedList** | 1.29×  |
+| offer(E)                                   | 55          | 105                  | **Custom**     | 1.91×  |
+| offerFirst(E)                              | 115         | 105                  | **LinkedList** | 1.10×  |
+| offerLast(E)                               | 51          | 56                   | **Custom**     | 1.10×  |
+| peek()                                     | 38          | 37                   | **LinkedList** | ~1.03× |
+| peekFirst()                                | 37          | 16                   | **LinkedList** | 2.31×  |
+| peekLast()                                 | 16          | 28                   | **Custom**     | 1.75×  |
+| poll()                                     | 28          | 27                   | **LinkedList** | ~1.04× |
+| pollFirst()                                | 27          | 41                   | **Custom**     | 1.52×  |
+| pollLast()                                 | 41          | 69                   | **Custom**     | 1.68×  |
+| pop()                                      | 69          | 29                   | **LinkedList** | 2.38×  |
+| push(E)                                    | 29          | 37                   | **Custom**     | 1.28×  |
+| remove()                                   | 37          | 40                   | **Custom**     | 1.08×  |
+| remove(int)                                | 92971       | 92644                | **LinkedList** | ~1.00× |
+| remove(Object)                             | 160399      | 197024               | **Custom**     | 1.23×  |
+| removeAll(Collection<?>)                   | 567338      | 724177529            | **Custom**     | ~1276× |
+| removeFirst()                              | 27          | 40                   | **Custom**     | 1.48×  |
+| removeFirstOccurrence(Object)              | 166809      | 195284               | **Custom**     | 1.17×  |
+| removeLast()                               | 32          | 61                   | **Custom**     | 1.91×  |
+| removeLastOccurrence(Object)               | 135         | 61                   | **LinkedList** | 2.21×  |
+| retainAll(Collection<?>)                   | 665167      | 733797679            | **Custom**     | ~1103× |
+| set(int, E)                                | 102767      | 90557                | **LinkedList** | 1.13×  |
+| size()                                     | 75          | 28                   | **LinkedList** | 2.68×  |
+| subList(int, int)                          | 148036      | 129491               | **LinkedList** | 1.14×  |
+| toArray()                                  | 124177      | 121581               | **LinkedList** | 1.02×  |
+| toArray(T[])                               | 178334      | 131129               | **LinkedList** | 1.36×  |
+| toString()                                 | 1892913     | 1384150              | **LinkedList** | 1.37×  |
+
 
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(int,%20E).png)
@@ -170,8 +171,9 @@ Note: all data is an average of 100 runs.
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/get(int).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/getFirst().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/getLast().png)
-![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/hashcode().png)
+![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/hashCode().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/indexOf(Object).png)
+![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/isEmpty().png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/lastIndexOf(Object).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/offer(E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/offerFirst(E).png)
