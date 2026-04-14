@@ -1,3 +1,5 @@
+import org.springframework.util.Assert;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
@@ -266,8 +268,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             }
 
             public void remove() {
-                if (lastReturned == null)
-                    throw new IllegalStateException();
+                Assert.notNull(lastReturned, "");
                 CustomDoublyLinkedList.this.unlink(lastReturned);
                 lastReturned = null;
             }
@@ -429,8 +430,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             }
 
             public void remove() {
-                if (lastReturned == null)
-                    throw new IllegalStateException();
+                Assert.notNull(lastReturned, "");
                 CustomDoublyLinkedList.this.unlink(lastReturned);
                 lastReturned = null;
             }
@@ -1113,8 +1113,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
 
         public void set(E e) {
             Objects.requireNonNull(e);
-            if (lastReturned == null)
-                throw new IllegalStateException();
+            Assert.notNull(lastReturned, "");
             lastReturned.data = e;
         }
 
