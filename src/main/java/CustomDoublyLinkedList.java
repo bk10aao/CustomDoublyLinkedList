@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * A custom doubly-linked list implementation that maintains elements in insertion order.
- * This list does not permit null elements in add operations and throws a {@link NullPointerException}.
+ * This list does not permit null elements in operations and throws a {@link NullPointerException}.
  * It implements the {@link List} interface for standard list operations and supports iteration via {@link Iterable}.
  * <p>
  * This implementation provides O(1) time complexity for operations at the head and tail (e.g.,
@@ -22,10 +22,10 @@ import java.util.Set;
  * for indexed operations (e.g., {@code get(int)}, {@code set(int, E)}). It is not thread-safe.
  * <strong>Note:</strong> Unlike {@link java.util.LinkedList}, this implementation
  * does <em>not</em> permit {@code null} elements. Any attempt to insert {@code null}
- * will result in a {@link NullPointerException}
+ * will result in a {@link NullPointerException}.
  * <p>
  *
- * @param <E> the type of elements maintained by this list
+ * @param <E> the type of elements maintained by this list.
  * @author Benjamin Kane
  * @see <a href="https://www.linkedin.com/in/benjamin-kane-81149482/">LinkedIn Profile</a>
  * @see <a href="https://github.com/bk10aao">GitHub Account</a>
@@ -51,9 +51,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Constructs a doubly-linked list containing the elements of the specified collection,
      * added in the order they are returned by the collection's iterator.
      *
-     * @param items the collection of elements to add to the list
+     * @param items the collection of elements to add to the list.
      *
-     * @throws NullPointerException if the collection or any element is null
+     * @throws NullPointerException if the {@code items}  or any element is null.
      */
     public CustomDoublyLinkedList(final Collection<E> items) {
         Objects.requireNonNull(items);
@@ -63,11 +63,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Appends the specified element to the end of this list.
      *
-     * @param item the element to be added to the list
+     * @param item the element to be added to the list.
      *
-     * @return {@code true} (as specified by {@link java.util.List#add(Object)})
+     * @return {@code true} (as specified by {@link java.util.List#add(Object)}).
      *
-     * @throws NullPointerException if the element is null
+     * @throws NullPointerException if {@code item} is null.
      */
     public boolean add(final E item) {
         Objects.requireNonNull(item);
@@ -86,11 +86,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Shifts the element currently at that index (if any) and any subsequent
      * elements to the right (adds one to their indices).
      *
-     * @param index the index at which to insert the element
-     * @param item the element to be inserted
+     * @param index the index at which to insert the element.
+     * @param item the element to be inserted.
      *
-     * @throws NullPointerException if the element is null
-     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
+     * @throws NullPointerException if the {@code item}  is null.
+     * @throws IndexOutOfBoundsException if the {@code item} is out of range ({@code index < 0 || index > size()}).
      */
     public void add(final int index, final E item) {
         Objects.requireNonNull(item);
@@ -107,11 +107,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Appends all elements in the specified collection to the end of this list,
      * in the order they are returned by the collection's iterator.
      *
-     * @param c the collection containing elements to be added
+     * @param c the collection containing elements to be added.
      *
-     * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty
+     * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty.
      *
-     * @throws NullPointerException if the collection is null or contains a null element
+     * @throws NullPointerException if the {@code c} is null or contains a null element.
      **/
     public boolean addAll(final Collection<? extends E> c) {
         Objects.requireNonNull(c);
@@ -126,13 +126,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * in the order they are returned by the collection's iterator. Shifts the element currently
      * at that index (if any) and any subsequent elements to the right.
      *
-     * @param index the index at which to insert the first element from the collection
-     * @param c the collection containing elements to be added
+     * @param index the index at which to insert the first element from the collection.
+     * @param c the collection containing elements to be added.
      *
-     * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty
+     * @return {@code true} if this list changed as a result of the call, {@code false} if the collection is empty.
      *
-     * @throws NullPointerException if the collection is null or contains a null element
-     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
+     * @throws NullPointerException if the {@code c} is null or contains a null element.
+     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()}).
      */
     public boolean addAll(final int index, final Collection<? extends E> c) {
         Objects.requireNonNull(c);
@@ -146,9 +146,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Inserts the specified element at the beginning of this list.
      *
-     * @param item the element to be added to the head of the list
+     * @param item the element to be added to the head of the list/
      *
-     * @throws NullPointerException if the element is null
+     * @throws NullPointerException if the {@code item} is null.
      */
     public void addFirst(final E item) {
         Objects.requireNonNull(item);
@@ -165,9 +165,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Appends the specified element to the end of this list.
      * This method is equivalent to {@link #add(Object)}.
      *
-     * @param item the element to be added to the end of the list
+     * @param item the element to be added to the end of the list.
      *
-     * @throws NullPointerException if the element is null
+     * @throws NullPointerException if t{@code item} is null.
      */
     public void addLast(final E item) {
         add(item);
@@ -196,9 +196,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * but modifications to the elements themselves (if mutable) will affect both lists.
      * The internal structure (nodes) of the new list is independent of this list.
      *
-     * @return a new {@code CustomDoublyLinkedList} instance containing all elements of this list
+     * @return a new {@code CustomDoublyLinkedList} instance containing all elements of this list.
      *
-     * @throws OutOfMemoryError if there is insufficient memory to create the clone
+     * @throws OutOfMemoryError if there is insufficient memory to create the clone.
      */
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     public CustomDoublyLinkedList<E> clone() {
@@ -213,22 +213,23 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * More formally, returns {@code true} if and only if this list contains at least
      * one element {@code e} such that {@code Objects.equals(item, e)}.
      *
-     * @param o the element to search for (may be null)
+     * @return {@code true} if the element is present in the list, {@code false} otherwise.
      *
-     * @return {@code true} if the element is present in the list, {@code false} otherwise
+     * @throws NullPointerException if the {@code o} is null.
      */
     public boolean contains(final Object o) {
+        Objects.requireNonNull(o);
         return indexOf(o) != -1;
     }
 
     /**
      * Returns {@code true} if this list contains all elements in Collection.
      *
-     * @param c collection to check for all values in CustomList
+     * @param c collection to check for all values in CustomList.
      *
-     * @return {@code true} if this list contains all elements in collection
+     * @return {@code true} if this list contains all elements in collection.
      *
-     * @throws NullPointerException if the specified collection or any of its elements is null
+     * @throws NullPointerException if the {@code c} any of its elements is null.
      */
     public boolean containsAll(final Collection<?> c) {
         Objects.requireNonNull(c);
@@ -246,8 +247,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * The returned iterator supports {@code remove()} but not {@code add()} or {@code set()}.
      * Calling {@code remove()} removes the last element returned by {@code next()}.
      *
-     * @return an iterator over the elements in this list in reverse order
-     * @see java.util.Deque#descendingIterator()
+     * @return an {@code Iterator} of elements in this list in reverse order.
+     *
+     * @see java.util.Deque#descendingIterator().
      */
     public Iterator<E> descendingIterator() {
         return new Iterator<>() {
@@ -278,9 +280,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Retrieves, but does not remove, the head (first element) of this list.
      *
-     * @return {@code E} element at head of the list
+     * @return {@code E} element at head of the list.
      *
-     * @throws NoSuchElementException if the list is empty
+     * @throws NoSuchElementException if the list is empty.
      */
     public E element() {
         checkNotEmpty();
@@ -297,11 +299,14 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * This implementation allows comparison with any {@code CustomDoublyLinkedList}
      * regardless of its generic type.
      *
-     * @param o the object to be compared for equality with this list
+     * @param o the object to be compared for equality with this list.
      *
      * @return {@code true} if the specified object is equal to this list,
+     *
+     * @throws NullPointerException if {@code o} is null.
      */
     public boolean equals(final Object o) {
+        Objects.requireNonNull(o);
         if (this == o)
             return true;
         if (!(o instanceof List<?> that))
@@ -323,11 +328,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Returns the element at the specified index in this list. Uses bidirectional
      * traversal for efficiency, starting from the head or tail based on index proximity.
      *
-     * @param index the index of the element to return
+     * @param index the index of the element to return.
      *
      * @return {@code E} element at the specified index
      *
-     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
+     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()}).
      */
     public E get(final int index) {
         requireInRange(index);
@@ -343,7 +348,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the start of the list.
      *
-     * @throws NoSuchElementException if this list is empty
+     * @throws NoSuchElementException if this list is empty.
      */
     public E getFirst() {
         checkNotEmpty();
@@ -355,7 +360,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element at the end of the list.
      *
-     * @throws NoSuchElementException if this list is empty
+     * @throws NoSuchElementException if this list is empty.
      */
     public E getLast() {
         checkNotEmpty();
@@ -371,7 +376,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * {@code list1.hashCode() == list2.hashCode()} for any two lists, as required
      * by the general contract of {@link Object#hashCode()}.
      *
-     * @return {@code int} the hash code value for this list
+     * @return {@code int} the hash code value for this list.
      */
     public int hashCode() {
         int result = 1;
@@ -384,11 +389,14 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Returns the index of the first occurrence of the specified element in this list,
      * or -1 if the element is not present.
      *
-     * @param o the element to search for (may be null)
+     * @param o the element to search for.
      *
-     * @return {@code int} the index of the first occurrence of the element, or -1 if not found
+     * @return {@code int} the index of the first occurrence of the element, or -1 if not found.
+     *
+     * @throws NullPointerException if  {@code o} id null..
      */
     public int indexOf(final Object o) {
+        Objects.requireNonNull(o);
         int index = 0;
         for (Node<E> x = head; x != null; x = x.next, index++)
             if (Objects.equals(x.data, o))
@@ -399,7 +407,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Returns {@code true} if this list contains no elements.
      *
-     * @return {@code true} if the list is empty, {@code false} otherwise
+     * @return {@code true} if the list is empty, {@code false} otherwise.
      */
     public boolean isEmpty() {
         return size == 0;
@@ -408,7 +416,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Returns an iterator over the elements in this list in proper sequence.
      *
-     * @return an {@code Iterator} over the elements in this list
+     * @return an {@code Iterator} over the elements in this list.
      */
     public Iterator<E> iterator() {
         return new Iterator<>() {
@@ -442,11 +450,12 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * or -1 if the element is not present. Uses {@link Objects#equals(Object, Object)}
      * for comparison.
      *
-     * @param o the element to search for (may be null)
+     * @return {@code int} the index of the last occurrence of the element, or -1 if not found.
      *
-     * @return {@code int} the index of the last occurrence of the element, or -1 if not found
+     * @throws NullPointerException if {@code o} is null.
      */
     public int lastIndexOf(final Object o) {
+        Objects.requireNonNull(o);
         int index = size - 1;
         for (Node<E> x = tail; x != null; x = x.previous, index--)
             if (Objects.equals(x.data, o))
@@ -457,7 +466,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Returns an iterator over the elements in this list in proper sequence.
      *
-     * @return {@code ListIterator} over the elements in this list in proper sequence
+     * @return {@code ListIterator} over the elements in this list in proper sequence.
      */
     public ListIterator<E> listIterator() {
         return new CustomListIterator(0);
@@ -466,11 +475,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Returns an iterator over the elements in this list in proper sequence.
      *
-     * @param index the index of the start of List Iterator
+     * @param index the index of the start of List Iterator.
      *
-     * @return {@code ListIterator} over the elements in this list in proper sequence
+     * @return {@code ListIterator} over the elements in this list in proper sequence.
      *
-     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
+     * @throws IndexOutOfBoundsException if the {@code index} is out of range ({@code index < 0 || index >= size()}).
      */
     public ListIterator<E> listIterator(final int index) {
         rangeCheckForAdd(index);
@@ -481,11 +490,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Appends the specified element to the end of this list.
      * This method is equivalent to {@link #add(Object)}.
      *
-     * @param item the element to be added to the end of the list
+     * @param item the element to be added to the end of the list.
      *
-     * @return {@code true} (as specified by {@link java.util.Queue#offer(Object)})
+     * @return {@code true} (as specified by {@link java.util.Queue#offer(Object)}).
      *
-     * @throws NullPointerException if the element is null
+     * @throws NullPointerException if the {@code item} is null.
      */
     public boolean offer(final E item) {
         return add(item);
@@ -495,14 +504,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Inserts the specified element at the beginning of this list.
      * This method is equivalent to {@link #addFirst(Object)}.
      *
-     * @param item the element to be added to the head of the list
+     * @param item the element to be added to the head of the list.
      *
-     * @return {@code true} (as specified by {@link java.util.Deque#offerFirst(Object)})
+     * @return {@code true} (as specified by {@link java.util.Deque#offerFirst(Object)}).
      *
-     * @throws NullPointerException if the element is null
+     * @throws NullPointerException if {@code item} is null.
      */
     public boolean offerFirst(final E item) {
-        Objects.requireNonNull(item);
         addFirst(item);
         return true;
     }
@@ -511,14 +519,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Appends the specified element to the end of this list.
      * This method is equivalent to {@link #addLast(Object)}.
      *
-     * @param item the element to be added to the end of the list
+     * @param item the element to be added to the end of the list.
      *
-     * @return {@code true} (as specified by {@link java.util.Deque#offerLast(Object)})
+     * @return {@code true} (as specified by {@link java.util.Deque#offerLast(Object)}).
      *
-     * @throws NullPointerException if the element is null
+     * @throws NullPointerException if {@code item} is null.
      */
     public boolean offerLast(final E item) {
-        Objects.requireNonNull(item);
         addLast(item);
         return true;
     }
@@ -526,7 +533,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Retrieves, but does not remove, the head (first element) of this list.
      *
-     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty.
      */
     public E peek() {
         return size == 0 ? null : head.data;
@@ -536,7 +543,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Retrieves, but does not remove, the head (first element) of this list.
      * This method is equivalent to {@link #peek()}.
      *
-     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty.
      */
     public E peekFirst() {
         return peek();
@@ -545,7 +552,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Retrieves, but does not remove, the last element of this list.
      *
-     * @return {@code E} element at the end of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the end of the list, or {@code null} if the list is empty.
      */
     public E peekLast() {
         return size == 0 ? null : tail.data;
@@ -554,7 +561,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Removes and returns the head (first element) of this list.
      *
-     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty.
+     *
+     * @throws NoSuchElementException if the list is empty.
      */
     public E poll() {
         return size != 0 ? removeFirst() : null;
@@ -564,7 +573,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Removes and returns the head (first element) of this list.
      * This method is equivalent to {@link #poll()}.
      *
-     * @return {@code E} element at the head of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the head of the list, or {@code null} if the list is empty.
      */
     public E pollFirst() {
         return poll();
@@ -573,7 +582,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Removes and returns the last element of this list.
      *
-     * @return {@code E} element at the end of the list, or {@code null} if the list is empty
+     * @return {@code E} element at the end of the list, or {@code null} if the list is empty.
+     *
+     * @throws NoSuchElementException if the list is empty.
      */
     public E pollLast() {
         return size != 0 ? removeLast() : null;
@@ -588,7 +599,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws NoSuchElementException if the list is empty
      */
     public E pop() {
-        checkNotEmpty();
+        if(size == 0)
+            throw new NoSuchElementException();
         return poll();
     }
 
@@ -598,7 +610,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @param item the element to be added to the head of the list
      *
-     * @throws NullPointerException if the element is null
+     * @throws NullPointerException if {@code item} is null
      */
     public void push(final E item) {
         addFirst(item);
@@ -624,7 +636,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      *
      * @return {@code E} element that was removed
      *
-     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
+     * @throws IndexOutOfBoundsException if the {@code index} is out of range ({@code index < 0 || index >= size()})
      */
     public E remove(final int index) {
         requireInRange(index);
@@ -639,26 +651,29 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Removes the first occurrence of the specified element from this list, if present.
      *
-     * @param o the element to be removed (may be null)
+     * @param o the element to be removed.
      *
-     * @return {@code true} if this list contained the specified element
+     * @return {@code true} if this list contained the specified element.
+     *
+     * @throws NoSuchElementException if {@code o} is null.
      */
     public boolean remove(final Object o) {
+        Objects.requireNonNull(o);
         for(Node<E> node = head; node != null; node = node.next)
-            if (Objects.equals(node.data, o)) {
-                unlink(node);
-                return true;
-            }
+            if (Objects.equals(node.data, o))
+                return unlink(node) != null;
         return false;
     }
 
     /**
      * Removes from this list all elements that are contained in the specified collection.
+     * @see Collection#contains(Object).
      *
-     * @param c collection containing elements to be removed from this list
-     * @throws NullPointerException if {@code c} is null
-     * @return {@code true} if this list changed
-     * @see Collection#contains(Object)
+     * @param c collection containing elements to be removed from this list.
+     *
+     * @return {@code true} if this list changed.
+     *
+     * @throws NullPointerException if {@code c} is null.
      */
     public boolean removeAll(final Collection<?> c) {
         Objects.requireNonNull(c);
@@ -680,9 +695,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Removes and returns the head (first element) of this list.
      * This method is equivalent to {@link #poll()} but throws an exception if the list is empty.
      *
-     * @return {@code E} element at the head of the list
+     * @return {@code E} element at the head of the list.
      *
-     * @throws NoSuchElementException if the list is empty
+     * @throws NoSuchElementException if the list is empty.
      */
     public E removeFirst() {
         checkNotEmpty();
@@ -701,25 +716,26 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Removes the first occurrence of the specified element from this list, if present.
      *
-     * @param o the element to be removed (may be null)
+     * @param o the element to be removed.
      *
-     * @return {@code true} if the element was found and removed, {@code false} otherwise
+     * @return {@code true} if the element was found and removed, {@code false} otherwise.
+     *
+     * @throws NullPointerException if {@code o} is null.
      */
     public boolean removeFirstOccurrence(final Object o) {
+        Objects.requireNonNull(o);
         for(Node<E> node = head; node != null; node = node.next)
-            if (Objects.equals(node.data, o)) {
-                unlink(node);
-                return true;
-            }
+            if (Objects.equals(node.data, o))
+                return unlink(node) != null;
         return false;
     }
 
     /**
      * Removes and returns the last element of this list.
      *
-     * @return {@code E} the element that was removed
+     * @return {@code E} the element that was removed.
      *
-     * @throws NoSuchElementException if the list is empty
+     * @throws NoSuchElementException if the list is empty.
      */
     public E removeLast() {
         checkNotEmpty();
@@ -738,16 +754,17 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Removes the last occurrence of the specified element from this list, if present.
      *
-     * @param o the element to be removed (may be null)
+     * @param o the element to be removed.
      *
-     * @return {@code true} if the element was found and removed, {@code false} otherwise
+     * @return {@code true} if the element was found and removed, {@code false} otherwise.
+     *
+     * @throws NullPointerException if {@code o} is null.
      */
     public boolean removeLastOccurrence(final Object o) {
+        Objects.requireNonNull(o);
         for(Node<E> node = tail; node != null; node = node.previous)
-            if (Objects.equals(node.data, o)) {
-                unlink(node);
-                return true;
-            }
+            if (Objects.equals(node.data, o))
+                return unlink(node) != null;
         return false;
     }
 
@@ -755,11 +772,11 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Retains only the elements in this list that are contained in the specified collection.
      * In other words, removes from this list all of its elements that are not contained in {@code c}.
      *
-     * @param c collection containing elements to be retained in this list
+     * @param c collection containing elements to be retained in this list.
      *
-     * @return {@code true} if this list changed as a result of the call
+     * @return {@code true} if this list changed as a result of the call.
      *
-     * @throws NullPointerException if {@code c} is null or contains null
+     * @throws NullPointerException if {@code c} is null or contains null items.
      */
     public boolean retainAll(final Collection<?> c) {
         Objects.requireNonNull(c);
@@ -783,13 +800,13 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Replaces the element at the specified index in this list with the specified element.
      *
-     * @param index the index of the element to replace
-     * @param item the new element to set at the specified index
+     * @param index the index of the element to replace.
+     * @param item the new element to set at the specified index.
      *
-     * @return {@code E} previous element at the specified index
+     * @return {@code E} previous element at the specified index.
      *
-     * @throws NullPointerException if the element is null
-     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
+     * @throws NullPointerException if the {@code item} is null.
+     * @throws IndexOutOfBoundsException if the {@code index} is out of range ({@code index < 0 || index >= size()}).
      */
     public E set(final int index, final E item) {
         requireInRange(index);
@@ -812,7 +829,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     /**
      * Returns the number of elements in this list.
      *
-     * @return {@code int} the number of elements in this list
+     * @return {@code int} the number of elements in this list.
      */
     public int size() {
         return this.size;
@@ -824,26 +841,22 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * {@code fromIndex} and {@code toIndex} are equal, the returned list is empty.
      * Note: The returned list is a copy, not a view backed by the original.
      *
-     * @param fromIndex index of the first element (inclusive)
-     * @param toIndex index after the last element (exclusive)
+     * @param fromIndex index of the first element (inclusive).
+     * @param toIndex index after the last element (exclusive).
      *
-     * @return a new {@code CustomDoublyLinkedList} containing the specified range of elements
+     * @return a new {@code CustomDoublyLinkedList} containing the specified range of elements.
      *
-     * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()} or {@code fromIndex > toIndex}
+     * @throws IndexOutOfBoundsException if {@code fromIndex < 0}, {@code toIndex > size()} or {@code fromIndex > toIndex}.
      */
     public List<E> subList(final int fromIndex, final int toIndex) {
-        if (fromIndex < 0 || toIndex > size || fromIndex > toIndex) {
-            throw new IndexOutOfBoundsException(
-                    "fromIndex=" + fromIndex + ", toIndex=" + toIndex + ", size=" + size);
-        }
-        if (fromIndex == toIndex) {
-            return new CustomDoublyLinkedList<>();
-        }
+        if (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
+            throw new IndexOutOfBoundsException("fromIndex=" + fromIndex + ", toIndex=" + toIndex + ", size=" + size);
+        if (fromIndex == toIndex) return new CustomDoublyLinkedList<>();
         Node<E> current = nodeAt(fromIndex);
         CustomDoublyLinkedList<E> result = new CustomDoublyLinkedList<>();
         int count = toIndex - fromIndex;
         for (int i = 0; i < count; i++) {
-            result.addLast(current.data);  // or result.add(current.data)
+            result.addLast(current.data);
             current = current.next;
         }
 
@@ -854,7 +867,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Returns an array containing all elements in this list in proper sequence
      * (from head to tail).
      *
-     * @return {@code Object[]} array containing the elements of this list
+     * @return {@code Object[]} array containing the elements of this list.
      */
     public Object[] toArray() {
         Object[] array = new Object[size];
@@ -868,9 +881,9 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * Returns an array containing all elements in this list in proper sequence,
      * using the specified array if it is large enough.
      *
-     * @param a the array into which the elements are to be stored, if it is large enough
+     * @param a the array into which the elements are to be stored, if it is large enough.
      *
-     * @return {@code <T> T[]} array containing the elements of this list
+     * @return {@code <T> T[]} array containing the elements of this list.
      */
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
@@ -890,7 +903,7 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * enclosed in square braces ({@code "[]"}). Adjacent elements are separated
      * by a comma and a space ({@code ", "]). If the list is empty, returns
      * {@code "[]"}.
-     * @return a {@code String}  representation of this list
+     * @return a {@code String} representation of this list.
      */
     public String toString() {
         if(size == 0)
@@ -943,22 +956,16 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private void insertCollection(int index, Node<E> first, Node<E> last) {
-        Node<E> succ = nodeAt(index);
-        Node<E> pred = succ.previous;
-        if (pred != null)
-            pred.next = first;
+        Node<E> successor = nodeAt(index);
+        Node<E> predecessor = successor.previous;
+        if (predecessor != null)
+            predecessor.next = first;
         else
             head = first;
-        last.next = succ;
-        succ.previous = last;
+        last.next = successor;
+        successor.previous = last;
     }
 
-    /**
-     * Checks if index is in range
-     *
-     * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index > size()})
-     * @param index - index to range check
-     */
     private void rangeCheckForAdd(int index) {
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -1100,7 +1107,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
                 prev.next = next;
             else
                 head = next;
-
             if (next != null)
                 next.previous = prev;
             else

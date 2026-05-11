@@ -755,12 +755,6 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
-    public void givenEmptyLinkedListOfType_String_on_removeFirstOccurrence_returns_false() {
-        CustomDoublyLinkedList<String> customDoublyLinkedList = new CustomDoublyLinkedList<>();
-        assertFalse(customDoublyLinkedList.removeFirstOccurrence(null));
-    }
-
-    @Test
     public void givenEmptyLinkedListOfType_String_withValues_a_b_c_on_removeFirstOccurrenceOf_d_returns_false() {
         CustomDoublyLinkedList<String> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         assertTrue(customDoublyLinkedList.add("a"));
@@ -778,12 +772,6 @@ class CustomDoublyLinkedListTest {
         assertTrue(customDoublyLinkedList.removeFirstOccurrence("b"));
         assertEquals("a", customDoublyLinkedList.get(0));
         assertEquals("c", customDoublyLinkedList.get(1));
-    }
-
-    @Test
-    public void givenEmptyLinkedListOfType_String_on_removeLastOccurrence_returns_false() {
-        CustomDoublyLinkedList<String> customDoublyLinkedList = new CustomDoublyLinkedList<>();
-        assertFalse(customDoublyLinkedList.removeLastOccurrence(null));
     }
 
     @Test
