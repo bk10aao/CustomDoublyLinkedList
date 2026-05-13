@@ -240,6 +240,21 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         return true;
     }
 
+    public CustomDoublyLinkedList<E> reversed() {
+        return clone().reverseInPlace();
+    }
+
+    private CustomDoublyLinkedList<E> reverseInPlace() {
+        CustomDoublyLinkedList<E> reversed = new CustomDoublyLinkedList<>();
+        Node<E> current = tail;
+        while (current != null) {
+            reversed.add(current.data);
+            current = current.previous;
+        }
+
+        return reversed;
+    }
+
     /**
      * Returns an iterator over the elements in this list in reverse sequential order.
      * The elements will be returned from last (tail) to first (head).
@@ -315,13 +330,10 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
             return false;
         Iterator<E> itr1 = this.iterator();
         Iterator<?> itr2 = that.iterator();
-        while (itr1.hasNext() && itr2.hasNext()) {
-            E e1 = itr1.next();
-            Object e2 = itr2.next();
-            if (!Objects.equals(e1, e2))
+        while (itr1.hasNext())
+            if (!Objects.equals(itr1.next(), itr2.next()))
                 return false;
-        }
-        return !(itr1.hasNext() || itr2.hasNext());
+        return true;
     }
 
     /**
@@ -482,7 +494,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
      * @throws IndexOutOfBoundsException if the {@code index} is out of range ({@code index < 0 || index >= size()}).
      */
     public ListIterator<E> listIterator(final int index) {
-        rangeCheckForAdd(index);
         return new CustomListIterator(index);
     }
 
@@ -660,8 +671,10 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     public boolean remove(final Object o) {
         Objects.requireNonNull(o);
         for(Node<E> node = head; node != null; node = node.next)
-            if (Objects.equals(node.data, o))
-                return unlink(node) != null;
+            if (Objects.equals(node.data, o)) {
+                unlink(node);
+                return true;
+            }
         return false;
     }
 
@@ -725,8 +738,10 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     public boolean removeFirstOccurrence(final Object o) {
         Objects.requireNonNull(o);
         for(Node<E> node = head; node != null; node = node.next)
-            if (Objects.equals(node.data, o))
-                return unlink(node) != null;
+            if (Objects.equals(node.data, o)) {
+                unlink(node);
+                return true;
+            }
         return false;
     }
 
@@ -763,8 +778,10 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     public boolean removeLastOccurrence(final Object o) {
         Objects.requireNonNull(o);
         for(Node<E> node = tail; node != null; node = node.previous)
-            if (Objects.equals(node.data, o))
-                return unlink(node) != null;
+            if (Objects.equals(node.data, o)) {
+                unlink(node);
+                return true;
+            }
         return false;
     }
 
@@ -977,8 +994,6 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
     }
 
     private E unlink(final Node<E> node) {
-        if (node == null)
-            throw new IllegalStateException("List structure corrupted");
         E data = node.data;
         Node<E> prev = node.previous;
         Node<E> next = node.next;
@@ -1055,7 +1070,8 @@ public class CustomDoublyLinkedList<E> implements List<E>, Deque<E>, Serializabl
         private int nextIndex;
 
         CustomListIterator(int index) {
-            rangeCheckForAdd(index);
+            if(index < 0 || index > size() - 1)
+                throw new IndexOutOfBoundsException();
             this.nextIndex = index;
             this.nextNode = (index == size) ? null : nodeAt(index);
         }

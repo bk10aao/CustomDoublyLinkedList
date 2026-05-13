@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 group = 'org.example'
@@ -11,10 +12,79 @@ repositories {
 
 dependencies {
     implementation 'org.springframework:spring-core:6.2.11'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
 }
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
+    }
+}
+
+jacoco {
+    toolVersion = '0.8.12'
+    reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect { dir ->
+                    fileTree(dir: dir).exclude([
+                            '**/CustomDoublyLinkedList$Node.class',
+                            '**/CustomDoublyLinkedList$CustomListIterator.class'
+                    ])
+                })
+        )
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                minimum = 0.80
+            }
+        }
+
+        // Ignore inner classes
+        rule {
+            element = 'CLASS'
+            excludes = [
+                    'CustomDoublyLinkedList$Node',
+                    'CustomDoublyLinkedList$CustomListIterator'
+            ]
+            limit {
+                counter = 'LINE'
+                minimum = 0.0
+            }
+        }
+    }
+}
+
+tasks.named('test') {
+    finalizedBy jacocoTestReport
+}
+
+tasks.named('build') {
+    dependsOn jacocoTestCoverageVerification
+}
+
+tasks.register('coverage') {
+    dependsOn jacocoTestCoverageVerification
+    group = 'Verification'
+    description = 'Runs tests and checks JaCoCo coverage (fails if < 80%)'
 }

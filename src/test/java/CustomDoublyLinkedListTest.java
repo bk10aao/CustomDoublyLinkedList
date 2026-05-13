@@ -2,14 +2,20 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -106,6 +112,15 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
+    public void givenNewListOf_10_removeLast_returns_10_andSizeOf_0() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        customDoublyLinkedList.add(10);
+        assertEquals(1, customDoublyLinkedList.size());
+        assertEquals(10, customDoublyLinkedList.removeLast());
+        assertEquals(0, customDoublyLinkedList.size());
+    }
+
+    @Test
     public void givenNewListOf_10_20_30_on_removeLast_returns_30_andSizeOf_2() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         customDoublyLinkedList.add(10);
@@ -163,6 +178,17 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.add(30);
         customDoublyLinkedList.add(3, 100);
         assertEquals(100, customDoublyLinkedList.get(3));
+    }
+
+    @Test
+    void givenListOf_4_5_6_on_addAll_1_2_3_atIndex_0_returns_4_5_6_1_2_3() {
+        CustomDoublyLinkedList<Integer> list = new CustomDoublyLinkedList<>();
+        list.addAll(List.of(1, 2, 3));
+
+        list.addAll(0, List.of(4, 5, 6));
+
+        assertEquals(List.of(4, 5, 6, 1, 2, 3), list);
+        assertNotNull(list.getFirst());
     }
 
     @Test
@@ -530,6 +556,17 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
+    public void givenLinkedListOfType_Integer_withValues_1_2_3_4_onSetIndexOf_3_to_10_updatesIndexValueTo_10() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        assertTrue(customDoublyLinkedList.add(1));
+        assertTrue(customDoublyLinkedList.add(2));
+        assertTrue(customDoublyLinkedList.add(3));
+        assertTrue(customDoublyLinkedList.add(4));
+        assertEquals(4,  customDoublyLinkedList.set(3, 10));
+        assertEquals(10, customDoublyLinkedList.get(3));
+    }
+
+    @Test
     public void givenLinkedListOfTypeInteger_withNoValues_onToArray_returns_emptyArray() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         assertEquals(0, customDoublyLinkedList.toArray().length);
@@ -545,19 +582,49 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
+    public void givenLinkedListOfType_Integer_withValues_1_2_3_onToArray_withIntArrayParameter_returnsCorrectArray() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        customDoublyLinkedList.add(1);
+        customDoublyLinkedList.add(2);
+        customDoublyLinkedList.add(3);
+        assertArrayEquals(new Integer[] {1, 2, 3}, customDoublyLinkedList.toArray(new Integer[0]));
+    }
+
+    @Test
+    public void givenLinkedListOfType_Integer_withValues_1_2_3_onToArray_withIntArrayParameterP_withSize_2_returnsCorrectArray() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        customDoublyLinkedList.add(1);
+        customDoublyLinkedList.add(2);
+        customDoublyLinkedList.add(3);
+        assertArrayEquals(new Integer[] {1, 2, 3}, customDoublyLinkedList.toArray(new Integer[2]));
+    }
+
+    @Test
+    public void givenLinkedListOfType_Integer_withValues_1_2_3_onToArray_withIntArrayParameterP_withSize_5_returnsCorrectArray() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        customDoublyLinkedList.add(1);
+        customDoublyLinkedList.add(2);
+        customDoublyLinkedList.add(3);
+        assertArrayEquals(new Integer[] {1, 2, 3, null, null}, customDoublyLinkedList.toArray(new Integer[5]));
+    }
+
+    @Test
     public void givenLinkedListOfType_Integer_onAddingNullCollection_throws_NullPointerException() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         assertThrows(NullPointerException.class, () -> customDoublyLinkedList.addAll(null));
     }
 
     @Test
-    public void givenLinkedListOfType_Integer_withValues_1_2_onAddAll_2_atIndex_0_updatesListCorrectly() {
+    public void givenLinkedListOfType_Integer_onAddingEmptyCollection_returns_false() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        assertFalse(customDoublyLinkedList.addAll(new ArrayList<>()));
+    }
+
+    @Test
+    public void givenLinkedListOfType_Integer_withValues_1_2_onAddingEmptyCollection_atIndex_1_returns_false() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2));
-        Collection<Integer> collection = List.of(3);
-        assertTrue(customDoublyLinkedList.addAll(0, collection));
-        assertEquals(3, customDoublyLinkedList.get(0));
-        assertEquals(1, customDoublyLinkedList.get(1));
-        assertEquals(2, customDoublyLinkedList.get(2));
+        Collection<Integer> collection = List.of();
+        assertFalse(customDoublyLinkedList.addAll(1, collection));
     }
 
     @Test
@@ -566,6 +633,16 @@ class CustomDoublyLinkedListTest {
         CustomDoublyLinkedList<Integer> toInsert = new CustomDoublyLinkedList<>(List.of(1, 2));
         customDoublyLinkedList.addAll(0, toInsert);
         assertEquals(List.of(1, 2, 10, 20), List.copyOf(customDoublyLinkedList));
+    }
+
+    @Test
+    public void givenEmptyLinkedListOfType_Integer_onAddAll_atIndex_1_returnsFalse() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2));
+        Collection<Integer> collection = List.of(3);
+        assertTrue(customDoublyLinkedList.addAll(1, collection));
+        assertEquals(1, customDoublyLinkedList.get(0));
+        assertEquals(3, customDoublyLinkedList.get(1));
+        assertEquals(2, customDoublyLinkedList.get(2));
     }
 
     @Test
@@ -872,6 +949,13 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
+    public void givenASetOf_0_to_32_integers_matchesInstanceOfSet() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        Set<Integer> collection = new HashSet<>(List.of(1, 2, 3));
+        assertTrue(customDoublyLinkedList.containsAll(collection));
+    }
+
+    @Test
     public void givenAListOf_0_to_32_integers_onContainsAllOf_nullCollection_throws_NullPointerException() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         IntStream.range(0, 33).forEach(customDoublyLinkedList::add);
@@ -883,6 +967,28 @@ class CustomDoublyLinkedListTest {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
         assertThrows(IndexOutOfBoundsException.class, () -> customDoublyLinkedList.subList(-1, 10));
+    }
+
+    @Test
+    public void whenGettingSubList_withToIndexGreaterThanSize_throws_IndexOutOfBoundsException() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
+        assertThrows(IndexOutOfBoundsException.class, () -> customDoublyLinkedList.subList(0, 6));
+    }
+
+    @Test
+    public void whenGettingSubList_withFromIndex_equals_toIndex_returns_emptyList() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
+        List<Integer> empty = customDoublyLinkedList.subList(3, 3);
+        assertTrue(empty.isEmpty());
+    }
+
+    @Test
+    public void whenGettingSubList_withToFromIndexGreaterThanToIndex_throws_IndexOutOfBoundsException() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
+        assertThrows(IndexOutOfBoundsException.class, () -> customDoublyLinkedList.subList(2, 1));
     }
 
     @Test
@@ -915,6 +1021,15 @@ class CustomDoublyLinkedListTest {
         IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
         Collection<Integer> items = IntStream.range(0, 3).mapToObj(i -> i * 10).toList();
         assertTrue(customDoublyLinkedList.removeAll(items));
+    }
+
+    @Test
+    void removeAll_withSetCollection_shouldUseSetDirectly() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
+        Set<Integer> setToRemove = Set.of(0, 10);   // This IS a Set
+        assertTrue(customDoublyLinkedList.removeAll(setToRemove));
+        assertEquals(List.of(20, 30, 40), customDoublyLinkedList);
     }
 
     @Test
@@ -1051,6 +1166,212 @@ class CustomDoublyLinkedListTest {
         customDoublyLinkedList.remove(0);
         customDoublyLinkedList.set(3, 777);
         assertEquals(List.of(99,100,101,777,3), List.copyOf(customDoublyLinkedList));
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_onEqualsExactObjectThatMatch_returns_true() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertEquals(customDoublyLinkedList, customDoublyLinkedList);
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_onEqualsNonMatchingObject_returns_false() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertNotEquals(customDoublyLinkedList, new HashSet<>());
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_andListOf_1_2_onEquals_withDifferentSizes_returns_false() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        CustomDoublyLinkedList<Integer> customDoublyLinkedListTwo = new CustomDoublyLinkedList<>(List.of(1, 2));
+        assertNotEquals(customDoublyLinkedList, customDoublyLinkedListTwo);
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_andCustomListOf_1_2_3_onEquals_withExactMatch_returns_true() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        CustomDoublyLinkedList<Integer> customDoublyLinkedListTwo = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertEquals(customDoublyLinkedList, customDoublyLinkedListTwo);
+    }
+
+    @Test
+    public void givenCustomLinkedList_empty_andCustomList_empty_onEquals_returns_true() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        CustomDoublyLinkedList<Integer> customDoublyLinkedListTwo = new CustomDoublyLinkedList<>();
+        assertEquals(customDoublyLinkedList, customDoublyLinkedListTwo);
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_andCustomListOf_1_2_3_4_onEquals_returns_false() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        CustomDoublyLinkedList<Integer> customDoublyLinkedListTwo = new CustomDoublyLinkedList<>(List.of(1, 2, 3,4));
+        assertNotEquals(customDoublyLinkedList, customDoublyLinkedListTwo);
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_andCustomListOf_1_2_4_onEquals_differentContentSameSize_returns_false() {
+        CustomDoublyLinkedList<Integer> list1 = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        CustomDoublyLinkedList<Integer> list2 = new CustomDoublyLinkedList<>(List.of(1, 2, 4));
+        assertNotEquals(list1, list2);
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_onReverse_returnsNewInstance_withValues_3_2_1() {
+        CustomDoublyLinkedList<Integer> list1 = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        CustomDoublyLinkedList<Integer> list2 = list1.reversed();
+        assertNotEquals(list1, list2);
+        assertEquals(3, list2.get(0));
+        assertEquals(2, list2.get(1));
+        assertEquals(1, list2.get(2));
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_onRetainAll_nullCollection_throws_nullPointerException() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        assertThrows(NullPointerException.class, () -> customDoublyLinkedList.retainAll(null));
+    }
+
+    @Test
+    public void givenEmptyCustomLinkedList_1_2_3_onRetainAll_emptyCollection_returnsTrue_andEmptiesCollection() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        Collection<Integer> empty = new ArrayList<>();
+        assertTrue(customDoublyLinkedList.retainAll(empty));
+        assertFalse(customDoublyLinkedList.contains(1));
+        assertFalse(customDoublyLinkedList.contains(2));
+        assertFalse(customDoublyLinkedList.contains(3));
+        assertTrue(customDoublyLinkedList.isEmpty());
+    }
+
+    @Test
+    public void givenCustomLinkedList_onRetainAll_emptyCollection_returnsFalse() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        Collection<Integer> empty = new ArrayList<>();
+        assertFalse(customDoublyLinkedList.retainAll(empty));
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3__onRetainAll_withListOf_1_2_returnsTrue_andLeavesValues_1_2() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        Collection<Integer> retain = new ArrayList<>(List.of(1, 2));
+        assertTrue(customDoublyLinkedList.retainAll(retain));
+        assertTrue(customDoublyLinkedList.contains(1));
+        assertTrue(customDoublyLinkedList.contains(2));
+        assertFalse(customDoublyLinkedList.contains(3));
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3__onRetainAll_withSetOf_1_2_returnsTrue_andLeavesValues_1_2() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        Collection<Integer> retain = new HashSet<>(List.of(1, 2));
+        assertTrue(customDoublyLinkedList.retainAll(retain));
+        assertTrue(customDoublyLinkedList.contains(1));
+        assertTrue(customDoublyLinkedList.contains(2));
+        assertFalse(customDoublyLinkedList.contains(3));
+    }
+
+    @Test
+    public void givenEmptyCustomLinkedList_hashCode_returns_1() {
+        assertEquals(1, new CustomDoublyLinkedList<>().hashCode());
+    }
+
+    @Test
+    public void hashCode_shouldMatchJavaLinkedList() {
+        List<Integer> custom = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        List<Integer> standard = new LinkedList<>(List.of(1, 2, 3));
+        assertEquals(standard.hashCode(), custom.hashCode());
+    }
+
+    @Test
+    public void givenEmptyCustomLinkedList_on_iterator_next_throws_noSuchElementException() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        assertThrows(NoSuchElementException.class, () -> customDoublyLinkedList.iterator().next());
+    }
+
+    @Test
+    public void giveCustomLinkedListOf_1_2_3_on_iterator_remove_removesElement_andReturnsListOf_2_3() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        Iterator<Integer> it = customDoublyLinkedList.iterator();
+        it.next();
+        it.remove();
+        assertEquals(2, customDoublyLinkedList.size());
+        assertEquals(2, customDoublyLinkedList.get(0));
+        assertEquals(3, customDoublyLinkedList.get(1));
+    }
+
+    @Test
+    public void givenEmptyCustomLinkedList_on_descendingOrderIterator_next_throws_noSuchElementException() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
+        assertThrows(NoSuchElementException.class, () -> customDoublyLinkedList.descendingIterator().next());
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_on_descendingOrderIterator_remove_removesElement_andReturnsListOf_1_2() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        Iterator<Integer> it = customDoublyLinkedList.descendingIterator();
+        it.next();
+        it.remove();
+        assertEquals(2, customDoublyLinkedList.size());
+        assertEquals(1, customDoublyLinkedList.get(0));
+        assertEquals(2, customDoublyLinkedList.get(1));
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_on_descendingOrderIterator_onHashNext_returnsFalse() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1));
+        Iterator<Integer> it = customDoublyLinkedList.descendingIterator();
+        assertTrue(it.hasNext());
+        assertEquals(1, it.next()); // get the first value
+        assertFalse(it.hasNext());
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_on_ListIterator_hasNext_returns_true() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertTrue(customDoublyLinkedList.listIterator().hasNext());
+    }
+
+    @Test
+    public void givneCustomLinkedListOf_1_2_3_on_ListIterator_hasPrevious_returns_false() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertFalse(customDoublyLinkedList.listIterator().hasPrevious());
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_on_ListIterator_withIndexOf_negative_1_throws_IndexOutOfBoundsException() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> customDoublyLinkedList.listIterator(-1));
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_on_ListIterator_withIndexOf_3_throws_IndexOutOfBoundsException() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertThrows(IndexOutOfBoundsException.class, () -> customDoublyLinkedList.listIterator(3));
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_on_ListIterator_hasPrevious_returns_false() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        assertFalse(customDoublyLinkedList.listIterator().hasPrevious());
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_on_next_ListIterator_hasPrevious_returns_true() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        ListIterator<Integer> listIterator = customDoublyLinkedList.listIterator();
+        assertEquals(1, listIterator.next());
+        listIterator.next();
+        assertTrue(listIterator.hasPrevious());
+        assertEquals(2, listIterator.previous());
+    }
+
+    @Test
+    public void givenCustomLinkedListOf_1_2_3_on_ListIterator_withIndex_1_returnsListIterator_withValues_2_3() {
+        CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1, 2, 3));
+        ListIterator<Integer> listIterator = customDoublyLinkedList.listIterator(1);
+        assertEquals(2, listIterator.next());
+        listIterator.next();
+        assertTrue(listIterator.hasPrevious());
+        assertEquals(3, listIterator.previous());
     }
 
     private void assertListEquals(CustomDoublyLinkedList<Integer> list, Integer... expected) {
