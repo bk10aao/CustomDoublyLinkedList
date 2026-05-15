@@ -927,7 +927,6 @@ class CustomDoublyLinkedListTest {
         assertTrue(customDoublyLinkedList.add(1));
         assertTrue(customDoublyLinkedList.add(2));
         assertTrue(customDoublyLinkedList.add(3));
-        System.out.println(customDoublyLinkedList);
         CustomDoublyLinkedList<Integer> clone = customDoublyLinkedList.clone();
         assertEquals(customDoublyLinkedList, clone);
     }
