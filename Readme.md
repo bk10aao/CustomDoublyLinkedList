@@ -155,6 +155,9 @@ Note: all data is an average of 100 runs.
 | toArray(T[])                               | 178334      | 131129               | **LinkedList** | 1.36×  |
 | toString()                                 | 1892913     | 1384150              | **LinkedList** | 1.37×  |
 
+## Performance Charts
+
+#### Note: The following performance charts designed to be viewed in dark mode.
 
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(int,%20E).png)
