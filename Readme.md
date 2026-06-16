@@ -159,6 +159,7 @@ Note: all data is an average of 100 runs.
 
 #### Note: The following performance charts are designed to be viewed in dark mode.
 
+![Heatmap](PerformanceTesting/Graphs/DoublyVsLinkedList/heatmap.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/add(int,%20E).png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/addAll(Collection).png)
