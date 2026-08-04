@@ -1026,7 +1026,7 @@ class CustomDoublyLinkedListTest {
     void removeAll_withSetCollection_shouldUseSetDirectly() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
-        Set<Integer> setToRemove = Set.of(0, 10);   // This IS a Set
+        Set<Integer> setToRemove = Set.of(0, 10);
         assertTrue(customDoublyLinkedList.removeAll(setToRemove));
         assertEquals(List.of(20, 30, 40), customDoublyLinkedList);
     }
@@ -1319,7 +1319,7 @@ class CustomDoublyLinkedListTest {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>(List.of(1));
         Iterator<Integer> it = customDoublyLinkedList.descendingIterator();
         assertTrue(it.hasNext());
-        assertEquals(1, it.next()); // get the first value
+        assertEquals(1, it.next());
         assertFalse(it.hasNext());
     }
 
