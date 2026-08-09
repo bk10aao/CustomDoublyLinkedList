@@ -9,48 +9,48 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 ### Time complexity
 
-| Method                                       | Custom         |       JDK       | Winner  |
-|:---------------------------------------------|:---------------|:---------------:|:-------:|
-| `add(E)`                                     | $O(1)$         |     $O(1)$      |   Tie   |
-| `add(int index, E)`                          | $O(n / 2)$     |   $O(n / 2)$    |   Tie   |
-| `addAll(Collection<? extends E>)`            | $O(m)$         |     $O(m)$      |   Tie   |
-| `addAll(int index, Collection<? extends E>)` | $O(n / 2 + m)$ | $O(n / 2 + m)$  |   Tie   |
-| `addFirst(E)`                                | $O(1)$         |     $O(1)$      |   Tie   |
-| `addLast(E)`                                 | $O(1)$         |     $O(1)$      |   Tie   |
-| `clear()`                                    | $O(n)$         |     $O(n)$      |   Tie   |
-| `clone()`                                    | $O(n)$         |     $O(n)$      |   Tie   |
-| `contains(Object)`                           | $O(n)$         |     $O(n)$      |   Tie   |
-| `element()`                                  | $O(1)$         |     $O(1)$      |   Tie   |
-| `get(int index)`                             | $O(n / 2)$     |   $O(n / 2)$    |   Tie   |
-| `indexOf(Object)`                            | $O(n)$         |     $O(n)$      |   Tie   |
-| `isEmpty()`                                  | $O(1)$         |     $O(1)$      |   Tie   |
-| `iterator()`                                 | $O(1)$         |     $O(1)$      |   Tie   |
-| `lastIndexOf(Object)`                        | $O(n)$         |     $O(n)$      |   Tie   |
-| `listIterator()`                             | $O(1)$         |     $O(1)$      |   Tie   |
-| `listIterator(int index)`                    | $O(n / 2)$     |   $O(n / 2)$    |   Tie   |
-| `offer(E)`                                   | $O(1)$         |     $O(1)$      |   Tie   |
-| `offerFirst(E)`                              | $O(1)$         |     $O(1)$      |   Tie   |
-| `offerLast(E)`                               | $O(1)$         |     $O(1)$      |   Tie   |
-| `peek()`                                     | $O(1)$         |     $O(1)$      |   Tie   |
-| `peekFirst()`                                | $O(1)$         |     $O(1)$      |   Tie   |
-| `peekLast()`                                 | $O(1)$         |     $O(1)$      |   Tie   |
-| `poll()`                                     | $O(1)$         |     $O(1)$      |   Tie   |
-| `pollFirst()`                                | $O(1)$         |     $O(1)$      |   Tie   |
-| `pollLast()`                                 | $O(1)$         |     $O(1)$      |   Tie   |
-| `pop()`                                      | $O(1)$         |     $O(1)$      |   Tie   |
-| `push(E)`                                    | $O(1)$         |     $O(1)$      |   Tie   |
-| `remove(int index)`                          | $O(n / 2)$     |   $O(n / 2)$    |   Tie   |
-| `remove(Object o)`                           | $O(n)$         |     $O(n)$      |   Tie   |
-| `removeFirst()`                              | $O(1)$         |     $O(1)$      |   Tie   |
-| `removeFirstOccurrence(Object)`              | $O(n)$         |     $O(n)$      |   Tie   |
-| `removeLast()`                               | $O(1)$         |     $O(1)$      |   Tie   |
-| `removeLastOccurrence(Object)`               | $O(n)$         |     $O(n)$      |   Tie   |
-| `set(int index, E)`                          | $O(n / 2)$     |   $O(n / 2)$    |   Tie   |
-| `size()`                                     | $O(1)$         |     $O(1)$      |   Tie   |
-| `subList(int fromIndex, int toIndex)`        | $O(1)$ view    |   $O(1)$ view   |   Tie   |
-| `toArray()`                                  | $O(n)$         |     $O(n)$      |   Tie   |
-| `toArray(T[] a)`                             | $O(n)$         |     $O(n)$      |   Tie   |
-| `toString()`                                 | $O(n)$         |     $O(n)$      |   Tie   |
+| Method                                       |     Custom     |      JDK       | Winner  |
+|:---------------------------------------------|:--------------:|:--------------:|:-------:|
+| `add(E)`                                     |     $O(1)$     |     $O(1)$     |   Tie   |
+| `add(int index, E)`                          |   $O(n / 2)$   |   $O(n / 2)$   |   Tie   |
+| `addAll(Collection<? extends E>)`            |     $O(m)$     |     $O(m)$     |   Tie   |
+| `addAll(int index, Collection<? extends E>)` | $O(n / 2 + m)$ | $O(n / 2 + m)$ |   Tie   |
+| `addFirst(E)`                                |     $O(1)$     |     $O(1)$     |   Tie   |
+| `addLast(E)`                                 |     $O(1)$     |     $O(1)$     |   Tie   |
+| `clear()`                                    |     $O(n)$     |     $O(n)$     |   Tie   |
+| `clone()`                                    |     $O(n)$     |     $O(n)$     |   Tie   |
+| `contains(Object)`                           |     $O(n)$     |     $O(n)$     |   Tie   |
+| `element()`                                  |     $O(1)$     |     $O(1)$     |   Tie   |
+| `get(int index)`                             |   $O(n / 2)$   |   $O(n / 2)$   |   Tie   |
+| `indexOf(Object)`                            |     $O(n)$     |     $O(n)$     |   Tie   |
+| `isEmpty()`                                  |     $O(1)$     |     $O(1)$     |   Tie   |
+| `iterator()`                                 |     $O(1)$     |     $O(1)$     |   Tie   |
+| `lastIndexOf(Object)`                        |     $O(n)$     |     $O(n)$     |   Tie   |
+| `listIterator()`                             |     $O(1)$     |     $O(1)$     |   Tie   |
+| `listIterator(int index)`                    |   $O(n / 2)$   |   $O(n / 2)$   |   Tie   |
+| `offer(E)`                                   |     $O(1)$     |     $O(1)$     |   Tie   |
+| `offerFirst(E)`                              |     $O(1)$     |     $O(1)$     |   Tie   |
+| `offerLast(E)`                               |     $O(1)$     |     $O(1)$     |   Tie   |
+| `peek()`                                     |     $O(1)$     |     $O(1)$     |   Tie   |
+| `peekFirst()`                                |     $O(1)$     |     $O(1)$     |   Tie   |
+| `peekLast()`                                 |     $O(1)$     |     $O(1)$     |   Tie   |
+| `poll()`                                     |     $O(1)$     |     $O(1)$     |   Tie   |
+| `pollFirst()`                                |     $O(1)$     |     $O(1)$     |   Tie   |
+| `pollLast()`                                 |     $O(1)$     |     $O(1)$     |   Tie   |
+| `pop()`                                      |     $O(1)$     |     $O(1)$     |   Tie   |
+| `push(E)`                                    |     $O(1)$     |     $O(1)$     |   Tie   |
+| `remove(int index)`                          |   $O(n / 2)$   |   $O(n / 2)$   |   Tie   |
+| `remove(Object o)`                           |     $O(n)$     |     $O(n)$     |   Tie   |
+| `removeFirst()`                              |     $O(1)$     |     $O(1)$     |   Tie   |
+| `removeFirstOccurrence(Object)`              |     $O(n)$     |     $O(n)$     |   Tie   |
+| `removeLast()`                               |     $O(1)$     |     $O(1)$     |   Tie   |
+| `removeLastOccurrence(Object)`               |     $O(n)$     |     $O(n)$     |   Tie   |
+| `set(int index, E)`                          |   $O(n / 2)$   |   $O(n / 2)$   |   Tie   |
+| `size()`                                     |     $O(1)$     |     $O(1)$     |   Tie   |
+| `subList(int fromIndex, int toIndex)`        |     $O(1)$     |     $O(1)$     |   Tie   |
+| `toArray()`                                  |     $O(n)$     |     $O(n)$     |   Tie   |
+| `toArray(T[] a)`                             |     $O(n)$     |     $O(n)$     |   Tie   |
+| `toString()`                                 |     $O(n)$     |     $O(n)$     |   Tie   |
 
 ### Space complexity
 
@@ -105,55 +105,55 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 # Performance
 
-| Method                          | Custom (ns) | java LinkedList (ns) |  Margin  |            Winner             |
-|:--------------------------------|:------------|:---------------------|:--------:|:-----------------------------:|
-| `add(E)`                        | 852804      | 880547               |  ~1.03×  | **Statistically Equivalent**  |
-| `add(int, E)`                   | 253095      | 261645               |  ~1.03×  | **Statistically Equivalent**  |
-| `addAll(Collection)`            | 605767      | 506558               |  1.20×   |        **LinkedList**         |
-| `addAll(int, Collection)`       | 861532      | 758533               |  1.14×   |        **LinkedList**         |
-| `addFirst(E)`                   | 236         | 301                  |  1.28×   |          **Custom**           |
-| `addLast(E)`                    | 200         | 213                  |  1.06×   | **Statistically Equivalent**  |
-| `clear()`                       | 448473      | 448279               |  ~1.00×  | **Statistically Equivalent**  |
-| `clone()`                       | 586322      | 615020               |  ~1.05×  | **Statistically Equivalent**  |
-| `contains(Object)`              | 635631      | 553031               |  1.15×   |        **LinkedList**         |
-| `containsAll(Collection)`       | 144338110   | 96892540             |  1.49×   |        **LinkedList**         |
-| `element()`                     | 281         | 280                  |  ~1.00×  | **Statistically Equivalent**  |
-| `equals(Object)`                | 1787025     | 1888869              |  1.06×   | **Statistically Equivalent**  |
-| `get(int)`                      | 253876      | 257732               |  ~1.02×  | **Statistically Equivalent**  |
-| `getFirst()`                    | 299         | 276                  |  1.08×   | **Statistically Equivalent**  |
-| `getLast()`                     | 293         | 267                  |  1.10×   | **Statistically Equivalent**  |
-| `hashCode()`                    | 468061      | 463363               |  ~1.01×  | **Statistically Equivalent**  |
-| `indexOf(Object)`               | 579899      | 575530               |  ~1.01×  | **Statistically Equivalent**  |
-| `isEmpty()`                     | 284         | 344                  |  1.21×   |          **Custom**           |
-| `lastIndexOf(Object)`           | 325         | 330                  |  ~1.02×  | **Statistically Equivalent**  |
-| `offer(E)`                      | 284         | 310                  |  1.09×   | **Statistically Equivalent**  |
-| `offerFirst(E)`                 | 230         | 397                  |  1.73×   |          **Custom**           |
-| `offerLast(E)`                  | 233         | 271                  |  1.16×   |          **Custom**           |
-| `peek()`                        | 315         | 328                  |  ~1.04×  | **Statistically Equivalent**  |
-| `peekFirst()`                   | 322         | 297                  |  1.08×   | **Statistically Equivalent**  |
-| `peekLast()`                    | 273         | 327                  |  1.20×   |          **Custom**           |
-| `poll()`                        | 339         | 341                  |  ~1.01×  | **Statistically Equivalent**  |
-| `pollFirst()`                   | 291         | 487                  |  1.67×   |          **Custom**           |
-| `pollLast()`                    | 270         | 346                  |  1.28×   |          **Custom**           |
-| `pop()`                         | 277         | 344                  |  1.24×   |          **Custom**           |
-| `push(E)`                       | 207         | 250                  |  1.21×   |          **Custom**           |
-| `remove()`                      | 273         | 399                  |  1.46×   |          **Custom**           |
-| `remove(int)`                   | 254938      | 308913               |  1.21×   |          **Custom**           |
-| `remove(Object)`                | 580650      | 566418               |  ~1.03×  | **Statistically Equivalent**  |
-| `removeAll(Collection)`         | 1455654     | 922613553            | 633.81×  |          **Custom**           |
-| `removeFirst()`                 | 270         | 366                  |  1.36×   |          **Custom**           |
-| `removeFirstOccurrence(Object)` | 575207      | 601290               |  ~1.05×  | **Statistically Equivalent**  |
-| `removeLast()`                  | 274         | 387                  |  1.41×   |          **Custom**           |
-| `removeLastOccurrence(Object)`  | 320         | 315                  |  ~1.02×  | **Statistically Equivalent**  |
-| `retainAll(Collection)`         | 1591015     | 901699327            | 566.74×  |          **Custom**           |
-| `set(int, E)`                   | 258487      | 271614               |  1.05×   | **Statistically Equivalent**  |
-| `size()`                        | 294         | 315                  |  1.07×   | **Statistically Equivalent**  |
-| `subList(int, int)`             | 296         | 336                  |  1.14×   |          **Custom**           |
-| `toArray()`                     | 437483      | 482643               |  1.10×   | **Statistically Equivalent**  |
-| `toArray(T[])`                  | 478357      | 519899               |  1.09×   | **Statistically Equivalent**  |
-| `toString()`                    | 4604379     | 4120345              |  1.12×   |        **LinkedList**         |
+| Method                          | Custom (ns) | JDK (ns)  | rRatio  |            Winner             |
+|:--------------------------------|:------------|:----------|:-------:|:-----------------------------:|
+| `add(E)`                        | 852804      | 880547    | ~1.03×  | **Statistically Equivalent**  |
+| `add(int, E)`                   | 253095      | 261645    | ~1.03×  | **Statistically Equivalent**  |
+| `addAll(Collection)`            | 605767      | 506558    |  1.20×  |        **LinkedList**         |
+| `addAll(int, Collection)`       | 861532      | 758533    |  1.14×  |        **LinkedList**         |
+| `addFirst(E)`                   | 236         | 301       |  1.28×  |          **Custom**           |
+| `addLast(E)`                    | 200         | 213       |  1.06×  | **Statistically Equivalent**  |
+| `clear()`                       | 448473      | 448279    | ~1.00×  | **Statistically Equivalent**  |
+| `clone()`                       | 586322      | 615020    | ~1.05×  | **Statistically Equivalent**  |
+| `contains(Object)`              | 635631      | 553031    |  1.15×  |        **LinkedList**         |
+| `containsAll(Collection)`       | 144338110   | 96892540  |  1.49×  |        **LinkedList**         |
+| `element()`                     | 281         | 280       | ~1.00×  | **Statistically Equivalent**  |
+| `equals(Object)`                | 1787025     | 1888869   |  1.06×  | **Statistically Equivalent**  |
+| `get(int)`                      | 253876      | 257732    | ~1.02×  | **Statistically Equivalent**  |
+| `getFirst()`                    | 299         | 276       |  1.08×  | **Statistically Equivalent**  |
+| `getLast()`                     | 293         | 267       |  1.10×  | **Statistically Equivalent**  |
+| `hashCode()`                    | 468061      | 463363    | ~1.01×  | **Statistically Equivalent**  |
+| `indexOf(Object)`               | 579899      | 575530    | ~1.01×  | **Statistically Equivalent**  |
+| `isEmpty()`                     | 284         | 344       |  1.21×  |          **Custom**           |
+| `lastIndexOf(Object)`           | 325         | 330       | ~1.02×  | **Statistically Equivalent**  |
+| `offer(E)`                      | 284         | 310       |  1.09×  | **Statistically Equivalent**  |
+| `offerFirst(E)`                 | 230         | 397       |  1.73×  |          **Custom**           |
+| `offerLast(E)`                  | 233         | 271       |  1.16×  |          **Custom**           |
+| `peek()`                        | 315         | 328       | ~1.04×  | **Statistically Equivalent**  |
+| `peekFirst()`                   | 322         | 297       |  1.08×  | **Statistically Equivalent**  |
+| `peekLast()`                    | 273         | 327       |  1.20×  |          **Custom**           |
+| `poll()`                        | 339         | 341       | ~1.01×  | **Statistically Equivalent**  |
+| `pollFirst()`                   | 291         | 487       |  1.67×  |          **Custom**           |
+| `pollLast()`                    | 270         | 346       |  1.28×  |          **Custom**           |
+| `pop()`                         | 277         | 344       |  1.24×  |          **Custom**           |
+| `push(E)`                       | 207         | 250       |  1.21×  |          **Custom**           |
+| `remove()`                      | 273         | 399       |  1.46×  |          **Custom**           |
+| `remove(int)`                   | 254938      | 308913    |  1.21×  |          **Custom**           |
+| `remove(Object)`                | 580650      | 566418    | ~1.03×  | **Statistically Equivalent**  |
+| `removeAll(Collection)`         | 1455654     | 922613553 | 633.81× |          **Custom**           |
+| `removeFirst()`                 | 270         | 366       |  1.36×  |          **Custom**           |
+| `removeFirstOccurrence(Object)` | 575207      | 601290    | ~1.05×  | **Statistically Equivalent**  |
+| `removeLast()`                  | 274         | 387       |  1.41×  |          **Custom**           |
+| `removeLastOccurrence(Object)`  | 320         | 315       | ~1.02×  | **Statistically Equivalent**  |
+| `retainAll(Collection)`         | 1591015     | 901699327 | 566.74× |          **Custom**           |
+| `set(int, E)`                   | 258487      | 271614    |  1.05×  | **Statistically Equivalent**  |
+| `size()`                        | 294         | 315       |  1.07×  | **Statistically Equivalent**  |
+| `subList(int, int)`             | 296         | 336       |  1.14×  |          **Custom**           |
+| `toArray()`                     | 437483      | 482643    |  1.10×  | **Statistically Equivalent**  |
+| `toArray(T[])`                  | 478357      | 519899    |  1.09×  | **Statistically Equivalent**  |
+| `toString()`                    | 4604379     | 4120345   |  1.12×  |        **LinkedList**         |
 
-Scores are averages across sizes 5000–50000. “Statistically Equivalent” = ratio < 1.15×.
+Scores are averages across sizes 5000–50000. “Statistically Equivalent” = ratio <= 1.10×.
 
 ## Performance Charts
 
