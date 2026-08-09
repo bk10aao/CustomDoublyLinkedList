@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'me.champeau.jmh' version '0.7.3'
 }
 
 group = 'org.example'
@@ -13,6 +14,10 @@ repositories {
 dependencies {
     implementation 'org.springframework:spring-core:6.2.11'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+
+    // JMH dependencies
+    jmh 'org.openjdk.jmh:jmh-core:1.37'
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
 }
 
 test {
@@ -87,4 +92,10 @@ tasks.register('coverage') {
     dependsOn jacocoTestCoverageVerification
     group = 'Verification'
     description = 'Runs tests and checks JaCoCo coverage (fails if < 80%)'
+}
+
+// Corrected from 'include' to 'includes' (plural)
+jmh {
+    includes = ['LinkedListJmhBenchmark']
+    duplicateClassesStrategy = org.gradle.api.file.DuplicatesStrategy.WARN
 }

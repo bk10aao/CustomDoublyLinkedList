@@ -1,3 +1,4 @@
+import custom.CustomDoublyLinkedList;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -984,10 +985,10 @@ class CustomDoublyLinkedListTest {
     }
 
     @Test
-    public void whenGettingSubList_withToFromIndexGreaterThanToIndex_throws_IndexOutOfBoundsException() {
+    public void whenGettingSubList_withToFromIndexGreaterThanToIndex_throws_IllegalArgumentException() {
         CustomDoublyLinkedList<Integer> customDoublyLinkedList = new CustomDoublyLinkedList<>();
         IntStream.range(0, 5).mapToObj(i -> i * 10).forEach(customDoublyLinkedList::add);
-        assertThrows(IndexOutOfBoundsException.class, () -> customDoublyLinkedList.subList(2, 1));
+        assertThrows(IllegalArgumentException.class, () -> customDoublyLinkedList.subList(2, 1));
     }
 
     @Test

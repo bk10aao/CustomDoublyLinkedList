@@ -1,3 +1,5 @@
+import custom.CustomDoublyLinkedList;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -8,7 +10,7 @@ public class CustomDoublyLinkedListPerformanceTest {
     private static final int RUNS = 100;
 
     public static void main(String[] args) {
-        int[] sizes = {1_000, 2_500, 5_000, 7_500, 10_000, 25_000, 50_000, 100_000};
+        int[] sizes = {5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000};
 
         long[][] results = new long[sizes.length][];
 
