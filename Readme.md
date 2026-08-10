@@ -4,7 +4,7 @@ All methods implemented are of the [Java Linked List](https://docs.oracle.com/ja
 
 Implementation of a Singly Linked List can be found [here](https://github.com/bk10aao/CustomLinkedList).
 
-### Time complexity
+# Time complexity
 
 | Method                                       |    `V1`    |      `V2`      |     `JDK`      | Winner  |
 |:---------------------------------------------|:----------:|:--------------:|:--------------:|:-------:|
@@ -49,7 +49,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | `toArray(T[] a)`                             |   $O(n)$   |     $O(n)$     |     $O(n)$     |   Tie   |
 | `toString()`                                 |   $O(n)$   |     $O(n)$     |     $O(n)$     |   Tie   |
 
-### Space complexity
+# Space complexity
 
 | Method                                       |    `V1`    |      `V2`      |     `JDK`      | Winner  |
 |:---------------------------------------------|:----------:|:--------------:|:--------------:|:-------:|
@@ -100,6 +100,8 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 # Performance
 
+## V2 vs JDK
+
 | Method                          | V2 (ns)   | JDK (ns)  |  Ratio  |            Winner            |
 |:--------------------------------|:----------|:----------|:-------:|:----------------------------:|
 | `add(E)`                        | 852804    | 880547    | ~1.03×  | **Statistically Equivalent** |
@@ -147,6 +149,9 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | `toArray()`                     | 437483    | 482643    |  1.10×  | **Statistically Equivalent** |
 | `toArray(T[])`                  | 478357    | 519899    |  1.09×  | **Statistically Equivalent** |
 | `toString()`                    | 4604379   | 4120345   |  1.12×  |        **LinkedList**        |
+
+## V1 vs V2
+
 
 | Method                          | V1 (ns)     | V2 (ns)     | Ratio        |            Winner            |
 |:--------------------------------|:------------|:------------|:-------------|:----------------------------:|
