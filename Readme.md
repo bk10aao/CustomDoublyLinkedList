@@ -105,7 +105,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 # Performance
 
-| Method                          | Custom (ns) | JDK (ns)  | rRatio  |            Winner             |
+| Method                          | Custom (ns) | JDK (ns)  |  Ratio  |            Winner             |
 |:--------------------------------|:------------|:----------|:-------:|:-----------------------------:|
 | `add(E)`                        | 852804      | 880547    | ~1.03×  | **Statistically Equivalent**  |
 | `add(int, E)`                   | 253095      | 261645    | ~1.03×  | **Statistically Equivalent**  |
@@ -159,6 +159,8 @@ Scores are averages across sizes 5000–50000. “Statistically Equivalent” = 
 
 #### Note: The following performance charts are designed to be viewed in dark mode.
 
+# V2 vs JDK
+
 ![Heatmap](PerformanceTesting/Graphs/DoublyVsLinkedList/heatmap.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/plot_add_E_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/plot_add_int__E_.png)
@@ -206,7 +208,55 @@ Scores are averages across sizes 5000–50000. “Statistically Equivalent” = 
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/plot_toArray_T[]_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/DoublyVsLinkedList/plot_toString__.png)
 
+# V1 vs V2
 
+## Custom Linked List vs Linked List
+![Heatmap](PerformanceTesting/Graphs/V1_V2/heatmap.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_add_E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_add_int__E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_addAll_Collection_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_addAll_int__Collection_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_addFirst_E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_addLast_E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_clear__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_clone__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_contains_Object_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_containsAll_Collection_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_element__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_equals_Object_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_get_int_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_getFirst__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_getLast__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_hashCode__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_indexOf_Object_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_isEmpty__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_lastIndexOf_Object_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_offer_E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_offerFirst_E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_offerLast_E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_peek__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_peekFirst__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_peekLast__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_poll__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_pollFirst__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_pollLast__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_pop__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_push_E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_remove__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_remove_int_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_remove_Object_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_removeAll_Collection_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_removeFirst__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_removeFirstOccurrence_Object_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_removeLast__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_removeLastOccurrence_Object_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_retainAll_Collection_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_set_int__E_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_size__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_subList_int__int_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_toArray__.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_toArray_T[]_.png)
+![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_toString__.png)
 
 
 

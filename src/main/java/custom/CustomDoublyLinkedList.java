@@ -250,17 +250,6 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
         return clone().reverseInPlace();
     }
 
-    private CustomDoublyLinkedList<E> reverseInPlace() {
-        CustomDoublyLinkedList<E> reversed = new CustomDoublyLinkedList<>();
-        Node<E> current = tail;
-        while (current != null) {
-            reversed.add(current.data);
-            current = current.previous;
-        }
-
-        return reversed;
-    }
-
     /**
      * Returns an iterator over the elements in this list in reverse sequential order.
      * The elements will be returned from last (tail) to first (head).
@@ -914,26 +903,7 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
         return stringBuilder.append("]").toString();
     }
 
-    /**
-     * A node in the doubly-linked list, containing an element and references to the previous and next nodes.
-     */
-    private static class Node<E> {
-        private E data;
-        private Node<E> previous;
-        private Node<E> next;
-
-        public Node(E data, Node<E> previous, Node<E> next) {
-            this.data = data;
-            this.previous = previous;
-            this.next = next;
-        }
-
-        public String toString() {
-            return String.valueOf(data);
-        }
-    }
-
-    private void addToIndex(int index, E item) {
+    private void addToIndex(final int index, final E item) {
         Node<E> successor = nodeAt(index);
         Node<E> predecessor = successor.previous;
         Node<E> newNode = new Node<>(item, predecessor, successor);
@@ -950,7 +920,7 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
             throw new NoSuchElementException();
     }
 
-    private void insertCollection(int index, Node<E> first, Node<E> last) {
+    private void insertCollection(final int index, final Node<E> first, final Node<E> last) {
         Node<E> successor = nodeAt(index);
         Node<E> predecessor = successor.previous;
         if (predecessor != null)
@@ -961,6 +931,30 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
         successor.previous = last;
     }
 
+    private Node<E> nodeAt(final int index) {
+        checkIndex(index, size);
+        Node<E> node;
+        if (index <= (size >> 1)) {
+            node = head;
+            for(int i = 0; i < index; i++)
+                node = node.next;
+        } else {
+            node = tail;
+            for(int i = size - 1; i > index; i--)
+                node = node.previous;
+        }
+        return node;
+    }
+
+    private CustomDoublyLinkedList<E> reverseInPlace() {
+        CustomDoublyLinkedList<E> reversed = new CustomDoublyLinkedList<>();
+        Node<E> current = tail;
+        while (current != null) {
+            reversed.add(current.data);
+            current = current.previous;
+        }
+        return reversed;
+    }
 
     private E unlink(final Node<E> node) {
         E data = node.data;
@@ -981,7 +975,7 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
         return data;
     }
 
-    private int update(int index, Collection<? extends E> c) {
+    private int update(final int index, final Collection<? extends E> c) {
         Node<E> first = null;
         Node<E> last = null;
         int count = 0;
@@ -999,22 +993,7 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
         return count;
     }
 
-    private Node<E> nodeAt(int index) {
-        checkIndex(index, size);
-        Node<E> node;
-        if (index <= (size >> 1)) {
-            node = head;
-            for(int i = 0; i < index; i++)
-                node = node.next;
-        } else {
-            node = tail;
-            for(int i = size - 1; i > index; i--)
-                node = node.previous;
-        }
-        return node;
-    }
-
-    private void updateList(int index, Node<E> first, Node<E> last) {
+    private void updateList(final int index, final Node<E> first, final Node<E> last) {
         if (index == 0) {
             if (head != null)
                 head.previous = last;
@@ -1031,6 +1010,25 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
             tail = last;
         } else
             insertCollection(index, first, last);
+    }
+
+    /**
+     * A node in the doubly-linked list, containing an element and references to the previous and next nodes.
+     */
+    private static class Node<E> {
+        private E data;
+        private Node<E> previous;
+        private Node<E> next;
+
+        public Node(E data, Node<E> previous, Node<E> next) {
+            this.data = data;
+            this.previous = previous;
+            this.next = next;
+        }
+
+        public String toString() {
+            return String.valueOf(data);
+        }
     }
 
     private class CustomListIterator implements ListIterator<E> {
@@ -1102,13 +1100,13 @@ public class CustomDoublyLinkedList<E> extends AbstractSequentialList<E> impleme
             lastReturned = null;
         }
 
-        public void set(E e) {
+        public void set(final E e) {
             requireNonNull(e);
             Assert.notNull(lastReturned, "");
             lastReturned.data = e;
         }
 
-        public void add(E e) {
+        public void add(final E e) {
             requireNonNull(e);
             if (nextNode == null) {
                 Node<E> newNode; newNode = new Node<>(e, tail, null);
