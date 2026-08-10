@@ -1,11 +1,8 @@
 # LinkedList
 Custom implementation of a doubly LinkedList.
-All methods implemented are of the [Java Linked List](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html) class including the [List](https://docs.oracle.com/javase/8/docs/api/java/util/List.html), [Deque](https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html), [Serializable](https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html) and [Cloneable](https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html) interfaces.
+All methods implemented are of the [Java Linked List](https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html) class including the [List](https://docs.oracle.com/javase/8/docs/api/java/util/List.html), [Serializable](https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html) and [Cloneable](https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html) interfaces.
 
 Implementation of a Singly Linked List can be found [here](https://github.com/bk10aao/CustomLinkedList).
-
-![Null-Hostile](https://img.shields.io/badge/null-hostile-red)
-![JDK-Matched](https://img.shields.io/badge/performance-JDK%20matched-blue)
 
 ### Time complexity
 
@@ -151,7 +148,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | `toArray(T[])`                  | 478357    | 519899    |  1.09×  | **Statistically Equivalent** |
 | `toString()`                    | 4604379   | 4120345   |  1.12×  |        **LinkedList**        |
 
-| Method                          | V1 (ns)     | V2 (ns)     | Ratio        | Winner                       |
+| Method                          | V1 (ns)     | V2 (ns)     | Ratio        |            Winner            |
 |:--------------------------------|:------------|:------------|:-------------|:----------------------------:|
 | `add(E)`                        | 837505      | 852804      | ~1.02x       | **Statistically Equivalent** |
 | `add(int, E)`                   | 254893      | 253095      | ~1.01x       | **Statistically Equivalent** |
