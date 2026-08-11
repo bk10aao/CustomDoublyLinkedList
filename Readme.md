@@ -152,7 +152,6 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 ## V1 vs V2
 
-
 | Method                          | V1 (ns)     | V2 (ns)     | Ratio        |            Winner            |
 |:--------------------------------|:------------|:------------|:-------------|:----------------------------:|
 | `add(E)`                        | 837505      | 852804      | ~1.02x       | **Statistically Equivalent** |

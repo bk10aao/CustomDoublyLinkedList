@@ -328,8 +328,8 @@ public class CustomDoublyLinkedListJmhBenchmark {
         Options opt = new OptionsBuilder()
                 .include(CustomDoublyLinkedListJmhBenchmark.class.getSimpleName())
                 .forks(1)
-                .result("custom-doubly-linked-list-results.csv") // Output file path
-                .resultFormat(ResultFormatType.CSV)             // Force CSV format
+                .result("custom-doubly-linked-list-results.csv")
+                .resultFormat(ResultFormatType.CSV)
                 .build();
 
         new Runner(opt).run();
