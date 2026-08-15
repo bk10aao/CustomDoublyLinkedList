@@ -152,53 +152,53 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 
 ## V1 vs V2
 
-| Method                          | V1 (ns)     | V2 (ns)     | Ratio        |            Winner            |
-|:--------------------------------|:------------|:------------|:-------------|:----------------------------:|
-| `add(E)`                        | 837505      | 852804      | ~1.02x       | **Statistically Equivalent** |
-| `add(int, E)`                   | 254893      | 253095      | ~1.01x       | **Statistically Equivalent** |
-| `addAll(Collection)`            | 605322      | 605767      | ~1.00x       | **Statistically Equivalent** |
-| `addAll(int, Collection)`       | 17379300399 | 861532      | 20172.55x    |            **V2**            |
-| `addFirst(E)`                   | 220         | 236         | ~1.07x       | **Statistically Equivalent** |
-| `addLast(E)`                    | 215         | 200         | ~1.07x       | **Statistically Equivalent** |
-| `clear()`                       | 206         | 448473      | 2177.05x     |            **V1**            |
-| `clone()`                       | 544903      | 586322      | ~1.08x       | **Statistically Equivalent** |
-| `contains(Object)`              | 630094      | 635631      | ~1.01x       | **Statistically Equivalent** |
-| `containsAll(Collection)`       | 148240843   | 144338110   | ~1.03x       | **Statistically Equivalent** |
-| `element()`                     | 322         | 281         | 1.15x        |            **V2**            |
-| `equals(Object)`                | 1644949     | 1787025     | ~1.09x       | **Statistically Equivalent** |
-| `get(int)`                      | 252529      | 253876      | ~1.01x       | **Statistically Equivalent** |
-| `getFirst()`                    | 304         | 299         | ~1.02x       | **Statistically Equivalent** |
-| `getLast()`                     | 297         | 293         | ~1.01x       | **Statistically Equivalent** |
-| `hashCode()`                    | 562927      | 468061      | 1.20x        |            **V2**            |
-| `indexOf(Object)`               | 577821      | 579899      | ~1.00x       | **Statistically Equivalent** |
-| `isEmpty()`                     | 294         | 284         | ~1.04x       | **Statistically Equivalent** |
-| `lastIndexOf(Object)`           | 908763      | 325         | 2796.19x     |            **V2**            |
-| `offer(E)`                      | 322         | 284         | 1.13x        |            **V2**            |
-| `offerFirst(E)`                 | 215         | 230         | ~1.07x       | **Statistically Equivalent** |
-| `offerLast(E)`                  | 215         | 233         | ~1.08x       | **Statistically Equivalent** |
-| `peek()`                        | 346         | 315         | ~1.10x       | **Statistically Equivalent** |
-| `peekFirst()`                   | 299         | 322         | ~1.08x       | **Statistically Equivalent** |
-| `peekLast()`                    | 472         | 273         | 1.73x        |            **V2**            |
-| `poll()`                        | 344         | 339         | ~1.01x       | **Statistically Equivalent** |
-| `pollFirst()`                   | 327         | 291         | 1.12x        |            **V2**            |
-| `pollLast()`                    | 509237      | 270         | 1886.06x     |            **V2**            |
-| `pop()`                         | 313         | 277         | 1.13x        |            **V2**            |
-| `push(E)`                       | 233         | 207         | 1.13x        |            **V2**            |
-| `remove()`                      | 293         | 273         | ~1.07x       | **Statistically Equivalent** |
-| `remove(Object)`                | 651906      | 580650      | 1.12x        |            **V2**            |
-| `remove(int)`                   | 257863      | 254938      | ~1.01x       | **Statistically Equivalent** |
-| `removeAll(Collection)`         | 1384972     | 1455654     | ~1.05x       | **Statistically Equivalent** |
-| `removeFirst()`                 | 293         | 270         | ~1.09x       | **Statistically Equivalent** |
-| `removeFirstOccurrence(Object)` | 632298      | 575207      | ~1.10x       | **Statistically Equivalent** |
-| `removeLast()`                  | 507794      | 274         | 1853.26x     |            **V2**            |
-| `removeLastOccurrence(Object)`  | 936185      | 320         | 2925.58x     |            **V2**            |
-| `retainAll(Collection)`         | 1541043     | 1591015     | ~1.03x       | **Statistically Equivalent** |
-| `set(int, E)`                   | 255731      | 258487      | ~1.01x       | **Statistically Equivalent** |
-| `size()`                        | 270         | 294         | ~1.09x       | **Statistically Equivalent** |
-| `subList(int, int)`             | 4308985927  | 296         | 14557384.89x |            **V2**            |
-| `toArray()`                     | 444724      | 437483      | ~1.02x       | **Statistically Equivalent** |
-| `toArray(T[])`                  | 471045      | 478357      | ~1.02x       | **Statistically Equivalent** |
-| `toString()`                    | 4657348     | 4604379     | ~1.01x       | **Statistically Equivalent** |
+| Method                          | V1 (ns)     | V2 (ns)   | Ratio        |            Winner            |
+|:--------------------------------|:------------|:----------|:-------------|:----------------------------:|
+| `add(E)`                        | 837505      | 852804    | ~1.02x       | **Statistically Equivalent** |
+| `add(int, E)`                   | 254893      | 253095    | ~1.01x       | **Statistically Equivalent** |
+| `addAll(Collection)`            | 605322      | 605767    | ~1.00x       | **Statistically Equivalent** |
+| `addAll(int, Collection)`       | 17379300399 | 861532    | 20172.55x    |            **V2**            |
+| `addFirst(E)`                   | 220         | 236       | ~1.07x       | **Statistically Equivalent** |
+| `addLast(E)`                    | 215         | 200       | ~1.07x       | **Statistically Equivalent** |
+| `clear()`                       | 206         | 448473    | 2177.05x     |            **V1**            |
+| `clone()`                       | 544903      | 586322    | ~1.08x       | **Statistically Equivalent** |
+| `contains(Object)`              | 630094      | 635631    | ~1.01x       | **Statistically Equivalent** |
+| `containsAll(Collection)`       | 148240843   | 144338110 | ~1.03x       | **Statistically Equivalent** |
+| `element()`                     | 322         | 281       | 1.15x        | **Statistically Equivalent** |
+| `equals(Object)`                | 1644949     | 1787025   | ~1.09x       | **Statistically Equivalent** |
+| `get(int)`                      | 252529      | 253876    | ~1.01x       | **Statistically Equivalent** |
+| `getFirst()`                    | 304         | 299       | ~1.02x       | **Statistically Equivalent** |
+| `getLast()`                     | 297         | 293       | ~1.01x       | **Statistically Equivalent** |
+| `hashCode()`                    | 562927      | 468061    | 1.20x        |            **V2**            |
+| `indexOf(Object)`               | 577821      | 579899    | ~1.00x       | **Statistically Equivalent** |
+| `isEmpty()`                     | 294         | 284       | ~1.04x       | **Statistically Equivalent** |
+| `lastIndexOf(Object)`           | 908763      | 325       | 2796.19x     |            **V2**            |
+| `offer(E)`                      | 322         | 284       | 1.13x        | **Statistically Equivalent** |
+| `offerFirst(E)`                 | 215         | 230       | ~1.07x       | **Statistically Equivalent** |
+| `offerLast(E)`                  | 215         | 233       | ~1.08x       | **Statistically Equivalent** |
+| `peek()`                        | 346         | 315       | ~1.10x       | **Statistically Equivalent** |
+| `peekFirst()`                   | 299         | 322       | ~1.08x       | **Statistically Equivalent** |
+| `peekLast()`                    | 472         | 273       | 1.73x        |            **V2**            |
+| `poll()`                        | 344         | 339       | ~1.01x       | **Statistically Equivalent** |
+| `pollFirst()`                   | 327         | 291       | 1.12x        | **Statistically Equivalent** |
+| `pollLast()`                    | 509237      | 270       | 1886.06x     |            **V2**            |
+| `pop()`                         | 313         | 277       | 1.13x        | **Statistically Equivalent** |
+| `push(E)`                       | 233         | 207       | 1.13x        | **Statistically Equivalent** |
+| `remove()`                      | 293         | 273       | ~1.07x       | **Statistically Equivalent** |
+| `remove(Object)`                | 651906      | 580650    | 1.12x        | **Statistically Equivalent** |
+| `remove(int)`                   | 257863      | 254938    | ~1.01x       | **Statistically Equivalent** |
+| `removeAll(Collection)`         | 1384972     | 1455654   | ~1.05x       | **Statistically Equivalent** |
+| `removeFirst()`                 | 293         | 270       | ~1.09x       | **Statistically Equivalent** |
+| `removeFirstOccurrence(Object)` | 632298      | 575207    | ~1.10x       | **Statistically Equivalent** |
+| `removeLast()`                  | 507794      | 274       | 1853.26x     |            **V2**            |
+| `removeLastOccurrence(Object)`  | 936185      | 320       | 2925.58x     |            **V2**            |
+| `retainAll(Collection)`         | 1541043     | 1591015   | ~1.03x       | **Statistically Equivalent** |
+| `set(int, E)`                   | 255731      | 258487    | ~1.01x       | **Statistically Equivalent** |
+| `size()`                        | 270         | 294       | ~1.09x       | **Statistically Equivalent** |
+| `subList(int, int)`             | 4308985927  | 296       | 14557384.89x |            **V2**            |
+| `toArray()`                     | 444724      | 437483    | ~1.02x       | **Statistically Equivalent** |
+| `toArray(T[])`                  | 471045      | 478357    | ~1.02x       | **Statistically Equivalent** |
+| `toString()`                    | 4657348     | 4604379   | ~1.01x       | **Statistically Equivalent** |
 
 Scores are averages across sizes 5000–50000. “Statistically Equivalent” = ratio <= 1.10×.
 
