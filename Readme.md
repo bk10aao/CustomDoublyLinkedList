@@ -107,12 +107,12 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | `add(E)`                        | 852804    | 880547    | ~1.03×  | **Statistically Equivalent** |
 | `add(int, E)`                   | 253095    | 261645    | ~1.03×  | **Statistically Equivalent** |
 | `addAll(Collection)`            | 605767    | 506558    |  1.20×  |        **LinkedList**        |
-| `addAll(int, Collection)`       | 861532    | 758533    |  1.14×  |        **LinkedList**        |
+| `addAll(int, Collection)`       | 861532    | 758533    |  1.14×  | **Statistically Equivalent** |
 | `addFirst(E)`                   | 236       | 301       |  1.28×  |            **V2**            |
 | `addLast(E)`                    | 200       | 213       |  1.06×  | **Statistically Equivalent** |
 | `clear()`                       | 448473    | 448279    | ~1.00×  | **Statistically Equivalent** |
 | `clone()`                       | 586322    | 615020    | ~1.05×  | **Statistically Equivalent** |
-| `contains(Object)`              | 635631    | 553031    |  1.15×  |        **LinkedList**        |
+| `contains(Object)`              | 635631    | 553031    |  1.15×  | **Statistically Equivalent** |
 | `containsAll(Collection)`       | 144338110 | 96892540  |  1.49×  |        **LinkedList**        |
 | `element()`                     | 281       | 280       | ~1.00×  | **Statistically Equivalent** |
 | `equals(Object)`                | 1787025   | 1888869   |  1.06×  | **Statistically Equivalent** |
@@ -125,7 +125,7 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | `lastIndexOf(Object)`           | 325       | 330       | ~1.02×  | **Statistically Equivalent** |
 | `offer(E)`                      | 284       | 310       |  1.09×  | **Statistically Equivalent** |
 | `offerFirst(E)`                 | 230       | 397       |  1.73×  |            **V2**            |
-| `offerLast(E)`                  | 233       | 271       |  1.16×  |            **V2**            |
+| `offerLast(E)`                  | 233       | 271       |  1.16×  | **Statistically Equivalent** |
 | `peek()`                        | 315       | 328       | ~1.04×  | **Statistically Equivalent** |
 | `peekFirst()`                   | 322       | 297       |  1.08×  | **Statistically Equivalent** |
 | `peekLast()`                    | 273       | 327       |  1.20×  |            **V2**            |
@@ -145,10 +145,10 @@ Implementation of a Singly Linked List can be found [here](https://github.com/bk
 | `retainAll(Collection)`         | 1591015   | 901699327 | 566.74× |            **V2**            |
 | `set(int, E)`                   | 258487    | 271614    |  1.05×  | **Statistically Equivalent** |
 | `size()`                        | 294       | 315       |  1.07×  | **Statistically Equivalent** |
-| `subList(int, int)`             | 296       | 336       |  1.14×  |            **V2**            |
+| `subList(int, int)`             | 296       | 336       |  1.14×  | **Statistically Equivalent** |
 | `toArray()`                     | 437483    | 482643    |  1.10×  | **Statistically Equivalent** |
 | `toArray(T[])`                  | 478357    | 519899    |  1.09×  | **Statistically Equivalent** |
-| `toString()`                    | 4604379   | 4120345   |  1.12×  |        **LinkedList**        |
+| `toString()`                    | 4604379   | 4120345   |  1.12×  | **Statistically Equivalent** |
 
 ## V1 vs V2
 
