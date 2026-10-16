@@ -206,9 +206,15 @@ Scores are averages across sizes 5000–50000. “Statistically Equivalent” = 
 
 #### Note: The following performance charts are designed to be viewed in dark mode.
 
-# V1 vs V2 vs JDK
+# Heat maps
 
-## Custom Linked List vs Linked List
+## V2 vs JDK
+![Heatmap](PerformanceTesting/Graphs/V2_JDK/heatmap.png)
+
+## V1 vs V2
+![Heatmap](PerformanceTesting/Graphs/V1_V2/heatmap.png)
+
+## V1 vs V2 vs JDK
 ![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2_JDK/plot_add_E_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2_JDK/plot_add_int__E_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2_JDK/plot_addAll_Collection_.png)
@@ -256,8 +262,6 @@ Scores are averages across sizes 5000–50000. “Statistically Equivalent” = 
 ![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2_JDK/plot_toString__.png)
 
 # V2 vs JDK
-
-![Heatmap](PerformanceTesting/Graphs/V2_JDK/heatmap.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V2_JDK/plot_add_E_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V2_JDK/plot_add_int__E_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V2_JDK/plot_addAll_Collection_.png)
@@ -307,7 +311,6 @@ Scores are averages across sizes 5000–50000. “Statistically Equivalent” = 
 # V1 vs V2
 
 ## Custom Linked List vs Linked List
-![Heatmap](PerformanceTesting/Graphs/V1_V2/heatmap.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_add_E_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_add_int__E_.png)
 ![Combined Performance Charts](PerformanceTesting/Graphs/V1_V2/plot_addAll_Collection_.png)
